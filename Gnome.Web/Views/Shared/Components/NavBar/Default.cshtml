@@ -1,0 +1,43 @@
+﻿@model Gnome.Web.ViewComponets.User
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            @if (Model.IsAuthenticated)
+            {
+                <a class="navbar-brand" href="/dashboard">gnome</a>
+            }
+            else
+            {
+                <a class="navbar-brand" href="/">gnome</a>
+            }
+
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            @if (Model.IsAuthenticated)
+            {
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/accounts">accounts</a>
+                    </li>
+                    <li>
+                        <a href="/reports">reports</a>
+                    </li>
+                </ul>
+            }
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @if (Model.IsAuthenticated)
+                    {
+                        <a href="/logout">log out</a>
+                    }
+                    else
+                    {
+                        <a href="/login">log in</a>
+                    }
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
