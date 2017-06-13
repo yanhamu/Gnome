@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using Gnome.Web.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,7 +14,13 @@ namespace Gnome.Web
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(config =>
+            {
+                config.Filters.Add(new AuthorizeFilter(
+                    new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build()));
+            });
             var container = DiConfiguration.CreateContainer(services);
 
             return container.Resolve<IServiceProvider>();

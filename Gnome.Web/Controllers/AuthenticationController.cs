@@ -18,11 +18,18 @@ namespace Gnome.Web.Controllers
             this.authenticationService = authenticationService;
         }
 
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return Redirect("/Home");
+        }
+
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginUser user)
+        public async Task<IActionResult> Login(LoginUser loginUser)
         {
-            if (userService.Verify(user))
+            var user = userService.Verify(loginUser);
+            if (user != null)
             {
                 await authenticationService.LogIn(user, HttpContext);
                 return Redirect("/Home");

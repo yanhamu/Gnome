@@ -2,7 +2,6 @@
 using Gnome.Web.Model.ViewModel;
 using Gnome.Web.Services.Interfaces;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Gnome.Web.Services.Mock
 {
@@ -10,10 +9,6 @@ namespace Gnome.Web.Services.Mock
     {
         public static List<User> Users = new List<User>();
 
-        public Task<User> Get()
-        {
-            return Task.Run(() => new User() { IsAuthenticated = true });
-        }
 
         public bool Register(UserRegistration user)
         {
@@ -27,9 +22,17 @@ namespace Gnome.Web.Services.Mock
             }
         }
 
-        public bool Verify(LoginUser user)
+        public User Verify(LoginUser user)
         {
-            return user.Email == "kriskatomas360@gmail.com";
+            if (user.Email != "kriskatomas360@gmail.com")
+            {
+                return null;
+            }
+            else
+            {
+                return new User() { Email = "kriskatomas360@gmail.com", Id = 1, IsAuthenticated = true };
+            }
+
         }
     }
 }

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Gnome.Web.Model.ViewModel.Account>
+@{
+    Layout = "_Layout";
+}
+
+<h3>Accounts</h3>
+
+<ol>
+    @foreach (var account in Model)
+    {
+        <li>@account.Name</li>
+
+    }
+</ol>

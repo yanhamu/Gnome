@@ -15,6 +15,7 @@ namespace Gnome.Web.Configuration
 
             containerBuilder.RegisterType<UserService>().As<IUserService>();
             containerBuilder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
+            containerBuilder.RegisterType<AccountService>().As<IAccountService>();
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();
