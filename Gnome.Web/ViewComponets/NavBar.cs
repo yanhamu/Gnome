@@ -13,9 +13,12 @@ namespace Gnome.Web.ViewComponets
             this.userService = userService;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public Task<Microsoft.AspNetCore.Mvc.ViewComponents.ViewViewComponentResult> InvokeAsync()
         {
-            return View(await userService.Get());
+            var user = HttpContext.User;
+
+            var task = Task.Run(() => View((new Model.User() { IsAuthenticated = user.Identity.IsAuthenticated })));
+            return task;
         }
     }
 }

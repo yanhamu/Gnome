@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Gnome.Web.Services;
 using Gnome.Web.Services.Interfaces;
 using Gnome.Web.Services.Mock;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ namespace Gnome.Web.Configuration
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterType<UserService>().As<IUserService>();
+            containerBuilder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();

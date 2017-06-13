@@ -1,10 +1,10 @@
-﻿using Gnome.Web.Configuration;
+﻿using Autofac;
+using Gnome.Web.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using Autofac;
 
 namespace Gnome.Web
 {
@@ -14,6 +14,7 @@ namespace Gnome.Web
         {
             services.AddMvc();
             var container = DiConfiguration.CreateContainer(services);
+
             return container.Resolve<IServiceProvider>();
         }
 
@@ -22,9 +23,16 @@ namespace Gnome.Web
             loggerFactory.AddConsole();
 
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                AuthenticationScheme = Services.AuthenticationService.COOKIE_MIDDLEWARE,
+                LoginPath = new Microsoft.AspNetCore.Http.PathString("/Authentication/Login"),
+                AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Authentication/Forbidden/"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
 
             app.UseMvc(routes =>
             {
