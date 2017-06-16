@@ -21,9 +21,16 @@ namespace Gnome.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Detail(int id)
+        public IActionResult Settings(int id)
         {
             return View(accountService.Get(id));
+        }
+
+        [HttpPost]
+        public IActionResult Settings(int id, Account account)
+        {
+            accountService.Update(id, account);
+            return View(accountService.Get(account.Id));
         }
 
 
@@ -33,17 +40,11 @@ namespace Gnome.Web.Controllers
             return View(accountService.Update(accountId, account));
         }
 
-        [HttpGet]
-        public IActionResult CreateNew()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public IActionResult CreateNew(Account account)
+        public IActionResult Index(Account account)
         {
             var newAccount = accountService.CreateNew(account);
-            return Redirect("/Account/" + newAccount.Id);
+            return Redirect("/account/settings/" + newAccount.Id);
         }
 
         [HttpPost]

@@ -3,12 +3,22 @@
     Layout = "_Layout";
 }
 
-<h3>Accounts</h3>
+<h3>accounts</h3>
 
-<ol>
+<table class="table table-striped">
     @foreach (var account in Model)
     {
-        <li>@account.Name</li>
-
+        <tr>
+            <td>
+                <a href="/account/@account.Id/transactions">@account.Name</a>
+            </td>
+            <td>
+                <a href="/account/settings/@account.Id">edit</a>
+            </td>
+        </tr>
     }
-</ol>
+</table>
+
+<form method='post' action='/account'>
+    <input class='btn btn-default' value='create new' type='submit' />
+</form>

@@ -1,38 +1,46 @@
 ﻿using Gnome.Web.Model.ViewModel;
 using Gnome.Web.Services.Interfaces;
 using System.Collections.Generic;
-using System;
+using System.Linq;
 
 namespace Gnome.Web.Services.Mock
 {
     public class AccountService : IAccountService
     {
+        private static List<Account> accountsData = new List<Account>() {
+            new Account(){ Id = 1, Name = "Fio" },
+            new Account(){ Id = 2, Name = "CSOB" }
+        };
+
         public Account CreateNew(Account account)
         {
-            return new Account() { Id = 1, Name = "Fio" };
+            accountsData.Add(account);
+            return account;
         }
 
         public Account Get(int id)
         {
-            return new Account() { Id = 1, Name = "Fio" };
+            return accountsData.Single(a => a.Id == id);
         }
 
         public IEnumerable<Account> GetAccounts(int userId)
         {
-            return new List<Account>() {
-                new Account(){ Id = 1, Name = "Fio" },
-                new Account(){ Id = 2, Name = "CSOB" }
-            };
+            return accountsData;
         }
 
         public Account Remove(int id)
         {
-            return new Account() { Id = 1, Name = "Fio" };
+            var toRemove = accountsData.Single(a => a.Id == id);
+            accountsData.Remove(toRemove);
+            return toRemove;
         }
 
         public Account Update(int accountId, Account account)
         {
-            return new Account() { Id = 1, Name = "Fio" };
+            var a = Get(accountId);
+            a.Name = account.Name;
+            a.Token = account.Token;
+            return a;
         }
     }
 }
