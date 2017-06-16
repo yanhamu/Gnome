@@ -1,5 +1,6 @@
 ﻿using Gnome.Web.Extensions;
 using Gnome.Web.Model;
+using Gnome.Web.Model.ViewModel;
 using Gnome.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,13 @@ namespace Gnome.Web.Controllers
         public IActionResult List(TransactionFilter filter)
         {
             var transactions = transactionService.GetTransactions(UserId, filter);
-            return View(transactions);
+            var model = new MaskedTransactionList();
+            model.Transactions = transactions;
+            model.Mask = new TransactionMask()
+            {
+                Fields = new System.Collections.Generic.List<string>() { "id", "amount", "currency" }
+            };
+            return View(model);
         }
     }
 }

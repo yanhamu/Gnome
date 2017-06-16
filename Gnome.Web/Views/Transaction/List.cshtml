@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Gnome.Web.Model.ViewModel.Transaction>
+﻿@model Gnome.Web.Model.ViewModel.MaskedTransactionList
 
 @{
     Layout = "_Layout";
@@ -7,17 +7,19 @@
 <h3>transactions</h3>
 
 <table class="table table-striped">
-    @foreach (var transaction in Model)
+    <tr>
+        @foreach (var mask in Model.Mask.Fields)
+        {
+            <th>@mask</th>
+        }
+    </tr>
+
+    @foreach (var transaction in Model.Transactions)
     {
         <tr>
-            <td>
-                @transaction.AccountId
-            </td>
-            @foreach (var keyValuePair in transaction.Fields)
+            @foreach (var mask in Model.Mask.Fields)
             {
-                <td>
-                    @keyValuePair.Value
-                </td>
+                <td>@transaction.Fields[mask]</td>
             }
         </tr>
     }
