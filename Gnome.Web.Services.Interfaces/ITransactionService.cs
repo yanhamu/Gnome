@@ -1,9 +1,11 @@
 ﻿using Gnome.Web.Model;
+using Gnome.Web.Model.ViewModel;
+using System.Collections.Generic;
 
 namespace Gnome.Web.Services.Interfaces
 {
     public interface ITransactionService
     {
-        object GetTransactions(int userId, TransactionFilter filter);
+        List<Transaction> GetTransactions(int accountId, TransactionFilter filter);
     }
 }

@@ -45,8 +45,13 @@ namespace Gnome.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    RouteNames.TransactionList,
+                    "account/{accountId}/transactions",
+                    new { controller = "Transaction", action = "List" });
+
+                routes.MapRoute(
+                       name: "default",
+                       template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

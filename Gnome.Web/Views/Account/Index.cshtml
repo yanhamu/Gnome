@@ -10,7 +10,7 @@
     {
         <tr>
             <td>
-                <a href="/account/@account.Id/transactions">@account.Name</a>
+                @Html.RouteLink(@account.Name, Gnome.Web.Configuration.RouteNames.TransactionList, new { accountId = account.Id })
             </td>
             <td>
                 <a href="/account/settings/@account.Id">edit</a>
@@ -20,5 +20,6 @@
 </table>
 
 <form method='post' action='/account'>
+    <input type="hidden" value="Account Name" name="Name" />
     <input class='btn btn-default' value='create new' type='submit' />
 </form>

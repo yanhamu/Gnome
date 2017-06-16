@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Gnome.Web.Model.ViewModel.Transaction>
+
+@{
+    Layout = "_Layout";
+}
+
+<h3>transactions</h3>
+
+<table class="table table-striped">
+    @foreach (var transaction in Model)
+    {
+        <tr>
+            <td>
+                @transaction.AccountId
+            </td>
+            @foreach (var keyValuePair in transaction.Fields)
+            {
+                <td>
+                    @keyValuePair.Value
+                </td>
+            }
+        </tr>
+    }
+</table>
