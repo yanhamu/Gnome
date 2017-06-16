@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Gnome.Core.DataAccess\Gnome.Core.DataAccess.csproj" />
+    <ProjectReference Include="..\Gnome.Core.Model\Gnome.Core.Model.csproj" />
+    <ProjectReference Include="..\Gnome.Core.Service.Interfaces\Gnome.Core.Service.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

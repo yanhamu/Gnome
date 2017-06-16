@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Gnome.Core.Service\Gnome.Core.Service.csproj" />
     <ProjectReference Include="..\Gnome.Web.Model\Gnome.Web.Model.csproj" />
     <ProjectReference Include="..\Gnome.Web.Services.Interfaces\Gnome.Web.Services.Interfaces.csproj" />
     <ProjectReference Include="..\Gnome.Web.Services.Mock\Gnome.Web.Services.Mock.csproj" />

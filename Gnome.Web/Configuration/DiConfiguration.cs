@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Gnome.Core.Service;
 using Gnome.Web.Services;
 using Gnome.Web.Services.Interfaces;
 using Gnome.Web.Services.Mock;

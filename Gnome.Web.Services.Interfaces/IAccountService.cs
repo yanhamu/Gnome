@@ -6,9 +6,9 @@ namespace Gnome.Web.Services.Interfaces
     public interface IAccountService
     {
         IEnumerable<Account> GetAccounts(int userId);
-        Account Get(int id);
+        Account Get(int accountId);
         Account Update(int accountId, Account account);
-        Account CreateNew(Account account);
-        Account Remove(int id);
+        Account CreateNew(Account account, int userId);
+        Account Remove(int accountId);
     }
 }

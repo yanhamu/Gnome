@@ -11,6 +11,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Web.Services.Interfac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Web.Services.Mock", "Gnome.Web.Services.Mock\Gnome.Web.Services.Mock.csproj", "{E68609EC-B40E-4009-A6DD-12AEF2C9D629}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Web.Services", "Gnome.Web.Services\Gnome.Web.Services.csproj", "{424B385A-7D05-498C-8873-2A6CB0F3A267}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Core.Service", "Gnome.Core.Service\Gnome.Core.Service.csproj", "{113FC7D0-0450-4301-97E0-3025808C5F5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Core.Model", "Gnome.Core.Model\Gnome.Core.Model.csproj", "{C1CC7099-CCE2-4315-BE29-7A6364AF42F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Core.Service.Interfaces", "Gnome.Core.Service.Interfaces\Gnome.Core.Service.Interfaces.csproj", "{DFC311CF-1195-4DE0-86C5-371FB1A6F910}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Core.DataAccess", "Gnome.Core.DataAccess\Gnome.Core.DataAccess.csproj", "{3192A398-B2F1-4113-9A3B-B3272E4367F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +43,26 @@ Global
 		{E68609EC-B40E-4009-A6DD-12AEF2C9D629}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E68609EC-B40E-4009-A6DD-12AEF2C9D629}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E68609EC-B40E-4009-A6DD-12AEF2C9D629}.Release|Any CPU.Build.0 = Release|Any CPU
+		{424B385A-7D05-498C-8873-2A6CB0F3A267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424B385A-7D05-498C-8873-2A6CB0F3A267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424B385A-7D05-498C-8873-2A6CB0F3A267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424B385A-7D05-498C-8873-2A6CB0F3A267}.Release|Any CPU.Build.0 = Release|Any CPU
+		{113FC7D0-0450-4301-97E0-3025808C5F5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{113FC7D0-0450-4301-97E0-3025808C5F5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{113FC7D0-0450-4301-97E0-3025808C5F5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{113FC7D0-0450-4301-97E0-3025808C5F5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1CC7099-CCE2-4315-BE29-7A6364AF42F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1CC7099-CCE2-4315-BE29-7A6364AF42F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1CC7099-CCE2-4315-BE29-7A6364AF42F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1CC7099-CCE2-4315-BE29-7A6364AF42F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFC311CF-1195-4DE0-86C5-371FB1A6F910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFC311CF-1195-4DE0-86C5-371FB1A6F910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFC311CF-1195-4DE0-86C5-371FB1A6F910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFC311CF-1195-4DE0-86C5-371FB1A6F910}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3192A398-B2F1-4113-9A3B-B3272E4367F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3192A398-B2F1-4113-9A3B-B3272E4367F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3192A398-B2F1-4113-9A3B-B3272E4367F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3192A398-B2F1-4113-9A3B-B3272E4367F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
