@@ -1,13 +1,12 @@
-using Dapper;
+using Autofac;
 using Gnome.Tests.Common;
 using System;
-using System.Data.SqlClient;
 using System.Linq;
 using Xunit;
 
 namespace Gnome.Core.DataAccess.Tests
 {
-    public class UserSecurityRepositoryTests : IDisposable
+    public class UserSecurityRepositoryTests : BaseTest
     {
         [Fact]
         public void Should_Create_New_Test()
@@ -16,15 +15,12 @@ namespace Gnome.Core.DataAccess.Tests
             var password = GenerateArray(32);
             var salt = GenerateArray(16);
 
-            using (var connection = new SqlConnection(Database.ConnectionString))
-            {
-                var repository = new UserSecurityRepository(connection);
+            var repository = container.Resolve<UserSecurityRepository>();
 
-                var user = repository.CreateNew(email, password, salt);
+            var user = repository.CreateNew(email, password, salt);
 
-                Assert.Equal(email, user.Email);
-                Assert.NotEqual(default(int), user.Id);
-            }
+            Assert.Equal(email, user.Email);
+            Assert.NotEqual(default(int), user.Id);
         }
 
         [Fact]
@@ -34,19 +30,16 @@ namespace Gnome.Core.DataAccess.Tests
             var password = GenerateArray(32);
             var salt = GenerateArray(16);
 
-            using (var connection = new SqlConnection(Database.ConnectionString))
-            {
-                var repository = new UserSecurityRepository(connection);
+            var repository = container.Resolve<UserSecurityRepository>();
 
-                repository.CreateNew(email, password, salt);
+            repository.CreateNew(email, password, salt);
 
-                var user = repository.GetBy(email);
+            var user = repository.GetBy(email);
 
-                Assert.NotEqual(default(int), user.Id);
-                Assert.Equal(email, user.Email);
-                Assert.True(password.SequenceEqual(user.Password));
-                Assert.True(salt.SequenceEqual(user.Salt));
-            }
+            Assert.NotEqual(default(int), user.Id);
+            Assert.Equal(email, user.Email);
+            Assert.True(password.SequenceEqual(user.Password));
+            Assert.True(salt.SequenceEqual(user.Salt));
         }
 
         private byte[] GenerateArray(int length)
@@ -56,14 +49,5 @@ namespace Gnome.Core.DataAccess.Tests
                 result[i] = Convert.ToByte(i % 8);
             return result;
         }
-
-        public void Dispose()
-        {
-            using (var connection = new SqlConnection(Database.ConnectionString))
-            {
-                connection.Execute(Database.Clear_All);
-            }
-        }
-
     }
 }

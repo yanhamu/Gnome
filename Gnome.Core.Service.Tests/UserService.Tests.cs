@@ -1,14 +1,11 @@
-﻿using Dapper;
-using Gnome.Core.DataAccess;
+﻿using Autofac;
 using Gnome.Core.Service.Interfaces;
 using Gnome.Tests.Common;
-using System;
-using System.Data.SqlClient;
 using Xunit;
 
 namespace Gnome.Core.Service.Tests
 {
-    public class UserServiceTests : IDisposable
+    public class UserServiceTests : BaseTest
     {
         [Fact]
         public void Should_Create_New_User_Test()
@@ -16,15 +13,12 @@ namespace Gnome.Core.Service.Tests
             var email = "email@email.com";
             var password = "password";
 
-            using (var connection = new SqlConnection(Database.ConnectionString))
-            {
-                IUserService service = GetUserService(connection);
+            var service = container.Resolve<IUserService>();
 
-                var user = service.CreateNew(email, password);
+            var user = service.CreateNew(email, password);
 
-                Assert.NotEqual(default(int), user.Id);
-                Assert.Equal(email, user.Email);
-            }
+            Assert.NotEqual(default(int), user.Id);
+            Assert.Equal(email, user.Email);
         }
 
 
@@ -34,16 +28,13 @@ namespace Gnome.Core.Service.Tests
             var email = "email@email.com";
             var password = "password";
 
-            using (var connection = new SqlConnection(Database.ConnectionString))
-            {
-                IUserService service = GetUserService(connection);
+            var service = container.Resolve<IUserService>();
 
-                service.CreateNew(email, password);
-                var user = service.Verify(email, password);
+            service.CreateNew(email, password);
+            var user = service.Verify(email, password);
 
-                Assert.NotEqual(default(int), user.Id);
-                Assert.Equal(email, user.Email);
-            }
+            Assert.NotEqual(default(int), user.Id);
+            Assert.Equal(email, user.Email);
         }
 
         [Fact]
@@ -52,15 +43,12 @@ namespace Gnome.Core.Service.Tests
             var email = "email@email.com";
             var password = "password";
 
-            using (var connection = new SqlConnection(Database.ConnectionString))
-            {
-                IUserService service = GetUserService(connection);
+            var service = container.Resolve<IUserService>();
 
-                service.CreateNew(email, password);
-                var user = service.Verify(email, "wrong password");
+            service.CreateNew(email, password);
+            var user = service.Verify(email, "wrong password");
 
-                Assert.Null(user);
-            }
+            Assert.Null(user);
         }
 
         [Fact]
@@ -69,34 +57,11 @@ namespace Gnome.Core.Service.Tests
             var email = "email@email.com";
             var password = "password";
 
-            using (var connection = new SqlConnection(Database.ConnectionString))
-            {
-                IUserService service = GetUserService(connection);
+            var service = container.Resolve<IUserService>();
 
-                service.CreateNew(email, password);
-                Assert.False(service.CheckEmailAvailability(email));
-                Assert.True(service.CheckEmailAvailability("new@email.com"));
-            }
-        }
-
-        public void Dispose()
-        {
-            using (var connection = new SqlConnection(Database.ConnectionString))
-            {
-                connection.Execute(Database.Clear_All);
-            }
-        }
-
-        private static IUserService GetUserService(SqlConnection connection)
-        {
-            var userRepository = new UserRepository(connection);
-            var userSecurityRepository = new UserSecurityRepository(connection);
-            var securityService = new UserSecurityService();
-            IUserService service = new UserService(
-                userRepository,
-                userSecurityRepository,
-                securityService);
-            return service;
+            service.CreateNew(email, password);
+            Assert.False(service.CheckEmailAvailability(email));
+            Assert.True(service.CheckEmailAvailability("new@email.com"));
         }
     }
 }
