@@ -8,7 +8,7 @@ namespace Gnome.Core.Service.Interfaces
         int Create(Account account);
         Account Get(int accountId);
         IEnumerable<Account> List(int userId);
-        Account Remove(int accountId);
-        Account Update(int accountId, Account account);
+        void Remove(int accountId);
+        void Update(int accountId, Account account);
     }
 }

@@ -32,12 +32,12 @@ namespace Gnome.Web.Services
             return accountService.List(userId).Select(a => CreateViewModel(a));
         }
 
-        public Account Remove(int accountId)
+        public void Remove(int accountId)
         {
-            return CreateViewModel(accountService.Remove(accountId));
+            accountService.Remove(accountId);
         }
 
-        public Account Update(int accountId, Account account)
+        public void Update(int accountId, Account account)
         {
             if (accountId != account.Id)
                 throw new ArgumentException("inconsistend account ids", nameof(accountId));
@@ -48,8 +48,7 @@ namespace Gnome.Web.Services
                 Name = account.Name,
                 Token = account.Token
             };
-            var updated = accountService.Update(accountId, newAccount);
-            return CreateViewModel(updated);
+            accountService.Update(accountId, newAccount);
         }
 
         private Account CreateViewModel(Gnome.Core.Model.Account account)

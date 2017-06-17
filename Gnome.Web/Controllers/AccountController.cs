@@ -30,14 +30,7 @@ namespace Gnome.Web.Controllers
         public IActionResult Settings(int id, Account account)
         {
             accountService.Update(id, account);
-            return View(accountService.Get(account.Id));
-        }
-
-
-        [HttpPost]
-        public IActionResult Edit(int accountId, [FromBody]Account account)
-        {
-            return View(accountService.Update(accountId, account));
+            return Redirect("/account/settings/" + id);
         }
 
         [HttpPost]

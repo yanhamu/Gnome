@@ -43,6 +43,40 @@ namespace Gnome.Core.Service.Tests
         }
 
         [Fact]
+        public void Should_Update_Account()
+        {
+            User user = PrepareUser();
+            var account = CreateAccount(user.Id);
+
+            var service = container.Resolve<IAccountService>();
+            var id = service.Create(account);
+
+            account.Name = "changed";
+            account.Token = "changed";
+            service.Update(id, account);
+            var retrievedAccount = service.Get(id);
+
+            Assert.Equal(user.Id, retrievedAccount.UserId);
+            Assert.NotEqual(default(int), retrievedAccount.Id);
+            Assert.Equal(account.Name, retrievedAccount.Name);
+            Assert.Equal(account.Token, retrievedAccount.Token);
+        }
+
+        [Fact]
+        public void Should_Remove_Account()
+        {
+            User user = PrepareUser();
+            var account = CreateAccount(user.Id);
+
+            var service = container.Resolve<IAccountService>();
+            var id = service.Create(account);
+            service.Remove(id);
+
+            var retrievedAccount = service.Get(id);
+            Assert.Null(retrievedAccount);
+        }
+
+        [Fact]
         public void Should_List_Accounts()
         {
             User user = PrepareUser();

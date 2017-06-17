@@ -29,14 +29,14 @@ namespace Gnome.Core.Service
             return repository.GetAccounts(userId);
         }
 
-        public Account Remove(int accountId)
+        public void Remove(int accountId)
         {
-            return repository.Remove(accountId);
+            repository.Remove(accountId);
         }
 
-        public Account Update(int accountId, Account account)
+        public void Update(int accountId, Account account)
         {
-            return repository.Update(accountId, account);
+            repository.Update(accountId, account);
         }
     }
 }

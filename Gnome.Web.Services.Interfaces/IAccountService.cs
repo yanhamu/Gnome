@@ -7,8 +7,8 @@ namespace Gnome.Web.Services.Interfaces
     {
         IEnumerable<Account> GetAccounts(int userId);
         Account Get(int accountId);
-        Account Update(int accountId, Account account);
+        void Update(int accountId, Account account);
         int CreateNew(Account account, int userId);
-        Account Remove(int accountId);
+        void Remove(int accountId);
     }
 }

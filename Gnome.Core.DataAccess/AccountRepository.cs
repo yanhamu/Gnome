@@ -31,7 +31,7 @@ select cast(SCOPE_IDENTITY() as int)";
         public Account Get(int accountId)
         {
             var sql = "select * from account where id = @id";
-            return connection.QueryFirst<Account>(sql, new { id = accountId });
+            return connection.Query<Account>(sql, new { id = accountId }).SingleOrDefault();
         }
 
         public IEnumerable<Account> GetAccounts(int userId)
@@ -40,14 +40,18 @@ select cast(SCOPE_IDENTITY() as int)";
             return connection.Query<Account>(sql, new { userId = userId });
         }
 
-        public Account Remove(int accountId)
+        public void Remove(int accountId)
         {
-            throw new NotImplementedException();
+            var sql = "delete from account where id = @id";
+            connection.Execute(sql, new { id = accountId });
         }
 
-        public Account Update(int accountId, Account account)
+        public void Update(int accountId, Account account)
         {
-            throw new NotImplementedException();
+            var sql = "update account set name =@name, token = @token where id = @id";
+            var affectedRows = connection.Execute(sql, new { name = account.Name, token = account.Token, id = accountId });
+            if (affectedRows != 1)
+                throw new InvalidOperationException();
         }
     }
 }
