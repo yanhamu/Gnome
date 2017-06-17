@@ -1,23 +1,29 @@
-﻿using Gnome.Core.Model;
-using System;
+﻿using Dapper;
+using Gnome.Core.Model;
+using System.Data.SqlClient;
 
 namespace Gnome.Core.DataAccess
 {
     public class UserRepository
     {
+        private readonly SqlConnection connection;
+
+        public UserRepository(SqlConnection connection)
+        {
+            this.connection = connection;
+        }
+
         public bool CheckEmailAvailability(string email)
         {
-            throw new NotImplementedException();
+            var sql = "select 1 from [user] where email = @email";
+            var result = connection.QueryFirst<int>(sql, new { email = email });
+            return result != default(int);
         }
 
-        public UserSecurity GetBy(string email)
+        public User GetUser(string email)
         {
-            throw new NotImplementedException();
-        }
-
-        public User CreateNew(string email, byte[] pwd, byte[] salt)
-        {
-            throw new NotImplementedException();
+            var sql = "select id, email from [user] where email = @email";
+            return connection.QueryFirst<User>(sql, new { email = email });
         }
     }
 }

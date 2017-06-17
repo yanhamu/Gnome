@@ -8,12 +8,15 @@ namespace Gnome.Core.Service
     {
         private readonly UserRepository repository;
         private readonly UserSecurityService securityService;
+        private readonly UserSecurityRepository securityRepository;
 
         public UserService(
             UserRepository repository,
+            UserSecurityRepository securityRepository,
             UserSecurityService securityService)
         {
             this.repository = repository;
+            this.securityRepository = securityRepository;
             this.securityService = securityService;
         }
 
@@ -26,12 +29,21 @@ namespace Gnome.Core.Service
         {
             var salt = securityService.GetSalt();
             var pwd = securityService.CreatePassword(password, salt);
-            return repository.CreateNew(email, pwd, salt);
+            var result = securityRepository.CreateNew(email, pwd, salt);
+
+            if (result == null)
+                return null;
+
+            return new User()
+            {
+                Id = result.Id,
+                Email = result.Email
+            };
         }
 
         public User Verify(string email, string password)
         {
-            var user = repository.GetBy(email);
+            var user = securityRepository.GetBy(email);
 
             if (!securityService.Verify(password, user.Password, user.Salt))
                 return null;

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Gnome.Core.Model\Gnome.Core.Model.csproj" />
   </ItemGroup>
 
