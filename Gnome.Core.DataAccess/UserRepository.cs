@@ -16,8 +16,8 @@ namespace Gnome.Core.DataAccess
         public bool CheckEmailAvailability(string email)
         {
             var sql = "select 1 from [user] where email = @email";
-            var result = connection.QueryFirst<int>(sql, new { email = email });
-            return result != default(int);
+            var result = connection.ExecuteScalar<int?>(sql, new { email = email });
+            return result == null;
         }
 
         public User GetUser(string email)

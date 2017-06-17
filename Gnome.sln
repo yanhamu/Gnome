@@ -31,6 +31,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GnomeDb", "GnomeDb\GnomeDb.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Core.DataAccess.Tests", "Gnome.Core.DataAccess.Tests\Gnome.Core.DataAccess.Tests.csproj", "{6B6E139B-2BE6-40A3-AEA4-BC8204E3FAC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Tests.Common", "Gnome.Tests.Common\Gnome.Tests.Common.csproj", "{E82858D3-CFFC-49C2-A9D6-D8549F7F3A37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{6B6E139B-2BE6-40A3-AEA4-BC8204E3FAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B6E139B-2BE6-40A3-AEA4-BC8204E3FAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B6E139B-2BE6-40A3-AEA4-BC8204E3FAC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E82858D3-CFFC-49C2-A9D6-D8549F7F3A37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E82858D3-CFFC-49C2-A9D6-D8549F7F3A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E82858D3-CFFC-49C2-A9D6-D8549F7F3A37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E82858D3-CFFC-49C2-A9D6-D8549F7F3A37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,5 +101,6 @@ Global
 		{FB341C14-35E0-4394-894F-4DE6F3F36652} = {BCBBBE33-CC72-4653-9BCB-76BD193951B8}
 		{54EBC929-D3E8-45ED-8473-00DEF83A2080} = {2DFF429A-E5C0-425D-9EE8-01C11648FF5E}
 		{6B6E139B-2BE6-40A3-AEA4-BC8204E3FAC9} = {BCBBBE33-CC72-4653-9BCB-76BD193951B8}
+		{E82858D3-CFFC-49C2-A9D6-D8549F7F3A37} = {BCBBBE33-CC72-4653-9BCB-76BD193951B8}
 	EndGlobalSection
 EndGlobal

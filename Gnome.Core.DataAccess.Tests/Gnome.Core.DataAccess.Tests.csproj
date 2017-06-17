@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gnome.Core.DataAccess\Gnome.Core.DataAccess.csproj" />
+    <ProjectReference Include="..\Gnome.Tests.Common\Gnome.Tests.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

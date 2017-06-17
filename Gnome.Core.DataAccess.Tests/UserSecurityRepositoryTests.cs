@@ -1,4 +1,5 @@
 using Dapper;
+using Gnome.Tests.Common;
 using System;
 using System.Data.SqlClient;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace Gnome.Core.DataAccess.Tests
         {
             using (var connection = new SqlConnection(Database.ConnectionString))
             {
-                connection.Execute("delete from [user]");
+                connection.Execute(Database.Clear_All);
             }
         }
 

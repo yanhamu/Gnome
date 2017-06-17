@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gnome.Core.Service\Gnome.Core.Service.csproj" />
+    <ProjectReference Include="..\Gnome.Tests.Common\Gnome.Tests.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
