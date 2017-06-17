@@ -43,8 +43,8 @@ namespace Gnome.Web.Controllers
         [HttpPost]
         public IActionResult Index(Account account)
         {
-            var newAccount = accountService.CreateNew(account, UserId);
-            return Redirect("/account/settings/" + newAccount.Id);
+            var id = accountService.CreateNew(account, UserId);
+            return Redirect("/account/settings/" + id);
         }
 
         [HttpPost]

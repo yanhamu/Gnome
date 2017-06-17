@@ -15,8 +15,10 @@ namespace Gnome.Infrastructure
 
             builder.RegisterType<UserService>().As<IUserService>();
             builder.RegisterType<AccountService>().As<IAccountService>();
+
             builder.RegisterType<UserRepository>();
             builder.RegisterType<UserSecurityRepository>();
+            builder.RegisterType<AccountRepository>();
 
             return builder;
         }

@@ -15,10 +15,10 @@ namespace Gnome.Web.Services
             this.accountService = accountService;
         }
 
-        public Account CreateNew(Account account, int userId)
+        public int CreateNew(Account account, int userId)
         {
-            var created = accountService.Create(new Core.Model.Account(account.Id, userId, account.Name, account.Token));
-            return CreateViewModel(created);
+            var id = accountService.Create(new Core.Model.Account(account.Id, userId, account.Name, account.Token));
+            return id;
         }
 
         public Account Get(int accountId)

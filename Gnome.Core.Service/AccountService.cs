@@ -14,7 +14,7 @@ namespace Gnome.Core.Service
             this.repository = repository;
         }
 
-        public Account Create(Account account)
+        public int Create(Account account)
         {
             return repository.Create(account);
         }
@@ -24,7 +24,7 @@ namespace Gnome.Core.Service
             return repository.Get(accountId);
         }
 
-        public IList<Account> List(int userId)
+        public IEnumerable<Account> List(int userId)
         {
             return repository.GetAccounts(userId);
         }
