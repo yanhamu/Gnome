@@ -6,7 +6,7 @@
             <a class="navbar-brand" href="/Home/Index">gnome</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            @if (Model.IsAuthenticated)
+            @if (Model != null)
             {
                 <ul class="nav navbar-nav">
                     <li>
@@ -20,7 +20,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    @if (Model.IsAuthenticated)
+                    @if (Model != null)
                     {
                         <a href="/Authentication/LogOut">log out</a>
                     }

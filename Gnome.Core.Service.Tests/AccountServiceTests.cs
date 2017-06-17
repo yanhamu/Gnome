@@ -12,15 +12,15 @@ namespace Gnome.Core.Service.Tests
         [Fact]
         public void Should_Create_New_Account_Tests()
         {
-            User user = PrepareUser();
-            var account = CreateAccount(user.Id);
+            var userId = PrepareUser();
+            var account = CreateAccount(userId);
 
             var service = container.Resolve<IAccountService>();
             var id = service.Create(account);
 
             var created = service.Get(id);
 
-            Assert.Equal(user.Id, created.UserId);
+            Assert.Equal(userId, created.UserId);
             Assert.Equal(account.Token, created.Token);
             Assert.Equal(account.Name, created.Name);
         }
@@ -28,15 +28,15 @@ namespace Gnome.Core.Service.Tests
         [Fact]
         public void Should_Retrieve_Account()
         {
-            User user = PrepareUser();
-            var account = CreateAccount(user.Id);
+            var userId = PrepareUser();
+            var account = CreateAccount(userId);
 
             var service = container.Resolve<IAccountService>();
             var id = service.Create(account);
 
             var retrievedAccount = service.Get(id);
 
-            Assert.Equal(user.Id, retrievedAccount.UserId);
+            Assert.Equal(userId, retrievedAccount.UserId);
             Assert.NotEqual(default(int), retrievedAccount.Id);
             Assert.Equal(account.Name, retrievedAccount.Name);
             Assert.Equal(account.Token, retrievedAccount.Token);
@@ -45,8 +45,8 @@ namespace Gnome.Core.Service.Tests
         [Fact]
         public void Should_Update_Account()
         {
-            User user = PrepareUser();
-            var account = CreateAccount(user.Id);
+            var userId = PrepareUser();
+            var account = CreateAccount(userId);
 
             var service = container.Resolve<IAccountService>();
             var id = service.Create(account);
@@ -56,7 +56,7 @@ namespace Gnome.Core.Service.Tests
             service.Update(id, account);
             var retrievedAccount = service.Get(id);
 
-            Assert.Equal(user.Id, retrievedAccount.UserId);
+            Assert.Equal(userId, retrievedAccount.UserId);
             Assert.NotEqual(default(int), retrievedAccount.Id);
             Assert.Equal(account.Name, retrievedAccount.Name);
             Assert.Equal(account.Token, retrievedAccount.Token);
@@ -65,8 +65,8 @@ namespace Gnome.Core.Service.Tests
         [Fact]
         public void Should_Remove_Account()
         {
-            User user = PrepareUser();
-            var account = CreateAccount(user.Id);
+            var userId = PrepareUser();
+            var account = CreateAccount(userId);
 
             var service = container.Resolve<IAccountService>();
             var id = service.Create(account);
@@ -79,15 +79,15 @@ namespace Gnome.Core.Service.Tests
         [Fact]
         public void Should_List_Accounts()
         {
-            User user = PrepareUser();
-            var account = CreateAccount(user.Id);
+            var userId = PrepareUser();
+            var account = CreateAccount(userId);
             var service = container.Resolve<IAccountService>();
 
             service.Create(account);
             service.Create(account);
             service.Create(account);
 
-            var accounts = service.List(user.Id);
+            var accounts = service.List(userId);
 
             Assert.True(accounts.All(a => a.Name == account.Name));
             Assert.True(accounts.All(a => a.Token == account.Token));
@@ -101,13 +101,12 @@ namespace Gnome.Core.Service.Tests
             return new Account(0, userId, accountName, accountToken);
         }
 
-        private User PrepareUser()
+        private int PrepareUser()
         {
             var email = "email@email.com";
             var password = "password";
             var userService = container.Resolve<IUserService>();
-            var user = userService.CreateNew(email, password);
-            return user;
+            return userService.CreateNew(email, password);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Gnome.Web.Services.Interfaces
 {
     public interface IUserService
     {
-        bool Register(UserRegistration user);
-        User Verify(LoginUser user);
+        int Register(UserRegistration user);
+        User Verify(string email, string password);
     }
 }

@@ -17,8 +17,14 @@ namespace Gnome.Web.ViewComponets
         {
             var user = HttpContext.User;
 
-            var task = Task.Run(() => View((new Model.User() { IsAuthenticated = user.Identity.IsAuthenticated })));
-            return task;
+            if (!user.Identity.IsAuthenticated)
+            {
+                return Task.Run(() => View(null));
+            }
+            else
+            {
+                return Task.Run(() => View((new Model.User())));
+            }
         }
     }
 }

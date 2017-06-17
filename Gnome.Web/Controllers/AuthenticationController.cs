@@ -28,7 +28,7 @@ namespace Gnome.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginUser loginUser)
         {
-            var user = userService.Verify(loginUser);
+            var user = userService.Verify(loginUser.Email, loginUser.Password);
             if (user != null)
             {
                 await authenticationService.LogIn(user, HttpContext);
@@ -36,7 +36,7 @@ namespace Gnome.Web.Controllers
             }
             else
             {
-                return View();
+                return Redirect("/Home");
             }
         }
 

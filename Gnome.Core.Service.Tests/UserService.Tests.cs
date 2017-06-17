@@ -15,10 +15,9 @@ namespace Gnome.Core.Service.Tests
 
             var service = container.Resolve<IUserService>();
 
-            var user = service.CreateNew(email, password);
+            var userId = service.CreateNew(email, password);
 
-            Assert.NotEqual(default(int), user.Id);
-            Assert.Equal(email, user.Email);
+            Assert.NotEqual(default(int), userId);
         }
 
 

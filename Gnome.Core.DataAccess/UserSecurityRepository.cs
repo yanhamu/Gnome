@@ -22,7 +22,7 @@ namespace Gnome.Core.DataAccess
         public UserSecurity GetBy(string email)
         {
             var sql = "select id, email, pwd as 'password', salt from [user] where email = @email";
-            var result = connection.QueryFirst<UserSecurity>(sql, new { email = email });
+            var result = connection.QueryFirstOrDefault<UserSecurity>(sql, new { email = email });
             return result;
         }
     }
