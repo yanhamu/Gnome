@@ -3,9 +3,9 @@ using Fio.Core.Model;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace Fio.Downloader
+namespace Fio.Downloader.DataAccess
 {
-    internal class TransactionRepository
+    public class TransactionRepository
     {
         private readonly SqlConnection connection;
 
