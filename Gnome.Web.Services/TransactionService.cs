@@ -3,7 +3,7 @@ using Gnome.Web.Model.ViewModel;
 using Gnome.Web.Services.Interfaces;
 using System.Collections.Generic;
 
-namespace Gnome.Web.Services.Mock
+namespace Gnome.Web.Services
 {
     public class TransactionService : ITransactionService
     {
