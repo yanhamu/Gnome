@@ -7,6 +7,13 @@ namespace Gnome.Web.Services
 {
     public class TransactionService : ITransactionService
     {
+        private readonly Core.Service.Interfaces.ITransactionService transactionService;
+
+        public TransactionService(Gnome.Core.Service.Interfaces.ITransactionService transactionService)
+        {
+            this.transactionService = transactionService;
+        }
+
         public List<Transaction> GetTransactions(int accountId, TransactionFilter filter)
         {
             var transactions = new List<Transaction>();

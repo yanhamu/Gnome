@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Gnome.Core.DataAccess.Tests
 {
-    public class UserSecurityRepositoryTests : BaseTest
+    public class UserSecurityRepositoryTests : BaseDbTest
     {
         [Fact]
         public void Should_Create_New_Test()

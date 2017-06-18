@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Gnome.Core.Service.Tests
 {
-    public class UserServiceTests : BaseTest
+    public class UserServiceTests : BaseDbTest
     {
         [Fact]
         public void Should_Create_New_User_Test()

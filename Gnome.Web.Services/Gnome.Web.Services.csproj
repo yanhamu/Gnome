@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Gnome.Web.Services.Interfaces\Gnome.Web.Services.Interfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Gnome\Core\Service\" />
+  </ItemGroup>
+
 </Project>

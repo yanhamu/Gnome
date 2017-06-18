@@ -23,6 +23,7 @@ namespace Gnome.Infrastructure
             builder.RegisterType<UserRepository>();
             builder.RegisterType<UserSecurityRepository>();
             builder.RegisterType<AccountRepository>();
+            builder.RegisterType<TransactionRepository>();
 
             return builder;
         }
