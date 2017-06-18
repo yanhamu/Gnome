@@ -53,6 +53,9 @@ namespace Fio.Core.Model
         [JsonProperty(PropertyName = "column25")]
         public Column<string> Comment { get; set; }
 
+        [JsonProperty(PropertyName = "column26")]
+        public Column<string> Bic { get; set; }
+        
         [JsonProperty(PropertyName = "column17")]
         public Column<long> InstructionId { get; set; }
 
