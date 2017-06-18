@@ -60,6 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="user.sql" />
-    <Build Include="account.sql" />
+    <Build Include="fio_account.sql" />
   </ItemGroup>
 </Project>

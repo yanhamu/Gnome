@@ -35,7 +35,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Tests.Common", "Gnome
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Infrastructure", "Gnome.Infrastructure\Gnome.Infrastructure.csproj", "{E12E8192-7080-462E-B400-63ABE874CBFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fio.Core", "Fio.Core\Fio.Core.csproj", "{11E3782F-7E2B-40B8-AE3E-B88ACAFE3F02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fio.Client", "Fio.Core\Fio.Client.csproj", "{11E3782F-7E2B-40B8-AE3E-B88ACAFE3F02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fio.Downloader", "Fio.Downloader\Fio.Downloader.csproj", "{DC595674-A025-4F5D-9B9B-58A5D22777D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,10 @@ Global
 		{11E3782F-7E2B-40B8-AE3E-B88ACAFE3F02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11E3782F-7E2B-40B8-AE3E-B88ACAFE3F02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11E3782F-7E2B-40B8-AE3E-B88ACAFE3F02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC595674-A025-4F5D-9B9B-58A5D22777D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC595674-A025-4F5D-9B9B-58A5D22777D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC595674-A025-4F5D-9B9B-58A5D22777D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC595674-A025-4F5D-9B9B-58A5D22777D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

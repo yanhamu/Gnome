@@ -15,6 +15,11 @@ namespace Fio.Core
             this.token = token;
         }
 
+        public object Get(object )
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Transactions> Get(DateTime from, DateTime to)
         {
             var formattedFrom = from.ToString("yyyy-MM-dd");

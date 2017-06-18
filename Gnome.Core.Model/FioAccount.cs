@@ -1,10 +1,10 @@
 ﻿namespace Gnome.Core.Model
 {
-    public class Account
+    public class FioAccount
     {
-        public Account() { }
+        public FioAccount() { }
 
-        public Account(
+        public FioAccount(
             int id,
             int userId,
             string name,

@@ -94,11 +94,11 @@ namespace Gnome.Core.Service.Tests
             Assert.True(accounts.All(a => a.Id != default(int)));
         }
 
-        private Account CreateAccount(int userId)
+        private FioAccount CreateAccount(int userId)
         {
             var accountName = "fio account";
             var accountToken = "token";
-            return new Account(0, userId, accountName, accountToken);
+            return new FioAccount(0, userId, accountName, accountToken);
         }
 
         private int PrepareUser()

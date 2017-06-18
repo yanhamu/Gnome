@@ -7,19 +7,19 @@ using System.Linq;
 
 namespace Gnome.Core.DataAccess
 {
-    public class AccountRepository
+    public class FioAccountRepository
     {
         private readonly SqlConnection connection;
 
-        public AccountRepository(SqlConnection connection)
+        public FioAccountRepository(SqlConnection connection)
         {
             this.connection = connection;
         }
 
-        public int Create(Account account)
+        public int Create(FioAccount account)
         {
             var sql = @"
-insert into account values(@userId, @name, @token);
+insert into fio_account values(@userId, @name, @token);
 select cast(SCOPE_IDENTITY() as int)";
             var id = connection
                 .Query<int>(sql, new { userId = account.UserId, name = account.Name, token = account.Token })
@@ -28,27 +28,27 @@ select cast(SCOPE_IDENTITY() as int)";
             return id;
         }
 
-        public Account Get(int accountId)
+        public FioAccount Get(int accountId)
         {
-            var sql = "select * from account where id = @id";
-            return connection.Query<Account>(sql, new { id = accountId }).SingleOrDefault();
+            var sql = "select * from fio_account where id = @id";
+            return connection.Query<FioAccount>(sql, new { id = accountId }).SingleOrDefault();
         }
 
-        public IEnumerable<Account> GetAccounts(int userId)
+        public IEnumerable<FioAccount> GetAccounts(int userId)
         {
-            var sql = "select * from account where userid = @userId";
-            return connection.Query<Account>(sql, new { userId = userId });
+            var sql = "select * from fio_account where userid = @userId";
+            return connection.Query<FioAccount>(sql, new { userId = userId });
         }
 
         public void Remove(int accountId)
         {
-            var sql = "delete from account where id = @id";
+            var sql = "delete from fio_account where id = @id";
             connection.Execute(sql, new { id = accountId });
         }
 
-        public void Update(int accountId, Account account)
+        public void Update(int accountId, FioAccount account)
         {
-            var sql = "update account set name =@name, token = @token where id = @id";
+            var sql = "update fio_account set name = @name, token = @token where id = @id";
             var affectedRows = connection.Execute(sql, new { name = account.Name, token = account.Token, id = accountId });
             if (affectedRows != 1)
                 throw new InvalidOperationException();
