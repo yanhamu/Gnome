@@ -1,5 +1,4 @@
 ﻿using Fio.Downloader.DataAccess;
-using System;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -9,17 +8,10 @@ namespace Fio.Downloader
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("fio downloader");
-
-            var accountId = 1;
-
-            Task.Run(() => Run(accountId)).GetAwaiter().GetResult();
-
-            Console.WriteLine("Done!");
-            Console.ReadLine();
+            Task.Run(() => Run()).GetAwaiter().GetResult();
         }
 
-        private static async Task Run(int accountId)
+        private static async Task Run()
         {
             using (var connection = new SqlConnection(SqlConnectionString))
             {
