@@ -1,6 +1,8 @@
 ﻿using Fio.Core;
 using Fio.Downloader.DataAccess;
+using Fio.Downloader.Model;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fio.Downloader
@@ -18,20 +20,24 @@ namespace Fio.Downloader
 
         public async Task Sync()
         {
-            var now = DateTime.Now;
-            var accounts = accountRepository.GetAccountsToSync();
+            var accounts = accountRepository
+                .GetAccountsToSync()
+                .ToList()
+                .Where(a => ShouldSync(a));
+
             foreach (var account in accounts)
             {
-                var lastSync = account.LastSync;
-                if (lastSync.HasValue && (now - lastSync) < TimeSpan.FromHours(2))
-                    continue;
-
                 var client = new FioClient(account.Token);
-                var transactions = await client.Get(DateTime.Now.AddDays(-100), DateTime.Now.AddDays(-50));
 
+                var transactions = await client.Get(DateTime.Now.AddDays(-100), DateTime.Now.AddDays(-50));
                 transactionRepository.SaveAll(account.Id, transactions.AccountStatement.TransactionList.Transactions);
-                accountRepository.SetSyncDate(account.Id, now);
+                accountRepository.SetSyncDate(account.Id, DateTime.Now);
             }
+        }
+
+        private bool ShouldSync(Account a)
+        {
+            return a.LastSync.HasValue == false || ((DateTime.Now - a.LastSync.Value) > TimeSpan.FromHours(2));
         }
     }
 }
