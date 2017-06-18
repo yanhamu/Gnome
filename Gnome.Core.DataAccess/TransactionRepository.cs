@@ -13,7 +13,7 @@ namespace Gnome.Core.DataAccess
             this.database = database;
         }
 
-        public IEnumerable<BsonDocument> Retrieve(int limit)
+        public List<BsonDocument> Retrieve(int limit)
         {
             var collection = database.GetCollection<BsonDocument>("transactions");
             var filter = new BsonDocument();

@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Gnome.Infrastructure;
 using Gnome.Web.Services;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 using System.Data.SqlClient;
 
 namespace Gnome.Web.Configuration
@@ -16,7 +17,11 @@ namespace Gnome.Web.Configuration
             var containerBuilder = ContainerInitializer.CreateContainer();
 
             containerBuilder.Register(c => new SqlConnection(SqlConnectionString));
-
+            containerBuilder.Register(c =>
+            {
+                var client = new MongoClient();
+                return client.GetDatabase("gnomeDb");
+            });
             containerBuilder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
 
             containerBuilder.Populate(services);

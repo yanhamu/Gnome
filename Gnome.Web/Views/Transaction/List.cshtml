@@ -8,18 +8,18 @@
 
 <table class="table table-striped">
     <tr>
-        @foreach (var mask in Model.Mask.Fields)
-        {
-            <th>@mask</th>
+        @foreach (var keyPair in Model.Transactions[0].Fields)
+            {
+            <td>@keyPair.Key</td>
         }
     </tr>
 
     @foreach (var transaction in Model.Transactions)
     {
         <tr>
-            @foreach (var mask in Model.Mask.Fields)
+            @foreach (var keyPair in transaction.Fields)
             {
-                <td>@transaction.Fields[mask]</td>
+                <td>@keyPair.Value</td>
             }
         </tr>
     }

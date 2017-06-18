@@ -2,6 +2,7 @@
 using Gnome.Web.Model.ViewModel;
 using Gnome.Web.Services.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Gnome.Web.Services
 {
@@ -16,23 +17,15 @@ namespace Gnome.Web.Services
 
         public List<Transaction> GetTransactions(int accountId, TransactionFilter filter)
         {
-            var transactions = new List<Transaction>();
-            for (int i = 0; i < 100; i++)
-            {
-                transactions.Add(Create(i));
-            }
-            return transactions;
+            return transactionService.GetTransactions(20).Select(t => CreateTransaction(t)).ToList();
         }
 
-        private Transaction Create(int id)
+        private Transaction CreateTransaction(Core.Model.Transaction t)
         {
-            var fields = new Dictionary<string, string>
-            {
-                ["id"] = id.ToString(),
-                ["currency"] = "CZK",
-                ["amount"] = "123.21"
-            };
-            return new Transaction() { AccountId = 1, Fields = fields };
+            var transaction = new Transaction() { AccountId = t.AccountId };
+            foreach (var field in t.Fields)
+                transaction.Fields[field.Key] = field.Value;
+            return transaction;
         }
     }
 }

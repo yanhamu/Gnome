@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Gnome.Tests.Common;
 using MongoDB.Driver;
+using Newtonsoft.Json.Linq;
 using System.Linq;
 using Xunit;
 
