@@ -1,29 +1,26 @@
-﻿using Dapper;
-using Gnome.Core.Model;
-using System.Data.SqlClient;
+﻿using Gnome.Core.Model;
+using System.Linq;
 
 namespace Gnome.Core.DataAccess
 {
     public class UserRepository
     {
-        private readonly SqlConnection connection;
+        private readonly GnomeDb context;
 
-        public UserRepository(SqlConnection connection)
+        public UserRepository(GnomeDb context)
         {
-            this.connection = connection;
+            this.context = context;
         }
 
         public bool CheckEmailAvailability(string email)
         {
-            var sql = "select 1 from [user] where email = @email";
-            var result = connection.ExecuteScalar<int?>(sql, new { email = email });
-            return result == null;
+            var user = context.Users.Where(u => u.Email == email).SingleOrDefault();
+            return user == null;
         }
 
         public User GetUser(string email)
         {
-            var sql = "select id, email from [user] where email = @email";
-            return connection.QueryFirst<User>(sql, new { email = email });
+            return context.Users.Where(u => u.Email == email).SingleOrDefault();
         }
     }
 }

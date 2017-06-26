@@ -1,57 +1,53 @@
-﻿using Dapper;
-using Gnome.Core.Model;
-using System;
+﻿using Gnome.Core.Model;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 
 namespace Gnome.Core.DataAccess
 {
     public class FioAccountRepository
     {
-        private readonly SqlConnection connection;
+        private readonly GnomeDb context;
 
-        public FioAccountRepository(SqlConnection connection)
+        public FioAccountRepository(GnomeDb context)
         {
-            this.connection = connection;
+            this.context = context;
         }
 
-        public int Create(FioAccount account)
+        public FioAccount Create(FioAccount account)
         {
-            var sql = @"
-insert into fio_account values(@userId, @name, @token);
-select cast(SCOPE_IDENTITY() as int)";
-            var id = connection
-                .Query<int>(sql, new { userId = account.UserId, name = account.Name, token = account.Token })
-                .Single();
+            context.Accounts.Add(account);
+            context.SaveChanges();
 
-            return id;
+            return account;
         }
 
         public FioAccount Get(int accountId)
         {
-            var sql = "select * from fio_account where id = @id";
-            return connection.Query<FioAccount>(sql, new { id = accountId }).SingleOrDefault();
+            return context.Accounts.Where(a => a.Id == accountId).SingleOrDefault();
         }
 
         public IEnumerable<FioAccount> GetAccounts(int userId)
         {
-            var sql = "select * from fio_account where userid = @userId";
-            return connection.Query<FioAccount>(sql, new { userId = userId });
+            return context.Accounts.Where(a => a.UserId == userId).ToList();
         }
 
         public void Remove(int accountId)
         {
-            var sql = "delete from fio_account where id = @id";
-            connection.Execute(sql, new { id = accountId });
+            var toRemove = this.Get(accountId);
+            if (toRemove != null)
+            {
+                context.Accounts.Remove(toRemove);
+                context.SaveChanges();
+            }
         }
 
         public void Update(int accountId, FioAccount account)
         {
-            var sql = "update fio_account set name = @name, token = @token where id = @id";
-            var affectedRows = connection.Execute(sql, new { name = account.Name, token = account.Token, id = accountId });
-            if (affectedRows != 1)
-                throw new InvalidOperationException();
+            var toUpdate = Get(accountId);
+
+            toUpdate.Name = account.Name;
+            toUpdate.Token = account.Token;
+
         }
     }
 }

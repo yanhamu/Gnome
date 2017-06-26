@@ -20,7 +20,7 @@ namespace Gnome.Web.Services
             return transactionService.GetTransactions(20).Select(t => CreateTransaction(t)).ToList();
         }
 
-        private Transaction CreateTransaction(Core.Model.Transaction t)
+        private Transaction CreateTransaction(Core.Model.FlatTransaction t)
         {
             var transaction = new Transaction() { AccountId = t.AccountId };
             foreach (var field in t.Fields)

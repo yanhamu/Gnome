@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using MongoDB.Driver;
 using System.Data.SqlClient;
 
 namespace Gnome.Tests.Common
@@ -11,10 +10,6 @@ namespace Gnome.Tests.Common
             var containerBuilder = Infrastructure.ContainerInitializer.CreateContainer();
 
             containerBuilder.Register(c => new SqlConnection(Database.ConnectionString));
-            containerBuilder.Register<IMongoDatabase>(c =>
-            {
-                return new MongoClient().GetDatabase("fioDb");
-            });
 
             return containerBuilder.Build();
         }

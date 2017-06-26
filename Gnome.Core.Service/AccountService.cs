@@ -16,7 +16,8 @@ namespace Gnome.Core.Service
 
         public int Create(FioAccount account)
         {
-            return repository.Create(account);
+            var created = repository.Create(account);
+            return created.Id;
         }
 
         public FioAccount Get(int accountId)

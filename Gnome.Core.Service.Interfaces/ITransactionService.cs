@@ -5,6 +5,6 @@ namespace Gnome.Core.Service.Interfaces
 {
     public interface ITransactionService
     {
-        List<Transaction> GetTransactions(int limit);
+        List<FlatTransaction> GetTransactions(int limit);
     }
 }

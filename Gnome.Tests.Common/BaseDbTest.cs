@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Dapper;
 using System;
 using System.Data.SqlClient;
 
@@ -17,7 +16,8 @@ namespace Gnome.Tests.Common
         public void Dispose()
         {
             var sqlConnection = container.Resolve<SqlConnection>();
-            sqlConnection.Execute(Database.Clear_All);
+            // TODO fix
+            //sqlConnection.Execute(Database.Clear_All);
             container.Dispose();
         }
     }

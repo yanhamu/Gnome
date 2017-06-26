@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Gnome.Core.Model
+namespace Gnome.Core.DataAccess.Transactions
 {
-    public class Transaction
+    public abstract class Transaction
     {
         public int Id { get; set; }
         public int AccountId { get; set; }
