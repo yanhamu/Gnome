@@ -21,6 +21,7 @@ namespace Gnome.Web
                      .RequireAuthenticatedUser()
                      .Build()));
             });
+
             var container = DiConfiguration.CreateContainer(services);
 
             return container.Resolve<IServiceProvider>();

@@ -6,6 +6,8 @@ namespace Gnome.Core.DataAccess
 {
     public class GnomeDb : DbContext
     {
+        public GnomeDb(DbContextOptions opt) : base(opt) { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var fioAccountBuilder = modelBuilder.Entity<FioAccount>();
@@ -17,6 +19,7 @@ namespace Gnome.Core.DataAccess
 
         private void MapFioAccount(EntityTypeBuilder<FioAccount> fioAccountBuilder)
         {
+            fioAccountBuilder.ToTable("fio_account");
             fioAccountBuilder.HasKey(k => k.Id);
             fioAccountBuilder.HasOne(u => u.User)
                 .WithMany()
