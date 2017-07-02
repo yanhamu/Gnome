@@ -3,6 +3,7 @@
     public class FioTransaction : Transaction
     {
         public long FioId { get; set; }
+        public FioAccount Account { get; set; }
 
         public decimal Amount { get; set; }
 

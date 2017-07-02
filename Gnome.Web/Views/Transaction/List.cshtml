@@ -8,9 +8,9 @@
 
 <table class="table table-striped">
     <tr>
-        @foreach (var keyPair in Model.Transactions[0].Fields)
-            {
-            <td>@keyPair.Key</td>
+        @foreach (var field in Model.Mask.Fields)
+        {
+            <td>@field</td>
         }
     </tr>
 

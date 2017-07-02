@@ -1,22 +1,25 @@
 ﻿using Gnome.Core.Model;
-using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Linq;
 
 namespace Gnome.Core.DataAccess
 {
     public class FioTransactionRepository
     {
-        private readonly SqlConnection connection;
+        private readonly GnomeDb context;
 
-        public FioTransactionRepository(SqlConnection connection)
+        public FioTransactionRepository(GnomeDb context)
         {
-            this.connection = connection;
+            this.context = context;
         }
 
-        public List<FioTransaction> Retrieve(int limit)
+        public List<FioTransaction> Retrieve(int accountId, int limit)
         {
-            throw new NotImplementedException();
+            return context
+                .FioTransactions
+                .Where(f => f.AccountId == accountId)
+                .Take(limit)
+                .ToList();
         }
     }
 }

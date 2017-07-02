@@ -17,7 +17,7 @@ namespace Gnome.Web.Services
 
         public List<Transaction> GetTransactions(int accountId, TransactionFilter filter)
         {
-            return transactionService.GetTransactions(20).Select(t => CreateTransaction(t)).ToList();
+            return transactionService.GetTransactions(accountId, 20).Select(t => CreateTransaction(t)).ToList();
         }
 
         private Transaction CreateTransaction(Core.Model.FlatTransaction t)
