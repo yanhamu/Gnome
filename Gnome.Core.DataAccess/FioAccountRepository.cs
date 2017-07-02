@@ -48,6 +48,7 @@ namespace Gnome.Core.DataAccess
             toUpdate.Name = account.Name;
             toUpdate.Token = account.Token;
 
+            context.SaveChanges();
         }
     }
 }
