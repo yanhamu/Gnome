@@ -1,5 +1,7 @@
 ﻿using Fio.Downloader.DataAccess;
+using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Fio.Downloader
@@ -13,7 +15,14 @@ namespace Fio.Downloader
 
         private static async Task Run()
         {
-            using (var connection = new SqlConnection(SqlConnectionString))
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("ConnectionStrings.json");
+
+            var configuration = builder.Build();
+
+            using (var connection = new SqlConnection(configuration["db:dev"]))
             {
                 var accountRepository = new AccountRepository(connection);
                 var transactionRepository = new TransactionRepository(connection);
@@ -22,7 +31,5 @@ namespace Fio.Downloader
                 await syncService.Sync();
             }
         }
-
-        public const string SqlConnectionString = "Data Source=TOM-LENOVO\\SQLEXPRESS;Initial Catalog=gnome;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
     }
 }
