@@ -12,8 +12,34 @@ namespace Gnome.Core.DataAccess
         {
             MapFioAccount(modelBuilder.Entity<FioAccount>());
             MapFioTransaction(modelBuilder.Entity<FioTransaction>());
+            MapCategory(modelBuilder.Entity<Category>());
+            MapCategoryTransaction(modelBuilder.Entity<CategoryTransaction>());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void MapCategoryTransaction(EntityTypeBuilder<CategoryTransaction> builder)
+        {
+            builder.HasKey(k => new { k.CategoryId, k.TransactionId });
+
+            builder.Property(x => x.CategoryId).HasColumnName("category_id");
+            builder.Property(x => x.TransactionId).HasColumnName("transaction_id");
+
+            builder.HasOne(x => x.Category).WithMany().HasForeignKey(x => x.CategoryId).IsRequired();
+            builder.HasOne(x => x.Transaction).WithMany().HasForeignKey(x => x.TransactionId).IsRequired();
+        }
+
+        private void MapCategory(EntityTypeBuilder<Category> builder)
+        {
+            builder.ToTable("category");
+
+            builder.HasKey(x => x.Id);
+
+            builder.Property(x => x.UserId).HasColumnName("user_id");
+            builder.Property(x => x.ParentId).HasColumnName("parent_id");
+            builder.Property(x => x.IsSystem).HasColumnName("is_system");
+            builder.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).IsRequired();
+            builder.HasOne(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId).IsRequired(false);
         }
 
         private void MapFioTransaction(EntityTypeBuilder<FioTransaction> builder)
