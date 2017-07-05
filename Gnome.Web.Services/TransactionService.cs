@@ -23,8 +23,11 @@ namespace Gnome.Web.Services
         private Transaction CreateTransaction(Core.Model.FlatTransaction t)
         {
             var transaction = new Transaction() { AccountId = t.AccountId };
-            foreach (var field in t.Fields)
-                transaction.Fields[field.Key] = field.Value;
+            transaction.Fields = t
+                .Fields
+                .Select(f => new { key = f.Key, value = f.Value })
+                .ToDictionary(k => k.key, v => v.value);
+
             return transaction;
         }
     }

@@ -51,7 +51,6 @@ namespace Gnome.Core.Service
             flat.Fields.Add(nameof(t.Type), t.Type.ToString());
             flat.Fields.Add(nameof(t.VariableSymbol), t.VariableSymbol.ToString());
 
-
             return flat;
         }
     }
