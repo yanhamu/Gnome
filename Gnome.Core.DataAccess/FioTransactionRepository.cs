@@ -21,5 +21,14 @@ namespace Gnome.Core.DataAccess
                 .Take(limit)
                 .ToList();
         }
+
+        public FioTransaction Save(FioTransaction transaction)
+        {
+            context
+                .FioTransactions
+                .Add(transaction);
+            context.SaveChanges();
+            return transaction;
+        }
     }
 }

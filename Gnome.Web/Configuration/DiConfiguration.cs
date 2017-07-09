@@ -17,15 +17,15 @@ namespace Gnome.Web.Configuration
         {
             var containerBuilder = ContainerInitializer.CreateContainer();
 
-            var builder = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("ConnectionStrings.json");
-
-            var configuration = builder.Build();
+                .AddJsonFile("ConnectionStrings.json")
+                .Build();
 
             services.AddDbContext<GnomeDb>(c => c.UseSqlServer(configuration["db:dev"]));
             containerBuilder.Register(c => new SqlConnection(configuration["db:dev"]));
-            containerBuilder.RegisterType<AuthenticationService>().As<IAuthenticationService>();
+            containerBuilder.RegisterType<AuthenticationService>()
+                .As<IAuthenticationService>();
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();

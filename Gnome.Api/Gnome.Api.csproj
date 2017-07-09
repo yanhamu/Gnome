@@ -10,11 +10,15 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.1.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="2.0.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Gnome.Core.DataAccess\Gnome.Core.DataAccess.csproj" />
+    <ProjectReference Include="..\Gnome.Core.Model\Gnome.Core.Model.csproj" />
     <ProjectReference Include="..\Gnome.Infrastructure\Gnome.Infrastructure.csproj" />
   </ItemGroup>
 
