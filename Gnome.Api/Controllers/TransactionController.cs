@@ -15,7 +15,7 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost("fio-transactions")]
-        public IActionResult CreateFio(FioTransaction transaction)
+        public IActionResult CreateFio([FromBody]FioTransaction transaction)
         {
             fioRepository.Save(transaction);
             return new OkResult();
