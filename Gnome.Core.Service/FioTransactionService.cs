@@ -33,25 +33,32 @@ namespace Gnome.Core.Service
             flat.Fields.Add(nameof(t.Accountant), t.Accountant);
             flat.Fields.Add(nameof(t.AccountId), t.AccountId.ToString());
             flat.Fields.Add(nameof(t.Amount), t.Amount.ToString());
-            flat.Fields.Add(nameof(t.Bic), t.Bic.ToString());
-            flat.Fields.Add(nameof(t.Comment), t.Comment.ToString());
-            flat.Fields.Add(nameof(t.ConstantSymbol), t.ConstantSymbol.ToString());
-            flat.Fields.Add(nameof(t.CounterpartAccount), t.CounterpartAccount.ToString());
-            flat.Fields.Add(nameof(t.CounterpartAccountName), t.CounterpartAccountName.ToString());
-            flat.Fields.Add(nameof(t.CounterpartBankCode), t.CounterpartBankCode.ToString());
-            flat.Fields.Add(nameof(t.CounterpartBankName), t.CounterpartBankName.ToString());
-            flat.Fields.Add(nameof(t.Currency), t.Currency.ToString());
+            flat.Fields.Add(nameof(t.Bic), NullableToString(t.Bic));
+            flat.Fields.Add(nameof(t.Comment), NullableToString(t.Comment));
+            flat.Fields.Add(nameof(t.ConstantSymbol), NullableToString(t.ConstantSymbol));
+            flat.Fields.Add(nameof(t.CounterpartAccount), NullableToString(t.CounterpartAccount));
+            flat.Fields.Add(nameof(t.CounterpartAccountName), NullableToString(t.CounterpartAccountName));
+            flat.Fields.Add(nameof(t.CounterpartBankCode), NullableToString(t.CounterpartBankCode));
+            flat.Fields.Add(nameof(t.CounterpartBankName), NullableToString(t.CounterpartBankName));
+            flat.Fields.Add(nameof(t.Currency), NullableToString(t.Currency));
             flat.Fields.Add(nameof(t.Date), t.Date.ToString());
             flat.Fields.Add(nameof(t.FioId), t.FioId.ToString());
             flat.Fields.Add(nameof(t.Id), t.Id.ToString());
-            flat.Fields.Add(nameof(t.Identification), t.Identification.ToString());
+            flat.Fields.Add(nameof(t.Identification), NullableToString(t.Identification));
             flat.Fields.Add(nameof(t.InstructionId), t.InstructionId.ToString());
-            flat.Fields.Add(nameof(t.MessageForReceipient), t.MessageForReceipient.ToString());
-            flat.Fields.Add(nameof(t.SpefificSymbol), t.SpefificSymbol.ToString());
-            flat.Fields.Add(nameof(t.Type), t.Type.ToString());
-            flat.Fields.Add(nameof(t.VariableSymbol), t.VariableSymbol.ToString());
+            flat.Fields.Add(nameof(t.MessageForReceipient), NullableToString(t.MessageForReceipient));
+            flat.Fields.Add(nameof(t.SpefificSymbol), NullableToString(t.SpefificSymbol));
+            flat.Fields.Add(nameof(t.Type), NullableToString(t.Type));
+            flat.Fields.Add(nameof(t.VariableSymbol), NullableToString(t.VariableSymbol));
 
             return flat;
+        }
+
+        private string NullableToString(string value)
+        {
+            return value == null
+                ? string.Empty
+                : value.ToString();
         }
     }
 }
