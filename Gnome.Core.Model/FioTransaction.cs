@@ -1,7 +1,12 @@
-﻿namespace Gnome.Core.Model
+﻿using System;
+
+namespace Gnome.Core.Model
 {
-    public class FioTransaction : Transaction
+    public class FioTransaction
     {
+        public int Id { get; set; }
+        public int AccountId { get; set; }
+        public DateTime Date { get; set; }
         public long FioId { get; set; }
         public FioAccount Account { get; set; }
 
