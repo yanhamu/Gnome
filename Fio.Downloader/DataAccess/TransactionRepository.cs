@@ -2,6 +2,7 @@
 using Fio.Core.Model;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Fio.Downloader.DataAccess
 {
@@ -18,46 +19,73 @@ namespace Fio.Downloader.DataAccess
             this.transactionClient = transactionClient;
         }
 
-        public void SaveAll(int accountId, List<Transaction> transactions)
+        public async Task SaveAll(int accountId, List<Transaction> transactions)
         {
             foreach (var t in transactions)
             {
+                var fioTransaction = Convert(accountId, t);
                 try
                 {
-                    transactionClient.SaveTransaction(accountId, t);
+                    await transactionClient.SaveTransaction(fioTransaction);
                 }
                 catch (System.Exception ex)
                 {
                     //TODO log!
-                    SaveTransaction(accountId, t);
+                    await SaveTransaction(fioTransaction);
                 }
             }
         }
 
-        public void SaveTransaction(int accountId, Transaction t)
+        public async Task SaveTransaction(Gnome.Core.Model.FioTransaction t)
         {
-            var id = connection.Execute(sql, new
+            var id = await connection.ExecuteAsync(sql, new
             {
-                @accountId = accountId,
-                @fioId = t.Id.Value,
-                @date = t.Date.Value,
-                @amount = t.Amount.Value,
-                @currency = t.Currency.Value,
-                @counterAccount = t.CounterpartAccount?.Value,
-                @counterAccountName = t.CounterpartAccountName?.Value,
-                @counterBankCode = t.CounterpartBankCode?.Value,
-                @counterBankName = t.CounterpartBankName?.Value,
-                @constantSymbol = t.ConstantSymbol?.Value,
-                @variableSymbol = t.VariableSymbol?.Value,
-                @specificSymbol = t.SpefificSymbol?.Value,
-                @identification = t.Identification?.Value,
-                @message = t.MessageForReceipient?.Value,
-                @type = t.Type.Value,
-                @accountant = t.Accountant?.Value,
-                @comment = t.Comment?.Value,
-                @bankIdentificationNumber = t.Bic?.Value,
-                @instructionId = t.InstructionId?.Value
+                @accountId = t.AccountId,
+                @fioId = t.FioId,
+                @date = t.Date,
+                @amount = t.Amount,
+                @currency = t.Currency,
+                @counterAccount = t.CounterpartAccount,
+                @counterAccountName = t.CounterpartAccountName,
+                @counterBankCode = t.CounterpartBankCode,
+                @counterBankName = t.CounterpartBankName,
+                @constantSymbol = t.ConstantSymbol,
+                @variableSymbol = t.VariableSymbol,
+                @specificSymbol = t.SpefificSymbol,
+                @identification = t.Identification,
+                @message = t.MessageForReceipient,
+                @type = t.Type,
+                @accountant = t.Accountant,
+                @comment = t.Comment,
+                @bankIdentificationNumber = t.Bic,
+                @instructionId = t.InstructionId
             });
+        }
+
+        private Gnome.Core.Model.FioTransaction Convert(int accountId, Transaction t)
+        {
+            return new Gnome.Core.Model.FioTransaction()
+            {
+                Accountant = t.Accountant?.Value,
+                AccountId = accountId,
+                Amount = t.Amount.Value,
+                Bic = t.Bic?.Value,
+                Comment = t.Comment?.Value,
+                ConstantSymbol = t.ConstantSymbol?.Value,
+                CounterpartAccount = t.CounterpartAccount?.Value,
+                CounterpartAccountName = t.CounterpartAccountName?.Value,
+                CounterpartBankCode = t.CounterpartBankCode?.Value,
+                CounterpartBankName = t.CounterpartBankName?.Value,
+                Currency = t.Currency.Value,
+                Date = t.Date.Value,
+                FioId = t.Id.Value,
+                Identification = t.Identification?.Value,
+                InstructionId = t.InstructionId.Value,
+                MessageForReceipient = t.MessageForReceipient?.Value,
+                SpefificSymbol = t.SpefificSymbol?.Value,
+                Type = t.Type?.Value,
+                VariableSymbol = t.VariableSymbol?.Value
+            };
         }
     }
 }

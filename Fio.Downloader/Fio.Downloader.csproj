@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fio.Core\Fio.Client.csproj" />
+    <ProjectReference Include="..\Gnome.Core.Model\Gnome.Core.Model.csproj" />
   </ItemGroup>
 
 </Project>

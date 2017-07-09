@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using Fio.Core.Model;
+﻿using Gnome.Core.Model;
+using System.Threading.Tasks;
 
 namespace Fio.Downloader.DataAccess
 {
     public interface ITransactionRepository
     {
-        void SaveTransaction(int accountId, Transaction transaction);
+        Task SaveTransaction(FioTransaction transaction);
     }
 }

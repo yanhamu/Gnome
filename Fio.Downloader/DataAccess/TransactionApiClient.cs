@@ -1,41 +1,30 @@
-﻿using Fio.Core.Model;
+﻿using Newtonsoft.Json;
 using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Fio.Downloader.DataAccess
 {
     public class TransactionApiClient : ITransactionRepository
     {
-        public void SaveTransaction(int accountId, Transaction transaction)
-        {
-            var fionTransaction = Convert(accountId, transaction);
+        private readonly HttpClient httpClient;
+        private readonly string uri;
 
-            throw new NotImplementedException();
+        public TransactionApiClient(HttpClient httpClient, string uri)
+        {
+            this.httpClient = httpClient;
+            this.uri = uri;
         }
 
-        private Gnome.Core.Model.FioTransaction Convert(int accountId, Transaction t)
+        public async Task SaveTransaction(Gnome.Core.Model.FioTransaction transaction)
         {
-            return new Gnome.Core.Model.FioTransaction()
-            {
-                Accountant = t.Accountant?.Value,
-                AccountId = accountId,
-                Amount = t.Amount.Value,
-                Bic = t.Bic?.Value,
-                Comment = t.Comment?.Value,
-                ConstantSymbol = t.ConstantSymbol?.Value,
-                CounterpartAccount = t.CounterpartAccount?.Value,
-                CounterpartAccountName = t.CounterpartAccountName?.Value,
-                CounterpartBankCode = t.CounterpartBankCode?.Value,
-                CounterpartBankName = t.CounterpartBankName?.Value,
-                Currency = t.Currency.Value,
-                Date = t.Date.Value,
-                FioId = t.Id.Value,
-                Identification = t.Identification?.Value,
-                InstructionId = t.InstructionId.Value,
-                MessageForReceipient = t.MessageForReceipient?.Value,
-                SpefificSymbol = t.SpefificSymbol?.Value,
-                Type = t.Type?.Value,
-                VariableSymbol = t.VariableSymbol?.Value
-            };
+            var json = JsonConvert.SerializeObject(transaction);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync(uri, content);
+
+            if (!response.IsSuccessStatusCode)
+                throw new Exception("Server didn't accept transaction");
         }
     }
 }
