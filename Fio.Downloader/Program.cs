@@ -15,7 +15,6 @@ namespace Fio.Downloader
 
         private static async Task Run()
         {
-
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("ConnectionStrings.json");
@@ -25,7 +24,8 @@ namespace Fio.Downloader
             using (var connection = new SqlConnection(configuration["db:dev"]))
             {
                 var accountRepository = new AccountRepository(connection);
-                var transactionRepository = new TransactionRepository(connection);
+                var transactionApiClient = new TransactionApiClient();
+                var transactionRepository = new TransactionRepository(connection, transactionApiClient);
                 var syncService = new SyncService(accountRepository, transactionRepository);
 
                 await syncService.Sync();
