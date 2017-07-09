@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\Gnome.Web\ConnectionStrings.json" Link="ConnectionStrings.json" />
+    <Content Include="ConnectionStrings.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

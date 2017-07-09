@@ -1,6 +1,6 @@
 {
   "app-api": {
-    "base-url": "http://localhost",
-    "transactions": "transactions"
+    "base-url": "http://localhost:9020",
+    "transactions": "api/fio-transactions"
   }
 }
