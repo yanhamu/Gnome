@@ -1,0 +1,32 @@
+﻿@model Gnome.Web.Model.Reports.AggregateReport
+@{
+    Layout = "_Layout";
+}
+
+<h3>aggregate report</h3>
+
+
+<div class="container-fluid">
+
+    <table class="table table-striped">
+        <tr>
+            <th>Index</th>
+            <th>Date</th>
+            <th>Amount</th>
+        </tr>
+        @foreach (var account in Model.Aggregates)
+        {
+            <tr>
+                <td>
+                    @Model.Aggregates.IndexOf(account)
+                </td>
+                <td>
+                    @account.Date.ToString("dd.MM.yyyy")
+                </td>
+                <td>
+                    @account.Expences
+                </td>
+            </tr>
+        }
+    </table>
+</div>
