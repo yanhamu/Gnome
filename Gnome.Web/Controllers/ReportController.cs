@@ -19,8 +19,9 @@ namespace Gnome.Web.Controllers
         {
             var from = DateTime.UtcNow.AddMonths(-1);
             var to = DateTime.UtcNow;
+            var aggregate = 30;
 
-            var result = aggregateReportService.CreateReport(UserId, new Model.Interval(from, to));
+            var result = aggregateReportService.CreateReport(UserId, new Model.Interval(from, to), aggregate);
 
             return View(result);
         }

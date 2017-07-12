@@ -17,8 +17,11 @@ namespace Gnome.Core.Service
 
         public List<FlatTransaction> GetTransactions(int accountId, int limit)
         {
+            var tr = repository.Retrieve(accountId, limit);
+
             return repository
                 .Retrieve(accountId, limit)
+                .OrderByDescending(t => t.Date)
                 .Select(t => Flattern(t))
                 .ToList();
         }

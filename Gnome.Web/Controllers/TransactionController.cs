@@ -16,9 +16,9 @@ namespace Gnome.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult List(TransactionFilter filter)
+        public IActionResult List(TransactionFilter filter, int accountId)
         {
-            var transactions = transactionService.GetTransactions(UserId, filter);
+            var transactions = transactionService.GetTransactions(accountId, filter);
             var model = new MaskedTransactionList();
             model.Transactions = transactions;
             model.Mask = new TransactionMask()
