@@ -30,6 +30,7 @@ namespace Fio.Downloader
                 var client = new FioClient(account.Token);
 
                 var transactions = await client.Get(DateTime.Now.AddDays(-100), DateTime.Now);
+                //var transactions = await client.GetNew();
                 await transactionRepository.SaveAll(account.Id, transactions.AccountStatement.TransactionList.Transactions);
                 accountRepository.SetSyncDate(account.Id, DateTime.Now);
             }
