@@ -17,10 +17,7 @@ namespace Gnome.Infrastructure
             builder.RegisterType<AccountService>().As<IAccountService>();
             builder.RegisterType<FioTransactionService>().As<ITransactionService>();
 
-            builder.RegisterType<Gnome.Web.Services.AccountService>().As<Gnome.Web.Services.Interfaces.IAccountService>();
-            builder.RegisterType<Gnome.Web.Services.UserService>().As<Gnome.Web.Services.Interfaces.IUserService>();
-            builder.RegisterType<Gnome.Web.Services.TransactionService>().As<Gnome.Web.Services.Interfaces.ITransactionService>();
-            builder.RegisterType<Gnome.Core.Reports.AggregateReport.Service>();
+            builder.RegisterType<Core.Reports.AggregateReport.Service>();
 
             builder.RegisterType<UserRepository>();
             builder.RegisterType<UserSecurityRepository>();
