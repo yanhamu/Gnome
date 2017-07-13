@@ -48,6 +48,8 @@ namespace Gnome.Core.Reports.AggregateReport
                 result.Add(aggregate);
             }
 
+            result.Reverse();
+
             return result;
         }
 

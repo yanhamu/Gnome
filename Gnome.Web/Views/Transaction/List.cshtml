@@ -8,7 +8,7 @@
 
 <table class="table table-striped">
     <tr>
-        @foreach (var field in Model.Mask.Fields)
+        @foreach (var field in Model.Transactions.First().Fields.Keys)
         {
             <td>@field</td>
         }
