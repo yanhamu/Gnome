@@ -1,12 +1,11 @@
 ﻿using Gnome.Core.DataAccess;
-using Gnome.Web.Model;
-using Gnome.Web.Model.Reports;
-using Gnome.Web.Services.Interfaces;
+using Gnome.Core.Service.Interfaces;
+using Gnome.Features.AggregateReport.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gnome.Web.Services
+namespace Gnome.Features.AggregateReport
 {
     public class AggregateReportService
     {
@@ -19,9 +18,9 @@ namespace Gnome.Web.Services
             this.accountService = accountService;
         }
 
-        public AggregateReport CreateReport(int userId, Interval interval, int numberOfDaysToAggregate)
+        public AggregateReportModel CreateReport(int userId, Interval interval, int numberOfDaysToAggregate)
         {
-            var report = new AggregateReport();
+            var report = new AggregateReportModel();
 
             report.Requested = interval;
 
@@ -32,7 +31,7 @@ namespace Gnome.Web.Services
 
         private List<Aggregate> GetAggregates(int userId, Interval interval, int numberOfDaysToAggregate)
         {
-            var accountIds = accountService.GetAccounts(userId).Select(a => a.Id).ToList();
+            var accountIds = accountService.List(userId).Select(a => a.Id).ToList();
             var startDate = interval.From.AddDays(-numberOfDaysToAggregate).Date;
             var transactions = fioTransactionRepository.Retrieve(accountIds, startDate, interval.To);
 

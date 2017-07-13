@@ -1,5 +1,6 @@
-﻿using Gnome.Web.Extensions;
-using Gnome.Web.Services;
+﻿using Gnome.Features.AggregateReport;
+using Gnome.Features.AggregateReport.Model;
+using Gnome.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -21,7 +22,7 @@ namespace Gnome.Web.Controllers
             var to = DateTime.UtcNow;
             var aggregate = 30;
 
-            var result = aggregateReportService.CreateReport(UserId, new Model.Interval(from, to), aggregate);
+            var result = aggregateReportService.CreateReport(UserId, new Interval(from, to), aggregate);
 
             return View(result);
         }

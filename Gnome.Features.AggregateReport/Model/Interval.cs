@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Gnome.Web.Model
+namespace Gnome.Features.AggregateReport.Model
 {
     public class Interval
     {
