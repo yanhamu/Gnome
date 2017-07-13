@@ -1,28 +1,33 @@
 ﻿using Gnome.Features.AggregateReport;
 using Gnome.Features.AggregateReport.Model;
 using Gnome.Web.Extensions;
+using Gnome.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace Gnome.Web.Controllers
 {
     public class ReportController : BaseController
     {
-        private readonly AggregateReportService aggregateReportService;
+        private readonly Service aggregateReportService;
+        private readonly IAccountService accountService;
 
-        public ReportController(AggregateReportService aggregateReportService)
+        public ReportController(Service aggregateReportService, IAccountService accountService)
         {
             this.aggregateReportService = aggregateReportService;
+            this.accountService = accountService;
         }
 
         [HttpGet, HttpPost]
         public IActionResult AggregateReport()
         {
+            var accountIds = accountService.GetAccounts(UserId).Select(a => a.Id).ToList();
             var from = DateTime.UtcNow.AddMonths(-1);
             var to = DateTime.UtcNow;
             var aggregate = 30;
 
-            var result = aggregateReportService.CreateReport(UserId, new Interval(from, to), aggregate);
+            var result = aggregateReportService.CreateReport(accountIds, new Interval(from, to), aggregate);
 
             return View(result);
         }
