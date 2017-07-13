@@ -1,10 +1,10 @@
 ﻿using Gnome.Core.DataAccess;
-using Gnome.Features.AggregateReport.Model;
+using Gnome.Core.Reports.AggregateReport.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gnome.Features.AggregateReport
+namespace Gnome.Core.Reports.AggregateReport
 {
     public class Service
     {
@@ -15,9 +15,9 @@ namespace Gnome.Features.AggregateReport
             this.fioTransactionRepository = fioTransactionRepository;
         }
 
-        public AggregateReportModel CreateReport(List<int> accountIds, Interval interval, int numberOfDaysToAggregate)
+        public AggregateEnvelope CreateReport(List<int> accountIds, Interval interval, int numberOfDaysToAggregate)
         {
-            var report = new AggregateReportModel();
+            var report = new AggregateEnvelope();
 
             report.Requested = interval;
             report.Aggregates = GetAggregates(accountIds, interval, numberOfDaysToAggregate);

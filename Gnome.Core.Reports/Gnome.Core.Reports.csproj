@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Gnome.Core.DataAccess\Gnome.Core.DataAccess.csproj" />
-    <ProjectReference Include="..\Gnome.Core.Service.Interfaces\Gnome.Core.Service.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

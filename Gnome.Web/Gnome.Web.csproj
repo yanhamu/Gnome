@@ -23,8 +23,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Gnome.Core.Reports\Gnome.Core.Reports.csproj" />
     <ProjectReference Include="..\Gnome.Core.Service\Gnome.Core.Service.csproj" />
-    <ProjectReference Include="..\Gnome.Features.AggregateReport\Gnome.Features.AggregateReport.csproj" />
     <ProjectReference Include="..\Gnome.Infrastructure\Gnome.Infrastructure.csproj" />
     <ProjectReference Include="..\Gnome.Web.Model\Gnome.Web.Model.csproj" />
     <ProjectReference Include="..\Gnome.Web.Services.Interfaces\Gnome.Web.Services.Interfaces.csproj" />

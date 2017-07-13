@@ -1,5 +1,4 @@
-﻿using Gnome.Features.AggregateReport;
-using Gnome.Features.AggregateReport.Model;
+﻿using Gnome.Core.Reports;
 using Gnome.Web.Extensions;
 using Gnome.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +9,10 @@ namespace Gnome.Web.Controllers
 {
     public class ReportController : BaseController
     {
-        private readonly Service aggregateReportService;
+        private readonly Core.Reports.AggregateReport.Service aggregateReportService;
         private readonly IAccountService accountService;
 
-        public ReportController(Service aggregateReportService, IAccountService accountService)
+        public ReportController(Core.Reports.AggregateReport.Service aggregateReportService, IAccountService accountService)
         {
             this.aggregateReportService = aggregateReportService;
             this.accountService = accountService;

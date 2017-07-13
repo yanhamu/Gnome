@@ -2,7 +2,6 @@
 using Gnome.Core.DataAccess;
 using Gnome.Core.Service;
 using Gnome.Core.Service.Interfaces;
-using Gnome.Features.AggregateReport;
 
 namespace Gnome.Infrastructure
 {
@@ -21,7 +20,7 @@ namespace Gnome.Infrastructure
             builder.RegisterType<Gnome.Web.Services.AccountService>().As<Gnome.Web.Services.Interfaces.IAccountService>();
             builder.RegisterType<Gnome.Web.Services.UserService>().As<Gnome.Web.Services.Interfaces.IUserService>();
             builder.RegisterType<Gnome.Web.Services.TransactionService>().As<Gnome.Web.Services.Interfaces.ITransactionService>();
-            builder.RegisterType<Service>();
+            builder.RegisterType<Gnome.Core.Reports.AggregateReport.Service>();
 
             builder.RegisterType<UserRepository>();
             builder.RegisterType<UserSecurityRepository>();

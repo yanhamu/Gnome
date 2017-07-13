@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace Gnome.Features.AggregateReport.Model
+namespace Gnome.Core.Reports.AggregateReport.Model
 {
-    public class AggregateReportModel
+    public class AggregateEnvelope
     {
         public Interval Requested { get; set; }
         public List<Aggregate> Aggregates { get; set; }
 
-        public AggregateReportModel()
+        public AggregateEnvelope()
         {
             Aggregates = new List<Aggregate>();
         }

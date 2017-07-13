@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gnome.Features.AggregateReport.Model
+namespace Gnome.Core.Reports.AggregateReport.Model
 {
     public class Aggregate
     {
