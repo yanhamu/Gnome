@@ -1,4 +1,8 @@
-﻿namespace Gnome.Core.DataAccess
+﻿using Gnome.Core.Model;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Gnome.Core.DataAccess
 {
     public class CategoryRepository
     {
@@ -9,6 +13,9 @@
             this.context = context;
         }
 
-
+        public List<Category> GetAll(int userId)
+        {
+            return context.Categories.Where(c => c.UserId == userId).ToList();
+        }
     }
 }
