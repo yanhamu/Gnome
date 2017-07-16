@@ -23,7 +23,7 @@ namespace Gnome.Core.DataAccess
 
         public FioAccount Get(int accountId)
         {
-            return context.Accounts.Where(a => a.Id == accountId).SingleOrDefault();
+            return context.Accounts.Find(accountId);
         }
 
         public IEnumerable<FioAccount> GetAccounts(int userId)
@@ -39,6 +39,18 @@ namespace Gnome.Core.DataAccess
                 context.Accounts.Remove(toRemove);
                 context.SaveChanges();
             }
+        }
+
+        public FioAccount Update(int id, string name, string token)
+        {
+            var toUpdate = Get(id);
+
+            toUpdate.Name = name;
+            toUpdate.Token = token;
+
+            context.SaveChanges();
+
+            return toUpdate;
         }
 
         public void Update(int accountId, FioAccount account)

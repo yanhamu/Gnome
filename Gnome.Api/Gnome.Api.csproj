@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Gnome.Api.Services\Gnome.Api.Services.csproj" />
     <ProjectReference Include="..\Gnome.Core.DataAccess\Gnome.Core.DataAccess.csproj" />
     <ProjectReference Include="..\Gnome.Core.Model\Gnome.Core.Model.csproj" />
     <ProjectReference Include="..\Gnome.Infrastructure\Gnome.Infrastructure.csproj" />
