@@ -19,6 +19,7 @@ namespace Gnome.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors();
             var container = DiConfiguration.CreateContainer(services);
             return container.Resolve<IServiceProvider>();
         }
@@ -42,6 +43,10 @@ namespace Gnome.Api
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 TokenValidationParameters = tokenValidationParameters
+            });
+
+            app.UseCors(builder => {
+                builder.AllowAnyOrigin();
             });
 
             if (env.IsDevelopment())
