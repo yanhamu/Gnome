@@ -1,0 +1,34 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        Gnome Vue Client
+    </title>
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <div id="app" class="container">
+        <navbar-anonymous></navbar-anonymous>
+        <router-view></router-view>
+    </div>
+
+    <!-- JS -->
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+    <script src="node_modules/vue-router/dist/vue-router.js"></script>
+
+    <script src="./app/auth.js"></script>
+
+    <script src="./app/navbar/navbar-anonymous.js"></script>
+    <script src="./app/navbar/navbar-registered.js"></script>
+    <script src="./app/account/accounts.js"></script>
+    <script src="./app/home/home.js"></script>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

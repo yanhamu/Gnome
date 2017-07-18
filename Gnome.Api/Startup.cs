@@ -45,8 +45,11 @@ namespace Gnome.Api
                 TokenValidationParameters = tokenValidationParameters
             });
 
-            app.UseCors(builder => {
+            app.UseCors(builder =>
+            {
                 builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
             });
 
             if (env.IsDevelopment())
@@ -55,6 +58,8 @@ namespace Gnome.Api
             }
 
             var options = GetTokenProviderOptions(signingKey);
+
+            app.UseStaticFiles();
 
             app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));
 

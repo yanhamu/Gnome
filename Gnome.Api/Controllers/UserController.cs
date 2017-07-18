@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Gnome.Api.Controllers
 {
-    [Route("api")]
+    [Route("api/users")]
     public class UserController : Controller
     {
         private readonly UsersService userService;
