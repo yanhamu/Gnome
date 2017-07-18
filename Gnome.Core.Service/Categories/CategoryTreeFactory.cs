@@ -1,4 +1,6 @@
 ﻿using Gnome.Core.DataAccess;
+using Gnome.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +18,9 @@ namespace Gnome.Core.Service.Categories
         public CategoryTree Create(int userId)
         {
             var categories = categoryRepository.GetAll(userId);
+
+            CheckRoot(categories);
+
             var parentChildren = categories
                 .Where(c => c.ParentId.HasValue)
                 .ToLookup(k => k.ParentId.Value, v => v.Id);
@@ -35,6 +40,12 @@ namespace Gnome.Core.Service.Categories
             SetRelations(root, parentChildren, categoryNodes);
 
             return new CategoryTree(categoryNodes, root);
+        }
+
+        private void CheckRoot(List<Category> categories)
+        {
+            if (categories.Where(c => c.ParentId.HasValue == false).Count() != 1)
+                throw new ArgumentException("there is no single root");
         }
 
         private void SetRelations(CategoryNode parent, ILookup<int, int> parentChildren, Dictionary<int, CategoryNode> categories)
