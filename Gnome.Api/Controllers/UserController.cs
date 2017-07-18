@@ -14,7 +14,7 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost()]
-        public IActionResult Register(User user)
+        public IActionResult Register([FromBody]User user)
         {
             this.userService.CreateNewUser(user);
             return NoContent();

@@ -1,13 +1,13 @@
-﻿using Gnome.Core.Service;
+﻿using Gnome.Core.Service.Interfaces;
 using System;
 
 namespace Gnome.Api.Services.Users
 {
     public class UsersService
     {
-        private readonly UserService userService;
+        private readonly IUserService userService;
 
-        public UsersService(UserService userService)
+        public UsersService(IUserService userService)
         {
             this.userService = userService;
         }

@@ -10,12 +10,20 @@ namespace Gnome.Core.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            MapUser(modelBuilder.Entity<User>());
             MapFioAccount(modelBuilder.Entity<FioAccount>());
             MapFioTransaction(modelBuilder.Entity<FioTransaction>());
             MapCategory(modelBuilder.Entity<Category>());
             MapCategoryTransaction(modelBuilder.Entity<CategoryTransaction>());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void MapUser(EntityTypeBuilder<User> builder)
+        {
+            builder.ToTable("user");
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Email).IsRequired();
         }
 
         private void MapCategoryTransaction(EntityTypeBuilder<CategoryTransaction> builder)

@@ -19,7 +19,7 @@ const Home = Vue.component('home', {
         });
     },
     register: function () {
-      var data = { username: this.registerEmail, password: this.registerPassword };
+      var data = { email: this.registerEmail, password: this.registerPassword };
       this.$http.post('http://localhost:9020/api/users', data).then(res => {
         this.loginEmail = this.registerEmail;
         this.loginPassword = this.registerPassword;
