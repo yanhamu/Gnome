@@ -6,9 +6,9 @@ namespace Gnome.Core.Service.Categories
 {
     public class CategoryTreeFactory
     {
-        private readonly CategoryRepository categoryRepository;
+        private readonly ICategoryRepository categoryRepository;
 
-        public CategoryTreeFactory(CategoryRepository categoryRepository)
+        public CategoryTreeFactory(ICategoryRepository categoryRepository)
         {
             this.categoryRepository = categoryRepository;
         }

@@ -4,7 +4,12 @@ using System.Linq;
 
 namespace Gnome.Core.DataAccess
 {
-    public class CategoryRepository
+    public interface ICategoryRepository
+    {
+        List<Category> GetAll(int userId);
+    }
+
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly GnomeDb context;
 

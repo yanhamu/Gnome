@@ -11,5 +11,10 @@ namespace Gnome.Core.Service.Categories
             this.Root = root;
             this.Categories = categories;
         }
+
+        public CategoryNode this[int id]
+        {
+            get { return Categories[id]; }
+        }
     }
 }
