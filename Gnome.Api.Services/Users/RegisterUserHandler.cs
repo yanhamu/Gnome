@@ -1,18 +1,19 @@
 ﻿using Gnome.Core.Service.Interfaces;
+using MediatR;
 using System;
 
 namespace Gnome.Api.Services.Users
 {
-    public class UsersService
+    public class RegisterUserHandler : INotificationHandler<RegisterUser>
     {
         private readonly IUserService userService;
 
-        public UsersService(IUserService userService)
+        public RegisterUserHandler(IUserService userService)
         {
             this.userService = userService;
         }
 
-        public void CreateNewUser(User user)
+        public void Handle(RegisterUser user)
         {
             if (this.userService.CheckEmailAvailability(user.Email))
             {

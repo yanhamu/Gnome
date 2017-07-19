@@ -23,7 +23,7 @@ namespace Gnome.Api.Configuration
 
             var containerBuilder = ContainerInitializer.CreateContainer();
             containerBuilder.Register(c => new SqlConnection(configuration["db:dev"]));
-            containerBuilder.RegisterType<Gnome.Api.Services.Users.UsersService>();
+            containerBuilder.RegisterType<Gnome.Api.Services.Users.RegisterUserHandler>();
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();
