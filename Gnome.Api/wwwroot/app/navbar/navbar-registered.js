@@ -7,10 +7,10 @@ const nr = Vue.component('navbar-registered', {
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="/Account">accounts</a>
+                    <router-link to="/accounts">accounts</router-link>
                 </li>
                 <li>
-                    <a href="/Report/AggregateReport">reports</a>
+                    <router-link to="/reports">reports</router-link>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
