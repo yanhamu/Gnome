@@ -9,10 +9,10 @@ namespace Gnome.Web.Controllers
 {
     public class ReportController : BaseController
     {
-        private readonly Core.Reports.AggregateReport.Service aggregateReportService;
+        private readonly Core.Reports.AggregateReport.IAggregateReportService aggregateReportService;
         private readonly IAccountService accountService;
 
-        public ReportController(Core.Reports.AggregateReport.Service aggregateReportService, IAccountService accountService)
+        public ReportController(Core.Reports.AggregateReport.IAggregateReportService aggregateReportService, IAccountService accountService)
         {
             this.aggregateReportService = aggregateReportService;
             this.accountService = accountService;
