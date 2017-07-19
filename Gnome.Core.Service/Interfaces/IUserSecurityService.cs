@@ -1,4 +1,4 @@
-﻿namespace Gnome.Core.Service
+﻿namespace Gnome.Core.Service.Interfaces
 {
     public interface IUserSecurityService
     {

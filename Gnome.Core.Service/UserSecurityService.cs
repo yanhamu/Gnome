@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Gnome.Core.Service.Interfaces;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -21,7 +22,7 @@ namespace Gnome.Core.Service
                 return sha.ComputeHash(passwordWithSalt);
             }
         }
-        
+
         public bool Verify(string password, byte[] hashed, byte[] salt)
         {
             var pwd = CreatePassword(password, salt);
