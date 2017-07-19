@@ -14,7 +14,7 @@ store = {
         }
     },
     getToken: function () {
-        return this.state.token
+        return 'bearer ' + this.state.token;
     }
 }
 

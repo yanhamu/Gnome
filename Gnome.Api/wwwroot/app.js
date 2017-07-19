@@ -1,7 +1,7 @@
 
 
 const routes = [
-    { path: '/accounts/:id', component: AccountDetail },
+    { path: '/accounts/:id', component: AccountDetail, props: true },
     { path: '/accounts', component: Accounts },
     { path: '/home', component: Home },
     { path: '*', redirect: '/home' }]
