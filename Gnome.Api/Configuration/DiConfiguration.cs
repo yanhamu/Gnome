@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Autofac.Features.Variance;
 using Gnome.Core.DataAccess;
 using Gnome.Infrastructure;
 using MediatR;
@@ -26,7 +27,7 @@ namespace Gnome.Api.Configuration
 
             var containerBuilder = ContainerInitializer.CreateContainer();
             containerBuilder.Register(c => new SqlConnection(configuration["db:dev"]));
-            containerBuilder.RegisterType<Gnome.Api.Services.Users.RegisterUserHandler>();
+            containerBuilder.RegisterSource(new ContravariantRegistrationSource());
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Gnome.Core.Reports.AggregateReport
 {
-    public class Service
+    public class Service : IAggregateReportService
     {
         private readonly FioTransactionRepository fioTransactionRepository;
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Gnome.Core.Service
 {
-    public class UserSecurityService
+    public class UserSecurityService : IUserSecurityService
     {
         public byte[] GetSalt()
         {

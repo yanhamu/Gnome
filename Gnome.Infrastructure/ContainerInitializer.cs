@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Gnome.Core.DataAccess;
 using Gnome.Core.Service;
-using Gnome.Core.Service.Interfaces;
+using System.Reflection;
 
 namespace Gnome.Infrastructure
 {
@@ -11,20 +11,23 @@ namespace Gnome.Infrastructure
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<UserSecurityService>();
+            builder.RegisterAssemblyTypes(CoreServiceAssembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces();
 
-            builder.RegisterType<UserService>().As<IUserService>();
-            builder.RegisterType<AccountService>().As<IAccountService>();
-            builder.RegisterType<FioTransactionService>().As<ITransactionService>();
+            builder.RegisterAssemblyTypes(CoreReportAssembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces();
 
-            builder.RegisterType<Core.Reports.AggregateReport.Service>();
-
-            builder.RegisterType<UserRepository>();
-            builder.RegisterType<UserSecurityRepository>();
-            builder.RegisterType<FioAccountRepository>();
-            builder.RegisterType<FioTransactionRepository>();
+            builder.RegisterAssemblyTypes(CoreRepositoryAssembly)
+                .Where(t => t.Name.EndsWith("Repository"))
+                .AsSelf();
 
             return builder;
         }
+
+        private static Assembly CoreReportAssembly { get { return typeof(Core.Reports.Interval).GetTypeInfo().Assembly; } }
+        private static Assembly CoreServiceAssembly { get { return typeof(UserSecurityService).GetTypeInfo().Assembly; } }
+        private static Assembly CoreRepositoryAssembly { get { return typeof(UserRepository).GetTypeInfo().Assembly; } }
     }
 }
