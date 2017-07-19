@@ -27,7 +27,6 @@
     <ProjectReference Include="..\Gnome.Core.Service\Gnome.Core.Service.csproj" />
     <ProjectReference Include="..\Gnome.Infrastructure\Gnome.Infrastructure.csproj" />
     <ProjectReference Include="..\Gnome.Web.Model\Gnome.Web.Model.csproj" />
-    <ProjectReference Include="..\Gnome.Web.Services.Interfaces\Gnome.Web.Services.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ namespace Gnome.Web.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly Core.Service.Interfaces.IAccountService accountService;
+        private readonly Gnome.Core.Service.Interfaces.IAccountService accountService;
 
         public AccountService(Core.Service.Interfaces.IAccountService accountService)
         {

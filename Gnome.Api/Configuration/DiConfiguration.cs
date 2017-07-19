@@ -1,12 +1,15 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Autofac.Features.Variance;
 using Gnome.Core.DataAccess;
 using Gnome.Infrastructure;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data.SqlClient;
 using System.IO;
+using System.Reflection;
 
 namespace Gnome.Api.Configuration
 {
@@ -20,13 +23,19 @@ namespace Gnome.Api.Configuration
                 .Build();
 
             services.AddDbContext<GnomeDb>(c => c.UseSqlServer(configuration["db:dev"]));
+            services.AddMediatR(GetCoreServiceAssembly());
 
             var containerBuilder = ContainerInitializer.CreateContainer();
             containerBuilder.Register(c => new SqlConnection(configuration["db:dev"]));
-            containerBuilder.RegisterType<Gnome.Api.Services.Users.UsersService>();
+            containerBuilder.RegisterSource(new ContravariantRegistrationSource());
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();
+        }
+
+        private static Assembly GetCoreServiceAssembly()
+        {
+            return typeof(Gnome.Api.Services.Users.RegisterUser).GetTypeInfo().Assembly;
         }
     }
 }

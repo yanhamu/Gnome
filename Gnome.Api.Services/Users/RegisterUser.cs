@@ -1,6 +1,8 @@
-﻿namespace Gnome.Api.Services.Users
+﻿using MediatR;
+
+namespace Gnome.Api.Services.Users
 {
-    public class User
+    public class RegisterUser : INotification
     {
         public string Email { get; set; }
         public string Password { get; set; }

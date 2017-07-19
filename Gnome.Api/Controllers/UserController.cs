@@ -1,4 +1,5 @@
 ﻿using Gnome.Api.Services.Users;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gnome.Api.Controllers
@@ -6,17 +7,17 @@ namespace Gnome.Api.Controllers
     [Route("api/users")]
     public class UserController : Controller
     {
-        private readonly UsersService userService;
+        private readonly IMediator mediator;
 
-        public UserController(UsersService userService)
+        public UserController(IMediator mediator)
         {
-            this.userService = userService;
+            this.mediator = mediator;
         }
 
         [HttpPost()]
-        public IActionResult Register([FromBody]User user)
+        public IActionResult Register([FromBody]RegisterUser user)
         {
-            this.userService.CreateNewUser(user);
+            mediator.Publish(user);
             return NoContent();
         }
     }
