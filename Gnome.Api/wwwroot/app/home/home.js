@@ -1,35 +1,36 @@
 const Home = Vue.component('home', {
-  data: function () {
-    return {
-      loginEmail: '',
-      loginPassword: '',
-      registerEmail: '',
-      registerPassword: ''
-    }
-  },
-  methods: {
-    login: function () {
-      var data = { username: this.loginEmail, password: this.loginPassword };
-      this.$http.post('http://localhost:9020/gettoken', data, { emulateJSON: true })
-        .then(res => {
-          store.setToken(res.body.access_token);
-        }, res => {
-          console.log(res);
-          store.setToken(null);
-        });
+    data: function () {
+        return {
+            loginEmail: '',
+            loginPassword: '',
+            registerEmail: '',
+            registerPassword: ''
+        }
     },
-    register: function () {
-      var data = { email: this.registerEmail, password: this.registerPassword };
-      this.$http.post('http://localhost:9020/api/users', data).then(res => {
-        this.loginEmail = this.registerEmail;
-        this.loginPassword = this.registerPassword;
-        this.login();
-      }, res => {
-        console.error(res);
-      });
-    }
-  },
-  template: `
+    methods: {
+        login: function () {
+            var data = { username: this.loginEmail, password: this.loginPassword };
+            this.$http.post('http://localhost:9020/gettoken', data, { emulateJSON: true })
+                .then(res => {
+                    store.setToken(res.body.access_token);
+                }, res => {
+                    console.log(res);
+                    store.setToken(null);
+                });
+        },
+        register: function () {
+            var data = { email: this.registerEmail, password: this.registerPassword };
+            this.$http.post('http://localhost:9020/api/users', data)
+                .then(res => {
+                    this.loginEmail = this.registerEmail;
+                    this.loginPassword = this.registerPassword;
+                    this.login();
+                }, res => {
+                    console.error(res);
+                });
+        }
+    },
+    template: `
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-6">

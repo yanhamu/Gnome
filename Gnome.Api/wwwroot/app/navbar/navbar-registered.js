@@ -2,7 +2,7 @@ const nr = Vue.component('navbar-registered', {
     template: `<nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="/Home/Index">gnome</a>
+            <router-link class="navbar-brand" to="/home">gnome</router-link>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">

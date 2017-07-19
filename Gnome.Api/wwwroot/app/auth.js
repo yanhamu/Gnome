@@ -5,14 +5,14 @@ store = {
     },
     setToken: function (token) {
         if (token != null) {
-            this.isAuthetnicated = true;
-            this.token = token
+            this.state.isAuthetnicated = true;
+            this.state.token = token
         } else {
-            this.isAuthetnicated = false;
-            this.token = null
+            this.state.isAuthetnicated = false;
+            this.state.token = null
         }
     },
     getToken: function () {
-        return this.token
+        return this.state.token
     }
 }

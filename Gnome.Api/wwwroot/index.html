@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 
 <head>
     <meta charset="utf-8">
@@ -12,7 +12,8 @@
 
 <body>
     <div id="app" class="container">
-        <navbar-anonymous></navbar-anonymous>
+        <navbar-registered v-if="state.isAuthetnicated"></navbar-registered>
+        <navbar-anonymous v-else></navbar-anonymous>
         <router-view></router-view>
     </div>
 
