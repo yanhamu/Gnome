@@ -11,7 +11,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Gnome.Core.Reports\Gnome.Core.Reports.csproj" />
     <ProjectReference Include="..\Gnome.Core.Service\Gnome.Core.Service.csproj" />
-    <ProjectReference Include="..\Gnome.Web.Services.Interfaces\Gnome.Web.Services.Interfaces.csproj" />
     <ProjectReference Include="..\Gnome.Web.Services\Gnome.Web.Services.csproj" />
   </ItemGroup>
 
