@@ -20,5 +20,11 @@ namespace Gnome.Api.Controllers
         {
             return new OkObjectResult(await mediator.Send(new ListCategories(UserId)));
         }
+
+        [HttpGet()]
+        public async Task<IActionResult> Get(int categoryId)
+        {
+            return new OkObjectResult(await mediator.Send(new GetCategory(categoryId, UserId)));
+        }
     }
 }

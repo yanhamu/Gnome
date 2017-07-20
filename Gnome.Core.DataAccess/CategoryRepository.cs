@@ -22,5 +22,10 @@ namespace Gnome.Core.DataAccess
         {
             return context.Categories.Where(c => c.UserId == userId).ToList();
         }
+
+        public Category GetById(int id)
+        {
+            return context.Categories.Find(id);
+        }
     }
 }
