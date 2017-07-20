@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Categories
 {
-    public class CategoryTreeFactory
+    public class CategoryTreeFactory : ICategoryTreeFactory
     {
         private readonly ICategoryRepository categoryRepository;
 
