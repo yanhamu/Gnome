@@ -1,12 +1,9 @@
-﻿namespace Gnome.Core.DataAccess
-{
-    public class CategoryTransactionRepository
-    {
-        private readonly GnomeDb context;
+﻿using Gnome.Core.Model;
 
-        public CategoryTransactionRepository(GnomeDb context)
-        {
-            this.context = context;
-        }
+namespace Gnome.Core.DataAccess
+{
+    public class CategoryTransactionRepository : GenericRepository<CategoryTransaction>
+    {
+        public CategoryTransactionRepository(GnomeDb context) : base(context) { }
     }
 }

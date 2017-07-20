@@ -4,6 +4,12 @@ using System.Data.SqlClient;
 
 namespace Gnome.Core.DataAccess
 {
+    public interface IUserSecurityRepository
+    {
+        UserSecurity CreateNew(string email, byte[] pwd, byte[] salt);
+        UserSecurity GetBy(string email);
+    }
+
     public class UserSecurityRepository
     {
         private readonly SqlConnection connection;

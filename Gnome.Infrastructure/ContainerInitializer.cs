@@ -25,13 +25,13 @@ namespace Gnome.Infrastructure
 
             builder.RegisterAssemblyTypes(CoreRepositoryAssembly)
                 .Where(t => t.Name.EndsWith("Repository"))
-                .AsSelf();
+                .AsImplementedInterfaces();
 
             return builder;
         }
 
         private static Assembly CoreReportAssembly { get { return typeof(Core.Reports.Interval).GetTypeInfo().Assembly; } }
         private static Assembly CoreServiceAssembly { get { return typeof(UserSecurityService).GetTypeInfo().Assembly; } }
-        private static Assembly CoreRepositoryAssembly { get { return typeof(UserRepository).GetTypeInfo().Assembly; } }
+        private static Assembly CoreRepositoryAssembly { get { return typeof(IUserRepository).GetTypeInfo().Assembly; } }
     }
 }

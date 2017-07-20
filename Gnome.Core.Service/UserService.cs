@@ -7,13 +7,13 @@ namespace Gnome.Core.Service
 {
     public class UserService : IUserService
     {
-        private readonly UserRepository repository;
-        private readonly UserSecurityRepository securityRepository;
+        private readonly IUserRepository repository;
+        private readonly IUserSecurityRepository securityRepository;
         private readonly IUserSecurityService securityService;
 
         public UserService(
-            UserRepository repository,
-            UserSecurityRepository securityRepository,
+            IUserRepository repository,
+            IUserSecurityRepository securityRepository,
             IUserSecurityService securityService)
         {
             this.repository = repository;

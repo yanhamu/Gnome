@@ -3,7 +3,13 @@ using System.Linq;
 
 namespace Gnome.Core.DataAccess
 {
-    public class UserRepository
+    public interface IUserRepository
+    {
+        bool CheckEmailAvailability(string email);
+        User GetUser(string email);
+    }
+
+    public class UserRepository : IUserRepository
     {
         private readonly GnomeDb context;
 

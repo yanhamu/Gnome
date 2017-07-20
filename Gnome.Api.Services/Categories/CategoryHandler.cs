@@ -1,5 +1,4 @@
-﻿using System;
-using Gnome.Api.Services.Categories.Requests;
+﻿using Gnome.Api.Services.Categories.Requests;
 using Gnome.Core.DataAccess;
 using Gnome.Core.Model;
 using Gnome.Core.Service.Categories;
@@ -14,11 +13,11 @@ namespace Gnome.Api.Services.Categories
         IRequestHandler<CreateCategory, Category>
     {
         private readonly ICategoryTreeFactory treeFactory;
-        private readonly CategoryRepository categoryRepository;
+        private readonly IGenericRepository<Category> categoryRepository;
 
         public CategoryHandler(
             ICategoryTreeFactory treeFactory,
-            CategoryRepository categoryRepository)
+            IGenericRepository<Category> categoryRepository)
         {
             this.treeFactory = treeFactory;
             this.categoryRepository = categoryRepository;
@@ -32,12 +31,12 @@ namespace Gnome.Api.Services.Categories
 
         public Category Handle(GetCategory message)
         {
-            return categoryRepository.GetById(message.Id);
+            return categoryRepository.Find(message.Id);
         }
 
         public Category Handle(UpdateCategory message)
         {
-            var category = categoryRepository.GetById(message.Id);
+            var category = categoryRepository.Find(message.Id);
             category.Name = message.Name;
             category.ParentId = message.ParentId;
 

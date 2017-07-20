@@ -4,46 +4,18 @@ using System.Linq;
 
 namespace Gnome.Core.DataAccess
 {
-    public class FioAccountRepository
+    public class FioAccountRepository : GenericRepository<FioAccount>
     {
-        private readonly GnomeDb context;
-
-        public FioAccountRepository(GnomeDb context)
-        {
-            this.context = context;
-        }
-
-        public FioAccount Create(FioAccount account)
-        {
-            context.Accounts.Add(account);
-            context.SaveChanges();
-
-            return account;
-        }
-
-        public FioAccount Get(int accountId)
-        {
-            return context.Accounts.Find(accountId);
-        }
+        public FioAccountRepository(GnomeDb context) : base(context) { }
 
         public IEnumerable<FioAccount> GetAccounts(int userId)
         {
             return context.Accounts.Where(a => a.UserId == userId).ToList();
         }
 
-        public void Remove(int accountId)
+        public FioAccount Update(int id, string name, string token) //TODO pull up
         {
-            var toRemove = this.Get(accountId);
-            if (toRemove != null)
-            {
-                context.Accounts.Remove(toRemove);
-                context.SaveChanges();
-            }
-        }
-
-        public FioAccount Update(int id, string name, string token)
-        {
-            var toUpdate = Get(id);
+            var toUpdate = Find(id);
 
             toUpdate.Name = name;
             toUpdate.Token = token;
@@ -53,9 +25,9 @@ namespace Gnome.Core.DataAccess
             return toUpdate;
         }
 
-        public void Update(int accountId, FioAccount account)
+        public void Update(int accountId, FioAccount account) //TODO pull up
         {
-            var toUpdate = Get(accountId);
+            var toUpdate = Find(accountId);
 
             toUpdate.Name = account.Name;
             toUpdate.Token = account.Token;

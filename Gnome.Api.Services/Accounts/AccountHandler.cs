@@ -29,7 +29,7 @@ namespace Gnome.Api.Services.Accounts
 
         public Account Handle(GetAccount message)
         {
-            var account = repository.Get(message.AccountId);
+            var account = repository.Find(message.AccountId);
             return new Account(account.Id, account.Name, account.Token);
         }
 

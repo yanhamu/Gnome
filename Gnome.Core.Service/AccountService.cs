@@ -22,7 +22,7 @@ namespace Gnome.Core.Service
 
         public FioAccount Get(int accountId)
         {
-            return repository.Get(accountId);
+            return repository.Find(accountId);
         }
 
         public IEnumerable<FioAccount> List(int userId)
