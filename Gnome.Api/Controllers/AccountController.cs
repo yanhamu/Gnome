@@ -2,6 +2,7 @@
 using Gnome.Api.Services.Accounts.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
 {
@@ -16,29 +17,27 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpGet()]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            return new OkObjectResult(mediator.Send(new ListUserAccounts(UserId)));
+            return new OkObjectResult(await mediator.Send(new ListUserAccounts(UserId)));
         }
 
         [HttpGet("{accountId:int}")]
-        public IActionResult Get(int accountId)
+        public async Task<IActionResult> Get(int accountId)
         {
-            return new OkObjectResult(mediator.Send(new GetAccount(accountId)));
+            return new OkObjectResult(await mediator.Send(new GetAccount(accountId)));
         }
 
         [HttpPut("{accountId:int}")]
-        public IActionResult Update(int accountId, [FromBody]Account account)
+        public async Task<IActionResult> Update(int accountId, [FromBody]Account account)
         {
-            var result = mediator.Send(new UpdateAccount(accountId, account.Name, account.Token));
-            return new OkObjectResult(result);
+            return new OkObjectResult(await mediator.Send(new UpdateAccount(accountId, account.Name, account.Token)));
         }
 
         [HttpPost()]
-        public IActionResult Create([FromBody]Account account)
+        public async Task<IActionResult> Create([FromBody]Account account)
         {
-            var result = mediator.Send(new CreateAccount(UserId, account.Token, account.Name));
-            return new OkObjectResult(result);
+            return new OkObjectResult(await mediator.Send(new CreateAccount(UserId, account.Token, account.Name)));
         }
     }
 }

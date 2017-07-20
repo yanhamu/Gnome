@@ -1,6 +1,7 @@
 ﻿using Gnome.Api.Services.Categories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
 {
@@ -15,11 +16,9 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpGet()]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            return new OkObjectResult(mediator.Send(new ListCategories(UserId)));
+            return new OkObjectResult(await mediator.Send(new ListCategories(UserId)));
         }
     }
 }
-
-// todo rewrite controllers to async

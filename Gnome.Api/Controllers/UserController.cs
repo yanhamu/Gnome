@@ -1,6 +1,7 @@
 ﻿using Gnome.Api.Services.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
 {
@@ -15,9 +16,9 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost()]
-        public IActionResult Register([FromBody]RegisterUser user)
+        public async Task<IActionResult> Register([FromBody]RegisterUser user)
         {
-            mediator.Publish(user);
+            await mediator.Publish(user);
             return NoContent();
         }
     }

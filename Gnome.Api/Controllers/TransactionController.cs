@@ -2,6 +2,7 @@
 using Gnome.Core.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
 {
@@ -16,10 +17,9 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost("fio-transactions")]
-        public IActionResult CreateFio([FromBody]FioTransaction transaction)
+        public async Task<IActionResult> CreateFio([FromBody]FioTransaction transaction)
         {
-            var id = mediator.Send(new CreateFioTransaction(transaction));
-            return new OkObjectResult(id);
+            return new OkObjectResult(await mediator.Send(new CreateFioTransaction(transaction)));
         }
     }
 }
