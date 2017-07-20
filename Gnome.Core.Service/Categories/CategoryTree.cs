@@ -16,5 +16,17 @@ namespace Gnome.Core.Service.Categories
         {
             get { return Categories[id]; }
         }
+
+        public IEnumerable<CategoryNode> SubTree(int id)
+        {
+            var node = this[id];
+            foreach (var child in node.Children)
+            {
+                yield return child;
+
+                foreach (var subChild in SubTree(child.Id))
+                    yield return child;
+            }
+        }
     }
 }

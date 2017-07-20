@@ -1,7 +1,7 @@
 ﻿using Gnome.Core.Model;
 using MediatR;
 
-namespace Gnome.Api.Services.Categories
+namespace Gnome.Api.Services.Categories.Requests
 {
     public class GetCategory : IRequest<Category>
     {

@@ -1,4 +1,5 @@
-﻿using Gnome.Api.Services.Categories;
+﻿using Gnome.Api.Services.Categories.Requests;
+using Gnome.Core.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -21,10 +22,29 @@ namespace Gnome.Api.Controllers
             return new OkObjectResult(await mediator.Send(new ListCategories(UserId)));
         }
 
-        [HttpGet()]
+        [HttpGet("{categoryId:int}")]
         public async Task<IActionResult> Get(int categoryId)
         {
             return new OkObjectResult(await mediator.Send(new GetCategory(categoryId, UserId)));
+        }
+
+        [HttpPut("{categoryId:int}")]
+        public async Task<IActionResult> Update(int categoryId, Category category)
+        {
+            return new OkObjectResult(await mediator.Send(new UpdateCategory(categoryId, category.ParentId, category.Name)));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateCategory category)
+        {
+            return new OkObjectResult(await mediator.Send(category));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Remove(RemoveCategory command)
+        {
+            await mediator.Publish(command);
+            return new NoContentResult();
         }
     }
 }
