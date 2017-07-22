@@ -8,6 +8,7 @@
     <Content Include="wwwroot\app\account\account-detail.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="wwwroot\app\category\category-detail.js" />
     <Content Include="wwwroot\app\category\category-manager.js" />
     <Content Include="wwwroot\app\category\category-node.js" />
   </ItemGroup>

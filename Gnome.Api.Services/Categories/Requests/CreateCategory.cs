@@ -5,8 +5,8 @@ namespace Gnome.Api.Services.Categories.Requests
 {
     public class CreateCategory : IRequest<Category>
     {
-        public int ParentId { get; }
-        public string Name { get; }
+        public int ParentId { get; set; }
+        public string Name { get; set; }
         public int UserId { get; set; }
 
         public CreateCategory(int parentId, string name, int userId)
@@ -15,5 +15,7 @@ namespace Gnome.Api.Services.Categories.Requests
             this.Name = name;
             this.UserId = userId;
         }
+
+        public CreateCategory() { }
     }
 }

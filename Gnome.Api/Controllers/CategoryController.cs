@@ -29,14 +29,15 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPut("{categoryId:int}")]
-        public async Task<IActionResult> Update(int categoryId, Category category)
+        public async Task<IActionResult> Update(int categoryId, [FromBody]Category category)
         {
             return new OkObjectResult(await mediator.Send(new UpdateCategory(categoryId, category.ParentId, category.Name)));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategory category)
+        public async Task<IActionResult> Create([FromBody]CreateCategory category)
         {
+            category.UserId = UserId;
             return new OkObjectResult(await mediator.Send(category));
         }
 

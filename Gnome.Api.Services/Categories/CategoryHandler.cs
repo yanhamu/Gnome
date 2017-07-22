@@ -54,7 +54,9 @@ namespace Gnome.Api.Services.Categories
                 UserId = message.UserId
             };
 
-            return categoryRepository.Create(category);
+            var created =  categoryRepository.Create(category);
+            categoryRepository.Save();
+            return created;
         }
     }
 }
