@@ -8,9 +8,9 @@ namespace Gnome.Core.Service
 {
     public class FioTransactionService : ITransactionService
     {
-        private readonly FioTransactionRepository repository;
+        private readonly IFioTransactionRepository repository;
 
-        public FioTransactionService(FioTransactionRepository repository)
+        public FioTransactionService(IFioTransactionRepository repository)
         {
             this.repository = repository;
         }

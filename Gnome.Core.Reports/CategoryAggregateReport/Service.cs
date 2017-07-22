@@ -1,4 +1,5 @@
 ﻿using Gnome.Core.DataAccess;
+using Gnome.Core.Model;
 using Gnome.Core.Reports.CategoryAggregateReport.Model;
 using Gnome.Core.Service.Categories;
 using System;
@@ -8,14 +9,14 @@ namespace Gnome.Core.Reports.CategoryAggregateReport
 {
     public class Service
     {
-        private readonly FioTransactionRepository fioTransactionRepository;
-        private readonly CategoryTransactionRepository categoryTransactionRepository;
-        private readonly CategoryTreeFactory categoryTreeFactory;
+        private readonly IFioTransactionRepository fioTransactionRepository;
+        private readonly IGenericRepository<CategoryTransaction> categoryTransactionRepository;
+        private readonly ICategoryTreeFactory categoryTreeFactory;
 
         public Service(
-            FioTransactionRepository fioTransactionRepository,
-            CategoryTransactionRepository categoryTransactionRepository,
-            CategoryTreeFactory categoryTreeFactory)
+            IFioTransactionRepository fioTransactionRepository,
+            IGenericRepository<CategoryTransaction> categoryTransactionRepository,
+            ICategoryTreeFactory categoryTreeFactory)
         {
             this.fioTransactionRepository = fioTransactionRepository;
             this.categoryTransactionRepository = categoryTransactionRepository;

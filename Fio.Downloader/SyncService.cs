@@ -40,6 +40,9 @@ namespace Fio.Downloader
 
         private bool ShouldSync(Account a)
         {
+            if (string.IsNullOrWhiteSpace(a.Token))
+                return false;
+
             return a.LastSync.HasValue == false || ((DateTime.Now - a.LastSync.Value) > TimeSpan.FromHours(2));
         }
     }

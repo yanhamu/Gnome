@@ -10,7 +10,7 @@ namespace Gnome.Core.DataAccess
         UserSecurity GetBy(string email);
     }
 
-    public class UserSecurityRepository
+    public class UserSecurityRepository : IUserSecurityRepository
     {
         private readonly SqlConnection connection;
 

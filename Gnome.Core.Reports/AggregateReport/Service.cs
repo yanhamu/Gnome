@@ -8,9 +8,9 @@ namespace Gnome.Core.Reports.AggregateReport
 {
     public class Service : IAggregateReportService
     {
-        private readonly FioTransactionRepository fioTransactionRepository;
+        private readonly IFioTransactionRepository fioTransactionRepository;
 
-        public Service(FioTransactionRepository fioTransactionRepository)
+        public Service(IFioTransactionRepository fioTransactionRepository)
         {
             this.fioTransactionRepository = fioTransactionRepository;
         }

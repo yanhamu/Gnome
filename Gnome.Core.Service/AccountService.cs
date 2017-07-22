@@ -7,9 +7,9 @@ namespace Gnome.Core.Service
 {
     public class AccountService : IAccountService
     {
-        private readonly FioAccountRepository repository;
+        private readonly IFioAccountRepository repository;
 
-        public AccountService(FioAccountRepository repository)
+        public AccountService(IFioAccountRepository repository)
         {
             this.repository = repository;
         }
@@ -33,11 +33,19 @@ namespace Gnome.Core.Service
         public void Remove(int accountId)
         {
             repository.Remove(accountId);
+            repository.Save();
         }
 
-        public void Update(int accountId, FioAccount account)
+        public FioAccount Update(int accountId, string name, string token)
         {
-            repository.Update(accountId, account);
+            var fioAccount = repository.Find(accountId);
+
+            fioAccount.Name = name;
+            fioAccount.Token = token;
+
+            repository.Save();
+
+            return fioAccount;
         }
     }
 }

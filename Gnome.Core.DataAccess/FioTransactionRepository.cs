@@ -5,14 +5,16 @@ using System.Linq;
 
 namespace Gnome.Core.DataAccess
 {
-    public class FioTransactionRepository
+    public interface IFioTransactionRepository : IGenericRepository<FioTransaction>
     {
-        private readonly GnomeDb context;
+        List<FioTransaction> Retrieve(int accountId, int limit);
+        List<FioTransaction> Retrieve(List<int> accountIds, DateTime from, DateTime to);
+        FioTransaction Save(FioTransaction transaction);
+    }
 
-        public FioTransactionRepository(GnomeDb context)
-        {
-            this.context = context;
-        }
+    public class FioTransactionRepository : GenericRepository<FioTransaction>, IFioTransactionRepository
+    {
+        public FioTransactionRepository(GnomeDb context) : base(context) { }
 
         public List<FioTransaction> Retrieve(List<int> accountIds, DateTime from, DateTime to)
         {
@@ -30,7 +32,7 @@ namespace Gnome.Core.DataAccess
             return context
                 .FioTransactions
                 .Where(f => f.AccountId == accountId)
-                .OrderByDescending(t=>t.Date)
+                .OrderByDescending(t => t.Date)
                 .Take(limit)
                 .ToList();
         }

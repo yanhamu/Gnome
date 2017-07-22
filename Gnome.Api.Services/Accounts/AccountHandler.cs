@@ -1,5 +1,6 @@
 ﻿using Gnome.Api.Services.Accounts.Requests;
 using Gnome.Core.DataAccess;
+using Gnome.Core.Service.Interfaces;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,14 @@ namespace Gnome.Api.Services.Accounts
         IRequestHandler<UpdateAccount, Account>,
         IRequestHandler<CreateAccount, Account>
     {
-        private readonly FioAccountRepository repository;
+        private readonly IFioAccountRepository repository;
+        private readonly IAccountService accountService;
 
-        public AccountHandler(FioAccountRepository repository)
+        public AccountHandler(IFioAccountRepository repository,
+            IAccountService accountService)
         {
             this.repository = repository;
+            this.accountService = accountService;
         }
 
         public List<Account> Handle(ListUserAccounts message)
@@ -35,7 +39,7 @@ namespace Gnome.Api.Services.Accounts
 
         public Account Handle(UpdateAccount message)
         {
-            var updated = repository.Update(message.Id, message.Name, message.Token);
+            var updated = accountService.Update(message.Id, message.Name, message.Token);
             return new Account(updated.Id, updated.Name, updated.Token);
         }
 

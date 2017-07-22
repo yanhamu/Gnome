@@ -42,13 +42,7 @@ namespace Gnome.Web.Services
             if (accountId != account.Id)
                 throw new ArgumentException("inconsistend account ids", nameof(accountId));
 
-            var newAccount = new Gnome.Core.Model.FioAccount()
-            {
-                Id = accountId,
-                Name = account.Name,
-                Token = account.Token
-            };
-            accountService.Update(accountId, newAccount);
+            accountService.Update(accountId, account.Name, account.Token);
         }
 
         private Account CreateViewModel(Gnome.Core.Model.FioAccount account)

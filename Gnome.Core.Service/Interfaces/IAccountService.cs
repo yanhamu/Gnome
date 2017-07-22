@@ -9,6 +9,6 @@ namespace Gnome.Core.Service.Interfaces
         FioAccount Get(int accountId);
         IEnumerable<FioAccount> List(int userId);
         void Remove(int accountId);
-        void Update(int accountId, FioAccount account);
+        FioAccount Update(int accountId, string name, string token);
     }
 }
