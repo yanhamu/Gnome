@@ -9,7 +9,14 @@
         public Category Parent { get; set; }
         public string Name { get; set; }
         public bool IsSystem { get; set; }
-        public int Type { get; set; } //TODO not sure
-        public bool IsFallback { get { return Type == 0; } }
+        public int Type { get; set; }
+        public bool IsFallback { get { return Type == TypeEnumeration.Fallback; } }
+        public bool IsRoot { get { return ParentId.HasValue == false; } }
+
+        public static class TypeEnumeration
+        {
+            public const int Envelope = 100;
+            public const int Fallback = 200;
+        }
     }
 }

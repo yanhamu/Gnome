@@ -12,6 +12,7 @@ namespace Gnome.Core.Service.Categories
         public bool IsSystem { get; private set; }
         public int Type { get; private set; }
         public bool IsFallback { get; private set; }
+        public bool IsRoot { get; private set; }
 
         public CategoryNode(Category category)
         {

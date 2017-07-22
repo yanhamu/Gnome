@@ -9,7 +9,7 @@ namespace Gnome.Core.DataAccess
         List<Category> GetAll(int userId);
     }
 
-    public class CategoryRepository : GenericRepository<Category>
+    public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
     {
         public CategoryRepository(GnomeDb context) : base(context) { }
 
