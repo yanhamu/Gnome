@@ -1,7 +1,6 @@
 const Accounts = Vue.component('accounts', {
     created: function () {
-        var options = { headers: { Authorization: store.getToken() } };
-        this.$http.get('http://localhost:9020/api/accounts', options)
+        this.$http.get('accounts')
             .then(res => {
                 this.accounts = res.body;
             }, res => {
@@ -11,8 +10,7 @@ const Accounts = Vue.component('accounts', {
     methods: {
         create: function () {
             var data = { name: 'new account', token: '' };
-            var options = { headers: { Authorization: store.getToken() } };
-            this.$http.post('http://localhost:9020/api/accounts', data, options)
+            this.$http.post('accounts', data)
                 .then(res => {
                     var location = '/accounts/' + res.body.id;
                     router.push(location);

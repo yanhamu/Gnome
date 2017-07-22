@@ -5,8 +5,7 @@ const AccountDetail = Vue.component('account-detail', {
     },
     methods: {
         load: function () {
-            var options = { headers: { Authorization: store.getToken() } };
-            this.$http.get('http://localhost:9020/api/accounts/' + this.id, options)
+            this.$http.get('accounts/' + this.id)
                 .then(res => {
                     this.account = res.body;
                 }, res => {
@@ -14,7 +13,7 @@ const AccountDetail = Vue.component('account-detail', {
                 });
         },
         remove: function () {
-            this.$http.delete('http://localhost:9020/api/accounts/' + this.id)
+            this.$http.delete('accounts/' + this.id)
                 .then(res => {
                     router.push('/accounts');
                 }, res => {
@@ -23,10 +22,8 @@ const AccountDetail = Vue.component('account-detail', {
         },
         update: function () {
             var data = this.account;
-            this.$http.put('http://localhost:9020/api/accounts/' + this.id, data)
-                .then(res => {
-
-                },
+            this.$http.put('accounts/' + this.id, data)
+                .then(res => { },
                 res => {
                     console.log(res);
                 }

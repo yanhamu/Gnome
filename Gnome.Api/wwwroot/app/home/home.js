@@ -10,7 +10,7 @@ const Home = Vue.component('home', {
     methods: {
         login: function () {
             var data = { username: this.loginEmail, password: this.loginPassword };
-            this.$http.post('http://localhost:9020/gettoken', data, { emulateJSON: true })
+            this.$http.post('gettoken', data, { emulateJSON: true })
                 .then(res => {
                     store.setToken(res.body.access_token);
                 }, res => {
@@ -20,7 +20,7 @@ const Home = Vue.component('home', {
         },
         register: function () {
             var data = { email: this.registerEmail, password: this.registerPassword };
-            this.$http.post('http://localhost:9020/api/users', data)
+            this.$http.post('users', data)
                 .then(res => {
                     this.loginEmail = this.registerEmail;
                     this.loginPassword = this.registerPassword;

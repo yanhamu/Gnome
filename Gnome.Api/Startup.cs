@@ -98,7 +98,7 @@ namespace Gnome.Api
                 Audience = "ExampleAudience",
                 Issuer = "ExampleIssuer",
                 Expiration = TimeSpan.FromMinutes(30),
-                Path = "/gettoken",
+                Path = "/api/gettoken",
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
             };
         }
