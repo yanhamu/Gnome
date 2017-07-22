@@ -55,7 +55,7 @@ const Home = Vue.component('home', {
                 <label for="register-password">Password</label>
                 <input id="register-password" type="password" class="form-control" v-model="registerPassword" />
             </div>
-            <button class="btn btn-primary" v-on:click="register">Register</button>
+            <button class="btn btn-primary" v-on:click="register" >Register</button>
       </div>
     </div>
   </div>`

@@ -1,6 +1,7 @@
 const routes = [
     { path: '/accounts/:id', component: AccountDetail, props: true },
     { path: '/accounts', component: Accounts },
+    { path: '/categories', component: CategoryManager },
     { path: '/home', component: Home },
     { path: '*', redirect: '/home' }]
 

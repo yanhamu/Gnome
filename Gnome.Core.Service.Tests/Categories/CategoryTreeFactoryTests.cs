@@ -28,9 +28,9 @@ namespace Gnome.Core.Service.Tests.Categories
             Assert.Contains(tree.Root.Children.Select(c => c.Id), p => p == 1 || p == 2);
             Assert.Equal(3, tree[1].Children.First().Id);
 
-            Assert.Same(tree[3].Parent, tree[1]);
-            Assert.Same(tree[2].Parent, tree[0]);
-            Assert.Same(tree[1].Parent, tree[0]);
+            Assert.Same(tree[3].ParentId, tree[1]);
+            Assert.Same(tree[2].ParentId, tree[0]);
+            Assert.Same(tree[1].ParentId, tree[0]);
         }
 
         [Fact]

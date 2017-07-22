@@ -20,7 +20,7 @@ const Accounts = Vue.component('accounts', {
         }
     },
     data: function () {
-        return { accounts: [] }
+        return { accounts: [] };
     },
     template: `
 <div class = "container-fluid">
