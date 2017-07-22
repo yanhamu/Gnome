@@ -4,6 +4,7 @@ using Gnome.Core.Service.Interfaces;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Gnome.Api.Services.Accounts
 {
@@ -11,7 +12,8 @@ namespace Gnome.Api.Services.Accounts
         IRequestHandler<ListUserAccounts, List<Account>>,
         IRequestHandler<GetAccount, Account>,
         IRequestHandler<UpdateAccount, Account>,
-        IRequestHandler<CreateAccount, Account>
+        IRequestHandler<CreateAccount, Account>,
+        INotificationHandler<RemoveAccount>
     {
         private readonly IFioAccountRepository repository;
         private readonly IAccountService accountService;
@@ -46,7 +48,14 @@ namespace Gnome.Api.Services.Accounts
         public Account Handle(CreateAccount message)
         {
             var created = repository.Create(new Core.Model.FioAccount(0, message.UserId, message.Name, message.Token));
+            repository.Save();
             return new Account(created.Id, created.Name, created.Token);
+        }
+
+        public void Handle(RemoveAccount notification)
+        {
+            repository.Remove(notification.Id);
+            repository.Save();
         }
     }
 }

@@ -39,5 +39,12 @@ namespace Gnome.Api.Controllers
         {
             return new OkObjectResult(await mediator.Send(new CreateAccount(UserId, account.Token, account.Name)));
         }
+
+        [HttpDelete("{accountId:int}")]
+        public async Task<IActionResult> Remove(int accountId)
+        {
+            await mediator.Publish(new RemoveAccount(accountId));
+            return new NoContentResult();
+        }
     }
 }

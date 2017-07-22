@@ -3,7 +3,7 @@ const Accounts = Vue.component('accounts', {
         var options = { headers: { Authorization: store.getToken() } };
         this.$http.get('http://localhost:9020/api/accounts', options)
             .then(res => {
-                this.accounts = res.body.result;
+                this.accounts = res.body;
             }, res => {
                 console.log(res);
             });
@@ -14,7 +14,7 @@ const Accounts = Vue.component('accounts', {
             var options = { headers: { Authorization: store.getToken() } };
             this.$http.post('http://localhost:9020/api/accounts', data, options)
                 .then(res => {
-                    var location = '/accounts/' + res.body.result.id;
+                    var location = '/accounts/' + res.body.id;
                     router.push(location);
                 }, res => {
                     console.log(res);
