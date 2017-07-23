@@ -29,7 +29,6 @@ namespace Gnome.Web.Configuration
 
             containerBuilder.RegisterType<AccountService>().As<Services.Interfaces.IAccountService>();
             containerBuilder.RegisterType<UserService>().As<Services.Interfaces.IUserService>();
-            containerBuilder.RegisterType<TransactionService>().As<Services.Interfaces.ITransactionService>();
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();

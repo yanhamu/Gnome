@@ -1,26 +1,23 @@
 ﻿using Gnome.Core.DataAccess;
 using Gnome.Core.Service.Transactions;
 using MediatR;
+using System;
 
 namespace Gnome.Api.Services.Transactions
 {
-    public class TransactionHandler : IRequestHandler<CreateFioTransaction, int>
+    public class TransactionHandler : IRequestHandler<CreateFioTransaction, Guid>
     {
-        private readonly IFioTransactionRepository repository;
         private readonly IFioTransactionService transactionService;
 
         public TransactionHandler(
-            IFioTransactionRepository fioTransactionRepository,
             IFioTransactionService transactionService)
         {
-            this.repository = fioTransactionRepository;
             this.transactionService = transactionService;
         }
 
-        public int Handle(CreateFioTransaction message)
+        public Guid Handle(CreateFioTransaction message)
         {
-            var transaction = repository.Save(message.Transaction);
-            transactionService.SaveFioTransaction(message.Transaction);
+            var transaction = transactionService.SaveFioTransaction(message.Transaction);
             return transaction.Id;
         }
     }

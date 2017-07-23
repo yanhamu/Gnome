@@ -61,7 +61,6 @@
   <ItemGroup>
     <Build Include="user.sql" />
     <Build Include="fio_account.sql" />
-    <Build Include="fio_transaction.sql" />
     <Build Include="category.sql" />
     <Build Include="category_transaction.sql" />
     <Build Include="fio_fio_transaction.sql" />

@@ -8,11 +8,11 @@ namespace Gnome.Core.Reports.AggregateReport
 {
     public class Service : IAggregateReportService
     {
-        private readonly IFioTransactionRepository fioTransactionRepository;
+        private readonly ITransactionRepository repository;
 
-        public Service(IFioTransactionRepository fioTransactionRepository)
+        public Service(ITransactionRepository repository)
         {
-            this.fioTransactionRepository = fioTransactionRepository;
+            this.repository = repository;
         }
 
         public AggregateEnvelope CreateReport(List<int> accountIds, Interval interval, int numberOfDaysToAggregate)
@@ -28,12 +28,15 @@ namespace Gnome.Core.Reports.AggregateReport
         private List<Aggregate> GetAggregates(List<int> accountIds, Interval interval, int numberOfDaysToAggregate)
         {
             var startDate = interval.From.AddDays(-numberOfDaysToAggregate).Date;
-            var transactions = fioTransactionRepository.Retrieve(accountIds, startDate, interval.To);
 
-            var groupedSums = transactions
+            var groupedSums = repository.Query
+                .Where(t => accountIds.Contains(t.AccountId))
+                .Where(t => t.Date >= startDate)
+                .Where(t => t.Date <= interval.To)
                 .Where(t => t.Amount < 0)
-                .ToLookup(k => k.Date.Date, v => v.Amount)
-                .ToDictionary(k => k.Key.Date, v => v.Sum(g => g));
+                .Select(t => new { t.Date, t.Amount })
+                .ToLookup(k => k.Date, v => v.Amount)
+                .ToDictionary(k => k.Key.Date, v => v.Sum(s => s));
 
             return GenerateAggregates(interval, numberOfDaysToAggregate, groupedSums);
         }
