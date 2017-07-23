@@ -19,6 +19,10 @@ namespace Gnome.Infrastructure
                 .Where(t => t.Name.EndsWith("Factory"))
                 .AsImplementedInterfaces();
 
+            builder.RegisterAssemblyTypes(CoreServiceAssembly)
+                .Where(t => t.Name.EndsWith("Builder"))
+                .AsImplementedInterfaces();
+
             builder.RegisterAssemblyTypes(CoreReportAssembly)
                 .Where(t => t.Name.EndsWith("Service"))
                 .AsImplementedInterfaces();

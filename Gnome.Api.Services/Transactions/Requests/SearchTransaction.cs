@@ -1,7 +1,7 @@
 ﻿using Gnome.Core.Service.Search.Filters;
 using MediatR;
 
-namespace Gnome.Api.Services.Transactions
+namespace Gnome.Api.Services.Transactions.Requests
 {
     public class SearchTransaction : IRequest<SearchTransactionResult>
     {

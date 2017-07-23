@@ -1,17 +1,24 @@
-﻿using System;
+﻿using Gnome.Core.Model;
+using System;
 using System.Collections.Generic;
 
 namespace Gnome.Core.Service.Transactions.RowFactories
 {
-    public class AbstractTransactionFactory
+    public interface IAbstractTransactionFactory
+    {
+        TransactionRow Create(Transaction transaction);
+    }
+
+    public class AbstractTransactionFactory : IAbstractTransactionFactory
     {
         private TransactionTemplate fioTemplate = new TransactionTemplate(new List<string> { });
 
-        public TransactionFactory Create(string type)
+        public TransactionRow Create(Transaction transaction)
         {
-            if (type == "fio")
-                return new TransactionFactory(fioTemplate);
-            throw new ArgumentException($"Transaction type {type} is not supported");
+            if (transaction.Type == "fio")
+                return new TransactionFactory(fioTemplate).Create(transaction);
+
+            throw new ArgumentException($"Transaction type {transaction.Type} is not supported");
         }
     }
 }

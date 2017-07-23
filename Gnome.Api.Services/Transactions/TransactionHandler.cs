@@ -1,4 +1,4 @@
-﻿using Gnome.Core.DataAccess;
+﻿using Gnome.Api.Services.Transactions.Requests;
 using Gnome.Core.Service.Transactions;
 using MediatR;
 using System;

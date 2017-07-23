@@ -2,7 +2,7 @@
 using MediatR;
 using System;
 
-namespace Gnome.Api.Services.Transactions
+namespace Gnome.Api.Services.Transactions.Requests
 {
     public class CreateFioTransaction : IRequest<Guid>
     {
