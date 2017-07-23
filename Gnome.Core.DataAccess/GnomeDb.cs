@@ -23,7 +23,9 @@ namespace Gnome.Core.DataAccess
         private void MapTransaction(EntityTypeBuilder<Transaction> builder)
         {
             builder.ToTable("transaction");
+            builder.HasOne(x => x.Account).WithMany().HasForeignKey(x => x.AccountId).IsRequired();
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.AccountId).HasColumnName("account_id");
             builder.Property(x => x.Date).IsRequired();
             builder.Property(x => x.Amount).IsRequired();
             builder.Property(x => x.Type).IsRequired();
