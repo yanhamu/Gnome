@@ -17,7 +17,7 @@
                     <td>Type</td>
                     <td>{{transaction.type}}</td>
                 </tr>
-                <tr v-for="(item, index) in transaction.fields">
+                <tr v-for="(item, index) in transaction.fields" v-if="item != ''">
                     <td>{{index}}</td>
                     <td>{{item}}</td>
                 </tr>
