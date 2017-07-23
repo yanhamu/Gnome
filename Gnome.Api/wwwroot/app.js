@@ -8,12 +8,20 @@ const routes = [
 const router = new VueRouter({ routes })
 
 Vue.http.options.root = 'http://localhost:9020/api';
+
 Vue.http.interceptors.push(function (request, next) {
     var token = store.getToken();
     if (token != null) {
         request.headers.set('Authorization', store.getToken());
     }
     next();
+});
+
+// request logging interceptor
+Vue.http.interceptors.push(function (request, next) {
+    next(function (res) {
+        console.log(res);
+    });
 });
 
 const app = new Vue({

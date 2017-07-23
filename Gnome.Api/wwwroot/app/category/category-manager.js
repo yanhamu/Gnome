@@ -20,9 +20,6 @@
             .then(res => {
                 this.root = res.body;
                 this.allCategories = (getList(this.root));
-
-            }, res => {
-                console.log(res);
             });
     },
     methods: {
@@ -36,8 +33,6 @@
                 this.root.children.push(newCategory)
                 this.allCategories.push(newCategory);
                 this.selected = newCategory;
-            }, res => {
-                console.error(res);
             });
         }
     },

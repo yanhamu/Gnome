@@ -14,7 +14,6 @@ const Home = Vue.component('home', {
                 .then(res => {
                     store.setToken(res.body.access_token);
                 }, res => {
-                    console.log(res);
                     store.setToken(null);
                 });
         },
@@ -25,8 +24,6 @@ const Home = Vue.component('home', {
                     this.loginEmail = this.registerEmail;
                     this.loginPassword = this.registerPassword;
                     this.login();
-                }, res => {
-                    console.error(res);
                 });
         }
     },

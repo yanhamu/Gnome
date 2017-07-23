@@ -3,10 +3,7 @@
     methods: {
         update: function () {
             this.$http.put('categories/' + this.category.id, this.category)
-                .then(res => { },
-                res => {
-                    console.error(res);
-                });
+                .then();
         }
     },
     template: `

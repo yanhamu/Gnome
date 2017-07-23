@@ -8,26 +8,18 @@ const AccountDetail = Vue.component('account-detail', {
             this.$http.get('accounts/' + this.id)
                 .then(res => {
                     this.account = res.body;
-                }, res => {
-                    console.log(res);
                 });
         },
         remove: function () {
             this.$http.delete('accounts/' + this.id)
                 .then(res => {
                     router.push('/accounts');
-                }, res => {
-                    console.log(res);
                 });
         },
         update: function () {
             var data = this.account;
             this.$http.put('accounts/' + this.id, data)
-                .then(res => { },
-                res => {
-                    console.log(res);
-                }
-                );
+                .then();
         }
     },
     data: function () {

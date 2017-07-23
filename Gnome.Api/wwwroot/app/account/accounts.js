@@ -3,8 +3,6 @@ const Accounts = Vue.component('accounts', {
         this.$http.get('accounts')
             .then(res => {
                 this.accounts = res.body;
-            }, res => {
-                console.log(res);
             });
     },
     methods: {
@@ -14,8 +12,6 @@ const Accounts = Vue.component('accounts', {
                 .then(res => {
                     var location = '/accounts/' + res.body.id;
                     router.push(location);
-                }, res => {
-                    console.log(res);
                 });
         }
     },
