@@ -38,6 +38,7 @@
     },
     template: `
   <div class="container-fluid">
+    <h3>categories</h3>
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">

@@ -25,7 +25,7 @@ const Accounts = Vue.component('accounts', {
     <table class="table table-striped">
             <tr v-for="account in accounts">
                 <td>
-                    <router-link :to = "'/transactions/' + account.id">{{ account.name }}</router-link>
+                    <router-link :to = "'/accounts/' + account.id + '/transactions/'">{{ account.name }}</router-link>
                 </td>
                 <td>
                     <router-link :to = "'/accounts/' + account.id">edit</router-link>

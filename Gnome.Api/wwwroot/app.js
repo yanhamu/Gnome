@@ -1,4 +1,5 @@
 const routes = [
+    { path: '/accounts/:id/transactions', component: TransactionManager, props: true },
     { path: '/accounts/:id', component: AccountDetail, props: true },
     { path: '/accounts', component: Accounts },
     { path: '/categories', component: CategoryManager },
