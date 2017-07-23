@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\app\lib\**" />
+    <Content Remove="wwwroot\app\lib\**" />
+    <EmbeddedResource Remove="wwwroot\app\lib\**" />
+    <None Remove="wwwroot\app\lib\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="wwwroot\app\account\account-detail.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
