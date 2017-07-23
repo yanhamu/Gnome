@@ -7,6 +7,8 @@ namespace Gnome.Core.Service.Transactions.RowFactories
     {
         private List<string> fields = new List<string>();
 
+        public string Type { get; private set; }
+
         public IEnumerator<string> GetEnumerator()
         {
             return fields.GetEnumerator();
@@ -18,9 +20,10 @@ namespace Gnome.Core.Service.Transactions.RowFactories
         }
 
         public TransactionTemplate() { }
-        public TransactionTemplate(List<string> fields)
+        public TransactionTemplate(List<string> fields, string type)
         {
             this.fields = fields;
+            this.Type = type;
         }
     }
 }

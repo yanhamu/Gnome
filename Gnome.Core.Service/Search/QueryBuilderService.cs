@@ -8,19 +8,19 @@ namespace Gnome.Core.Service.Search
 {
     public interface IQueryBuilderService
     {
-        IQueryable<Transaction> Filter(IQueryable<Transaction> query, SearchFilter filter);
+        IQueryable<Transaction> Filter(IQueryable<Transaction> query, SingleAccountSearchFilter filter);
     }
 
     public class QueryBuilderService : IQueryBuilderService
     {
-        private readonly IEnumerable<IQueryBuilder> queryBuilders;
+        private readonly IEnumerable<IQueryBuilder<SingleAccountSearchFilter>> queryBuilders;
 
-        public QueryBuilderService(IEnumerable<IQueryBuilder> queryBuilders)
+        public QueryBuilderService(IEnumerable<IQueryBuilder<SingleAccountSearchFilter>> queryBuilders)
         {
             this.queryBuilders = queryBuilders;
         }
 
-        public IQueryable<Transaction> Filter(IQueryable<Transaction> query, SearchFilter filter)
+        public IQueryable<Transaction> Filter(IQueryable<Transaction> query, SingleAccountSearchFilter filter)
         {
             foreach (var builder in this.queryBuilders)
                 query = builder.Build(query, filter);

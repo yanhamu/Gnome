@@ -4,14 +4,11 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Search.QueryBuilders
 {
-    public class AccountQueryBuilder : IQueryBuilder
+    public class AccountQueryBuilder : IQueryBuilder<SingleAccountSearchFilter>
     {
-        public IQueryable<Transaction> Build(IQueryable<Transaction> query, SearchFilter filter)
+        public IQueryable<Transaction> Build(IQueryable<Transaction> query, SingleAccountSearchFilter filter)
         {
-            if (filter.AccountsFilter == null)
-                return query;
-
-            return query.Where(t => filter.AccountsFilter.AccountIds.Contains(t.AccountId));
+            return query.Where(t => t.AccountId == filter.AccountId);
         }
     }
 }

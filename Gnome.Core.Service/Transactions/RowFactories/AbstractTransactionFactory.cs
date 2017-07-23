@@ -11,7 +11,7 @@ namespace Gnome.Core.Service.Transactions.RowFactories
 
     public class AbstractTransactionFactory : IAbstractTransactionFactory
     {
-        private TransactionTemplate fioTemplate = new TransactionTemplate(new List<string> { });
+        private TransactionTemplate fioTemplate = new TransactionTemplate(new List<string> { "fioid", "currency", "counterpartaccount", "counterpartaccountname", "counterpartbankcode", "counterpartbankname", "constantsymbol", "variablesymbol", "spefificsymbol", "identification", "messageforreceipient", "accountant", "comment", "bic", "instructionid" }, "fio");
 
         public TransactionRow Create(Transaction transaction)
         {

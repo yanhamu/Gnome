@@ -24,9 +24,11 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost("accounts/{accountId:int}/transactions")]
-        public async Task<IActionResult> Search(int accountId, [FromBody] SearchFilter filter)
+        public async Task<IActionResult> Search(int accountId, [FromBody] SingleAccountSearchFilter filter)
         {
-            return new OkObjectResult(await mediator.Send(new SearchTransaction(filter, UserId)));
+            filter.AccountId = accountId;
+
+            return new OkObjectResult(await mediator.Send(new SingleAccountSearchTransaction(filter, UserId)));
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Gnome.Core.Service.Transactions
 {
@@ -19,7 +18,7 @@ namespace Gnome.Core.Service.Transactions
         public decimal Amount { get; set; }
         public string Type { get; set; }
 
-        private Dictionary<string, string> fields = new Dictionary<string, string>();
+        public Dictionary<string, string> Fields { get; set; } = new Dictionary<string, string>();
 
         public string this[string field]
         {
@@ -34,8 +33,8 @@ namespace Gnome.Core.Service.Transactions
                 if (field == "type")
                     return this.Type;
 
-                return fields.ContainsKey(field)
-                    ? fields[field]
+                return Fields.ContainsKey(field)
+                    ? Fields[field]
                     : null;
             }
 
@@ -44,7 +43,7 @@ namespace Gnome.Core.Service.Transactions
                 if (keywords.Contains(field))
                     throw new ArgumentException("cannot set that kind of field. Use property instead");
 
-                fields[field] = value;
+                Fields[field] = value;
             }
         }
 

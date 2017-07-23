@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Gnome.Api.Services.Transactions
 {
-    public class SearchTransactionHandler : IRequestHandler<SearchTransaction, SearchTransactionResult>
+    public class SearchTransactionHandler : IRequestHandler<SingleAccountSearchTransaction, SearchTransactionResult>
     {
         private readonly ITransactionRepository repository;
         private readonly IQueryBuilderService queryBuilder;
@@ -23,7 +23,7 @@ namespace Gnome.Api.Services.Transactions
             this.rowFactory = transactionRowFactory;
         }
 
-        public SearchTransactionResult Handle(SearchTransaction message)
+        public SearchTransactionResult Handle(SingleAccountSearchTransaction message)
         {
             var query = repository.Query;
             query = queryBuilder.Filter(query, message.Filter);

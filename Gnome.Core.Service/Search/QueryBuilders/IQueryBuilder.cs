@@ -1,11 +1,10 @@
 ﻿using Gnome.Core.Model;
-using Gnome.Core.Service.Search.Filters;
 using System.Linq;
 
 namespace Gnome.Core.Service.Search.QueryBuilders
 {
-    public interface IQueryBuilder
+    public interface IQueryBuilder<T>
     {
-        IQueryable<Transaction> Build(IQueryable<Transaction> query, SearchFilter filter);
+        IQueryable<Transaction> Build(IQueryable<Transaction> query, T filterDefinition);
     }
 }
