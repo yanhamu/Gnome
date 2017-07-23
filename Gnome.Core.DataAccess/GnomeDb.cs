@@ -15,8 +15,19 @@ namespace Gnome.Core.DataAccess
             MapFioTransaction(modelBuilder.Entity<FioTransaction>());
             MapCategory(modelBuilder.Entity<Category>());
             MapCategoryTransaction(modelBuilder.Entity<CategoryTransaction>());
+            MapTransaction(modelBuilder.Entity<Transaction>());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void MapTransaction(EntityTypeBuilder<Transaction> builder)
+        {
+            builder.ToTable("transaction");
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Date).IsRequired();
+            builder.Property(x => x.Amount).IsRequired();
+            builder.Property(x => x.Type).IsRequired();
+            builder.Property(x => x.Data).IsRequired();
         }
 
         private void MapUser(EntityTypeBuilder<User> builder)
