@@ -31,7 +31,7 @@ namespace Gnome.Api.Controllers
         [HttpPut("{categoryId:int}")]
         public async Task<IActionResult> Update(int categoryId, [FromBody]Category category)
         {
-            return new OkObjectResult(await mediator.Send(new UpdateCategory(categoryId, category.ParentId, category.Name)));
+            return new OkObjectResult(await mediator.Send(new UpdateCategory(categoryId, category.ParentId, category.Name, category.Color)));
         }
 
         [HttpPost]

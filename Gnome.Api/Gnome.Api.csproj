@@ -11,10 +11,14 @@
     <Content Include="wwwroot\app\category\category-detail.js" />
     <Content Include="wwwroot\app\category\category-manager.js" />
     <Content Include="wwwroot\app\category\category-node.js" />
+    <Content Include="wwwroot\app\transactions\transaction-detail.js" />
     <Content Include="wwwroot\app\transactions\transaction-filter - Copy.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Include="wwwroot\app\transactions\transaction-filter.js" />
+    <Content Include="wwwroot\app\transactions\transaction-list - Copy.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="wwwroot\app\transactions\transaction-list.js" />
     <Content Include="wwwroot\app\transactions\transaction-manager.js" />
   </ItemGroup>

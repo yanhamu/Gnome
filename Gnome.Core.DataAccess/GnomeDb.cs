@@ -58,6 +58,7 @@ namespace Gnome.Core.DataAccess
             builder.Property(x => x.UserId).HasColumnName("user_id");
             builder.Property(x => x.ParentId).HasColumnName("parent_id");
             builder.Property(x => x.IsSystem).HasColumnName("is_system");
+            builder.Property(x => x.Color).HasColumnName("color");
             builder.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).IsRequired();
             builder.HasOne(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId).IsRequired(false);
         }

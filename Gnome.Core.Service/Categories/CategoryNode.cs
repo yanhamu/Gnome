@@ -15,6 +15,7 @@ namespace Gnome.Core.Service.Categories
         public bool IsFallback { get; private set; }
         public bool IsRoot { get { return ParentId.HasValue == false; } }
         public bool HasChildren { get { return Children.Any(); } }
+        public string Color { get; set; }
 
         public CategoryNode(Category category)
         {
@@ -24,6 +25,7 @@ namespace Gnome.Core.Service.Categories
             this.IsSystem = category.IsSystem;
             this.Type = category.Type;
             this.IsFallback = category.IsFallback;
+            this.Color = category.Color;
         }
 
         public void SetParent(CategoryNode category)

@@ -24,7 +24,7 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost("accounts/{accountId:int}/transactions")]
-        public async Task<IActionResult> Search(int accountId, [FromBody] SingleAccountSearchFilter filter)
+        public async Task<IActionResult> Search(int accountId, [FromBody] SingleAccountTransactionSearchFilter filter)
         {
             filter.AccountId = accountId;
 

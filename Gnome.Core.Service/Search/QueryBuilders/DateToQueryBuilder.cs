@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Search.QueryBuilders
 {
-    public class DateToQueryBuilder : IQueryBuilder<SingleAccountSearchFilter>
+    public class DateToQueryBuilder : IQueryBuilder<SingleAccountTransactionSearchFilter>
     {
-        public IQueryable<Transaction> Build(IQueryable<Transaction> query, SingleAccountSearchFilter filter)
+        public IQueryable<Transaction> Build(IQueryable<Transaction> query, SingleAccountTransactionSearchFilter filter)
         {
             if (filter.DateFilter == null || filter.DateFilter.To.HasValue == false)
                 return null;

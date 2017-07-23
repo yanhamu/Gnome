@@ -31,7 +31,7 @@ namespace Gnome.Api.Services.Categories
             var node = tree[notification.Id];
 
             foreach (var child in node.Children)
-                mediator.Send(new UpdateCategory(child.Id, node.ParentId, child.Name));
+                mediator.Send(new UpdateCategory(child.Id, node.ParentId, child.Name, child.Color));
 
             categoryRepository.Remove(new List<int>() { node.Id });
         }

@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Search.QueryBuilders
 {
-    public class AccountQueryBuilder : IQueryBuilder<SingleAccountSearchFilter>
+    public class AccountQueryBuilder : IQueryBuilder<SingleAccountTransactionSearchFilter>
     {
-        public IQueryable<Transaction> Build(IQueryable<Transaction> query, SingleAccountSearchFilter filter)
+        public IQueryable<Transaction> Build(IQueryable<Transaction> query, SingleAccountTransactionSearchFilter filter)
         {
             return query.Where(t => t.AccountId == filter.AccountId);
         }

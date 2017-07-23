@@ -2,6 +2,7 @@
     props: ['category', 'allCategories'],
     methods: {
         update: function () {
+            console.log(this.color);
             this.$http.put('categories/' + this.category.id, this.category)
                 .then();
         }
@@ -21,6 +22,12 @@
                 <select class="form-control" v-model="category.parentId">
                     <option v-for="n in allCategories" v-bind:value="n.id">{{n.name}}</option>
                 </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">Color</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" v-model="category.color" >
             </div>
         </div>
         <div class="row">

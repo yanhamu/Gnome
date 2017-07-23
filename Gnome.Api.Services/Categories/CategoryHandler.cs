@@ -39,6 +39,7 @@ namespace Gnome.Api.Services.Categories
             var category = categoryRepository.Find(message.Id);
             category.Name = message.Name;
             category.ParentId = message.ParentId;
+            category.Color = message.Color;
 
             categoryRepository.Save();
 
