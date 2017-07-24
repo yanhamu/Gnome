@@ -7,17 +7,17 @@
             <tbody>
                 <tr>
                     <td>Date</td>
-                    <td>{{transaction.date}}</td>
+                    <td>{{transaction.row.date | formatDate}}</td>
                 </tr>
                 <tr>
                     <td>Amount</td>
-                    <td>{{transaction.amount}}</td>
+                    <td>{{transaction.row.amount}}</td>
                 </tr>
                 <tr>
                     <td>Type</td>
-                    <td>{{transaction.type}}</td>
+                    <td>{{transaction.row.type}}</td>
                 </tr>
-                <tr v-for="(item, index) in transaction.fields" v-if="item != ''">
+                <tr v-for="(item, index) in transaction.row.fields" v-if="item != ''">
                     <td>{{index}}</td>
                     <td>{{item}}</td>
                 </tr>

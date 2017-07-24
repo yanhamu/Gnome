@@ -11,8 +11,8 @@
         <table class="table table-striped table-hover">
             <tbody>
                 <tr v-for="t in transactions.rows" v-on:click="selectTransaction(t)">
-                    <td>{{t.date}}</td>
-                    <td>{{t.amount}}</td>
+                    <td>{{t.row.date | formatDate}}</td>
+                    <td>{{t.row.amount}}</td>
                 </tr>
             </tbody>
         </table>

@@ -2,7 +2,7 @@
 using Gnome.Core.Service.Search.Filters;
 using System.Linq;
 
-namespace Gnome.Core.Service.Search.QueryBuilders
+namespace Gnome.Core.Service.Search.QueryBuilders.Transactions
 {
     public class AccountQueryBuilder : IQueryBuilder<SingleAccountTransactionSearchFilter>
     {

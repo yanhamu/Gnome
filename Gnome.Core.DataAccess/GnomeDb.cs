@@ -40,6 +40,7 @@ namespace Gnome.Core.DataAccess
 
         private void MapCategoryTransaction(EntityTypeBuilder<CategoryTransaction> builder)
         {
+            builder.ToTable("category_transaction");
             builder.HasKey(k => new { k.CategoryId, k.TransactionId });
 
             builder.Property(x => x.CategoryId).HasColumnName("category_id");

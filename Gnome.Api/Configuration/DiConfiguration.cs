@@ -23,19 +23,25 @@ namespace Gnome.Api.Configuration
                 .Build();
 
             services.AddDbContext<GnomeDb>(c => c.UseSqlServer(configuration["db:dev"]));
-            services.AddMediatR(GetCoreServiceAssembly());
+            services.AddMediatR(CoreServiceAssembly);
 
             var containerBuilder = ContainerInitializer.CreateContainer();
             containerBuilder.Register(c => new SqlConnection(configuration["db:dev"]));
             containerBuilder.RegisterSource(new ContravariantRegistrationSource());
 
+            containerBuilder.RegisterAssemblyTypes(CoreServiceAssembly)
+                .Where(t => t.Name.EndsWith("Service"))
+                .AsImplementedInterfaces();
+
+            containerBuilder.RegisterAssemblyTypes(CoreServiceAssembly)
+                .Where(t => t.Name.EndsWith("Factory"))
+                .AsImplementedInterfaces();
+
             containerBuilder.Populate(services);
             return containerBuilder.Build();
         }
 
-        private static Assembly GetCoreServiceAssembly()
-        {
-            return typeof(Gnome.Api.Services.Users.RegisterUser).GetTypeInfo().Assembly;
-        }
+        private static Assembly CoreServiceAssembly => typeof(Gnome.Api.Services.Users.RegisterUser).GetTypeInfo().Assembly;
+
     }
 }

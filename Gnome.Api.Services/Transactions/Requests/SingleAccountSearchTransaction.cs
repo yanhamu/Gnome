@@ -1,4 +1,5 @@
-﻿using Gnome.Core.Service.Search.Filters;
+﻿using Gnome.Api.Services.Transactions.Model;
+using Gnome.Core.Service.Search.Filters;
 using MediatR;
 
 namespace Gnome.Api.Services.Transactions.Requests

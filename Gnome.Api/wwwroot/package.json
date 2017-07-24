@@ -6,6 +6,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bulma": "^0.4.3",
+    "moment": "^2.18.1",
     "vue": "^2.4.1",
     "vue-blu": "^0.1.9",
     "vue-bulma-datepicker": "^1.3.5",

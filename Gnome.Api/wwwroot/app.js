@@ -25,6 +25,11 @@ Vue.http.interceptors.push(function (request, next) {
     });
 });
 
+Vue.filter('formatDate', function (value) {
+    if (value)
+        return moment(String(value)).format('YYYY/MM/DD');
+});
+
 const app = new Vue({
     data: {
         state: store.state
