@@ -34,7 +34,7 @@ namespace Gnome.Infrastructure
             return builder;
         }
 
-        private static Assembly CoreReportAssembly { get { return typeof(Core.Reports.Interval).GetTypeInfo().Assembly; } }
+        private static Assembly CoreReportAssembly { get { return typeof(Core.Reports.AggregateReport.IAggregateReportService).GetTypeInfo().Assembly; } }
         private static Assembly CoreServiceAssembly { get { return typeof(UserSecurityService).GetTypeInfo().Assembly; } }
         private static Assembly CoreRepositoryAssembly { get { return typeof(IUserRepository).GetTypeInfo().Assembly; } }
     }

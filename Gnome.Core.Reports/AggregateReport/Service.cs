@@ -1,5 +1,6 @@
 ﻿using Gnome.Core.DataAccess;
 using Gnome.Core.Reports.AggregateReport.Model;
+using Gnome.Core.Service.Search.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,22 +16,22 @@ namespace Gnome.Core.Reports.AggregateReport
             this.repository = repository;
         }
 
-        public AggregateEnvelope CreateReport(List<int> accountIds, Interval interval, int numberOfDaysToAggregate)
+        public AggregateEnvelope CreateReport(int accountId, Interval interval, int numberOfDaysToAggregate)
         {
             var report = new AggregateEnvelope();
 
             report.Requested = interval;
-            report.Aggregates = GetAggregates(accountIds, interval, numberOfDaysToAggregate);
+            report.Aggregates = GetAggregates(accountId, interval, numberOfDaysToAggregate);
 
             return report;
         }
 
-        private List<Aggregate> GetAggregates(List<int> accountIds, Interval interval, int numberOfDaysToAggregate)
+        private List<Aggregate> GetAggregates(int accountId, Interval interval, int numberOfDaysToAggregate)
         {
-            var startDate = interval.From.AddDays(-numberOfDaysToAggregate).Date;
+            var startDate = interval.From.Value.AddDays(-numberOfDaysToAggregate).Date;
 
             var groupedSums = repository.Query
-                .Where(t => accountIds.Contains(t.AccountId))
+                .Where(t => t.AccountId == accountId)
                 .Where(t => t.Date >= startDate)
                 .Where(t => t.Date <= interval.To)
                 .Where(t => t.Amount < 0)
@@ -44,7 +45,7 @@ namespace Gnome.Core.Reports.AggregateReport
         private List<Aggregate> GenerateAggregates(Interval interval, int numberOfDaysToAggregate, Dictionary<DateTime, decimal> groupedSums)
         {
             var result = new List<Aggregate>();
-            for (DateTime currentDate = interval.From; currentDate <= interval.To; currentDate = currentDate.AddDays(1))
+            for (DateTime currentDate = interval.From.Value; currentDate <= interval.To; currentDate = currentDate.AddDays(1))
             {
                 var aggregateInterval = new Interval(currentDate.AddDays(-numberOfDaysToAggregate).Date, currentDate.Date);
                 var aggregate = CreateAggregate(groupedSums, aggregateInterval);
@@ -59,13 +60,13 @@ namespace Gnome.Core.Reports.AggregateReport
         private Aggregate CreateAggregate(Dictionary<DateTime, decimal> groupedExpences, Interval interval)
         {
             var sum = 0m;
-            for (DateTime d = interval.From; d <= interval.To; d = d.AddDays(1))
+            for (DateTime d = interval.From.Value; d <= interval.To; d = d.AddDays(1))
             {
                 if (groupedExpences.ContainsKey(d.Date))
                     sum += groupedExpences[d.Date];
             }
 
-            return new Aggregate(interval.To, sum);
+            return new Aggregate(interval.To.Value, sum);
         }
     }
 }

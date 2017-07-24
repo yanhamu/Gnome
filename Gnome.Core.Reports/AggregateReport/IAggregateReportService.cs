@@ -1,10 +1,10 @@
 ﻿using Gnome.Core.Reports.AggregateReport.Model;
-using System.Collections.Generic;
+using Gnome.Core.Service.Search.Filters;
 
 namespace Gnome.Core.Reports.AggregateReport
 {
     public interface IAggregateReportService
     {
-        AggregateEnvelope CreateReport(List<int> accountIds, Interval interval, int numberOfDaysToAggregate);
+        AggregateEnvelope CreateReport(int accountIds, Interval interval, int numberOfDaysToAggregate);
     }
 }

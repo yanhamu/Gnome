@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Gnome.Core.Service.Search.Filters;
+using System.Collections.Generic;
 
 namespace Gnome.Core.Reports.AggregateReport.Model
 {
