@@ -2,7 +2,6 @@
 using Gnome.Core.Reports.AggregateReport.Model;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
-using System;
 
 namespace Gnome.Api.Services.Reports
 {
