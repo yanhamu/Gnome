@@ -2,7 +2,7 @@
 
 namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
-    public class LiteralProvider : ITokenProvider
+    public class LiteralTokenProvider : ITokenProvider
     {
         public TokenProviderResult GetToken(int startIndex, string expression)
         {
@@ -18,7 +18,7 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
                 index += 1;
             }
 
-            return new TokenProviderResult(startIndex, index - 1, new StringToken(expression.Substring(startIndex, index - startIndex)));
+            return new TokenProviderResult(startIndex, index - 1, new LiteralToken(expression.Substring(startIndex, index - startIndex)));
         }
     }
 }
