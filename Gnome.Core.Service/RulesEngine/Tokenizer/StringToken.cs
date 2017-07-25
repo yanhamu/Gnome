@@ -1,8 +1,8 @@
 ﻿namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
-    public class OperatorToken : IToken
+    public class StringToken : IToken
     {
-        public OperatorToken(string value)
+        public StringToken(string value)
         {
             this.Value = value;
         }

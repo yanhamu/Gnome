@@ -1,11 +1,12 @@
 ﻿namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
-    public class OperandToken : IToken
+    public class LiteralToken : IToken
     {
-        public OperandToken(string value)
+        public LiteralToken(string value)
         {
             this.Value = value;
         }
+
         public string Value { get; }
     }
 }

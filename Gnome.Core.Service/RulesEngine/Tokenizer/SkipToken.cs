@@ -1,8 +1,8 @@
 ﻿namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
-    public class StringConstantOperandToken : IToken
+    public class SkipToken : IToken
     {
-        public StringConstantOperandToken(string value)
+        public SkipToken(string value)
         {
             this.Value = value;
         }

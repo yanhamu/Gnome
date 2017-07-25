@@ -2,12 +2,12 @@
 
 namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
-    public class StringConstantOperandProvider : ITokenProvider
+    public class StringTokenProvider : ITokenProvider
     {
         public TokenProviderResult GetToken(int startIndex, string expression)
         {
             if (expression[startIndex] != '\'')
-                throw new ArgumentException($"invalid beginning. Expected \"'\" in {expression} at {startIndex}");
+                throw new ArgumentException($"Invalid start character. Expected \"'\" in {expression} at {startIndex}");
 
             var index = startIndex + 1;
             while (expression.Length > index)
@@ -25,7 +25,7 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
                 index += 1;
             }
 
-            return new TokenProviderResult(startIndex, index, new StringConstantOperandToken(expression.Substring(startIndex, index - startIndex + 1)));
+            return new TokenProviderResult(startIndex, index, new StringToken(expression.Substring(startIndex, index - startIndex + 1)));
         }
 
         private bool IsDoubledApostrophe(string expression, int index)
