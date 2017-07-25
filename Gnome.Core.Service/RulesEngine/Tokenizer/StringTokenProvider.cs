@@ -25,6 +25,7 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
                 index += 1;
             }
 
+            // TODO String token should not contain ' anymore... we know that it is string now
             return new TokenProviderResult(startIndex, index, new StringToken(expression.Substring(startIndex, index - startIndex + 1)));
         }
 
