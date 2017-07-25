@@ -2,6 +2,10 @@
 {
     public class OperandToken : IToken
     {
-        public string Value { get; set; }
+        public OperandToken(string value)
+        {
+            this.Value = value;
+        }
+        public string Value { get; }
     }
 }

@@ -2,6 +2,11 @@
 {
     public class OperatorToken : IToken
     {
-        public string Value { get; set; }
+        public OperatorToken(string value)
+        {
+            this.Value = value;
+        }
+
+        public string Value { get; }
     }
 }

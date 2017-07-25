@@ -2,6 +2,11 @@
 {
     public class StringConstantOperandToken : IToken
     {
-        public string Value { get; set; }
+        public StringConstantOperandToken(string value)
+        {
+            this.Value = value;
+        }
+
+        public string Value { get; }
     }
 }
