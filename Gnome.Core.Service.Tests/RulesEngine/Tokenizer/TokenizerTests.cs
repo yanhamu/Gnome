@@ -9,14 +9,22 @@ namespace Gnome.Core.Service.Tests.RulesEngine.Tokenizer
         [Fact]
         public void Should_Return_Tokens()
         {
-            var e = "comment contains  'hello world' ";
+            var e = "comment contains  'hello world' and x = 32.5 ";
             var tokenizer = new Gnome.Core.Service.RulesEngine.Tokenizer.Tokenizer();
             var enumerator = new List<IToken>() {
                 new LiteralToken("comment"),
                 new SkipToken(" "),
                 new LiteralToken("contains"),
                 new SkipToken("  "),
-                new StringToken("'hello world'"),
+                new StringToken("hello world"),
+                new SkipToken(" "),
+                new LiteralToken("and"),
+                new SkipToken(" "),
+                new LiteralToken("x"),
+                new SkipToken(" "),
+                new LiteralToken("="),
+                new SkipToken(" "),
+                new NumberToken("32.5"),
                 new SkipToken(" ")
             }.GetEnumerator();
 

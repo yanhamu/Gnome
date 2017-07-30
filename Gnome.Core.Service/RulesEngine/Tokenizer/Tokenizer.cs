@@ -31,6 +31,15 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
                 case ' ':
                     provider = new SkipTokenProvider();
                     break;
+                case char number when char.IsNumber(number):
+                    provider = new NumberTokenProvider();
+                    break;
+                case '(':
+                    provider = new ParenthesisTokenProvider();
+                    break;
+                case ')':
+                    provider = new ParenthesisTokenProvider();
+                    break;
                 default:
                     provider = new LiteralTokenProvider();
                     break;

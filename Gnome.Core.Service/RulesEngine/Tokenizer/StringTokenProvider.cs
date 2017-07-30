@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
@@ -10,11 +11,12 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
                 throw new ArgumentException($"Invalid start character. Expected \"'\" in {expression} at {startIndex}");
 
             var index = startIndex + 1;
+            var sb = new StringBuilder();
             while (expression.Length > index)
             {
                 if (IsDoubledApostrophe(expression, index))
                 {
-
+                    sb.Append(expression[index]);
                     index += 2;
                     continue;
                 }
@@ -22,11 +24,12 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
                 {
                     break;
                 }
+                sb.Append(expression[index]);
                 index += 1;
             }
 
             // TODO String token should not contain ' anymore... we know that it is string now
-            return new TokenProviderResult(startIndex, index, new StringToken(expression.Substring(startIndex, index - startIndex + 1)));
+            return new TokenProviderResult(startIndex, index, new StringToken(sb.ToString()));
         }
 
         private bool IsDoubledApostrophe(string expression, int index)
