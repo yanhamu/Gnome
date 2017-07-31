@@ -15,7 +15,7 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
             {
                 new NumberToken("10"),
                 new OperatorToken("="),
-                new OperatorToken("amount")
+                new FieldToken("amount")
             };
 
             var builder = new ParseTreeBuilder();
