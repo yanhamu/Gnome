@@ -5,12 +5,14 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
     public class Tokenizer
     {
-        private readonly HashSet<string> operatorKeywords;
         private readonly Dictionary<Type, ITokenProvider> providerCache;
+        private readonly HashSet<string> operatorKeywords;
+        private readonly HashSet<char> stopCharacters;
 
         public Tokenizer()
         {
-            this.operatorKeywords = new HashSet<string>() { "=", "!=", "<", ">", "<=", ">=", "contains" };
+            this.operatorKeywords = new HashSet<string>() { "=", "!=", "<", ">", "<=", ">=", "contains", "and", "or" };
+            this.stopCharacters = new HashSet<char>() { ' ', '(', ')' };
             this.providerCache = InitializeProviderCache();
         }
 
@@ -19,9 +21,9 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
             var dict = new Dictionary<Type, ITokenProvider>();
             dict.Add(typeof(StringTokenProvider), new StringTokenProvider());
             dict.Add(typeof(SkipTokenProvider), new SkipTokenProvider());
-            dict.Add(typeof(NumberTokenProvider), new NumberTokenProvider());
+            dict.Add(typeof(NumberTokenProvider), new NumberTokenProvider(this.stopCharacters));
             dict.Add(typeof(ParenthesisTokenProvider), new ParenthesisTokenProvider());
-            dict.Add(typeof(OperatorTokenProvider), new OperatorTokenProvider(this.operatorKeywords));
+            dict.Add(typeof(LiteralTokenProvider), new LiteralTokenProvider(this.operatorKeywords, this.stopCharacters));
             return dict;
         }
 
@@ -60,7 +62,7 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
                     provider = GetProvider<ParenthesisTokenProvider>();
                     break;
                 default:
-                    provider = GetProvider<OperatorTokenProvider>();
+                    provider = GetProvider<LiteralTokenProvider>();
                     break;
             }
 

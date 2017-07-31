@@ -3,13 +3,15 @@ using System.Collections.Generic;
 
 namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
-    public class OperatorTokenProvider : ITokenProvider
+    public class LiteralTokenProvider : ITokenProvider
     {
         private readonly HashSet<string> operatorKeywords;
+        private readonly HashSet<char> stopCharacters;
 
-        public OperatorTokenProvider(HashSet<string> operatorKeywords)
+        public LiteralTokenProvider(HashSet<string> operatorKeywords, HashSet<char> stopCharacters)
         {
             this.operatorKeywords = operatorKeywords;
+            this.stopCharacters = stopCharacters;
         }
 
         public TokenProviderResult GetToken(int startIndex, string expression)
@@ -20,8 +22,10 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
             var index = startIndex + 1;
             while (expression.Length > index)
             {
-                if (expression[index] == ' ')
+                if (stopCharacters.Contains(expression[index]))
+                {
                     break;
+                }
 
                 index += 1;
             }

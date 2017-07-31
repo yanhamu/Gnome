@@ -1,9 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
     public class NumberTokenProvider : ITokenProvider
     {
+        private readonly HashSet<char> stopCharacters;
+
+        public NumberTokenProvider(HashSet<char> stopCharacters)
+        {
+            this.stopCharacters = stopCharacters;
+        }
+
         public TokenProviderResult GetToken(int startIndex, string expression)
         {
             if (!char.IsNumber(expression[startIndex]))
@@ -22,7 +30,7 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
                     index += 1;
                     continue;
                 }
-                if (expression[index] == ' ')
+                if (stopCharacters.Contains(expression[index]))
                 {
                     break;
                 }
