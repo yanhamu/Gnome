@@ -1,10 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
     public class Tokenizer
     {
-        private readonly string expression;
+        private readonly HashSet<string> operatorKeywords;
+        private readonly Dictionary<Type, ITokenProvider> providerCache;
+
+        public Tokenizer()
+        {
+            this.operatorKeywords = new HashSet<string>() { "=", "!=", "<", ">", "<=", ">=", "contains" };
+            this.providerCache = InitializeProviderCache();
+        }
+
+        private Dictionary<Type, ITokenProvider> InitializeProviderCache()
+        {
+            var dict = new Dictionary<Type, ITokenProvider>();
+            dict.Add(typeof(StringTokenProvider), new StringTokenProvider());
+            dict.Add(typeof(SkipTokenProvider), new SkipTokenProvider());
+            dict.Add(typeof(NumberTokenProvider), new NumberTokenProvider());
+            dict.Add(typeof(ParenthesisTokenProvider), new ParenthesisTokenProvider());
+            dict.Add(typeof(OperatorTokenProvider), new OperatorTokenProvider(this.operatorKeywords));
+            return dict;
+        }
 
         public IEnumerable<IToken> GetTokens(string expression)
         {
@@ -20,32 +39,37 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
             }
         }
 
-        private static ITokenProvider GetTokenProvider(string expression, int index)
+        private ITokenProvider GetTokenProvider(string expression, int index)
         {
             var provider = default(ITokenProvider);
             switch (expression[index])
             {
                 case '\'':
-                    provider = new StringTokenProvider();
+                    provider = GetProvider<StringTokenProvider>();
                     break;
                 case ' ':
-                    provider = new SkipTokenProvider();
+                    provider = GetProvider<SkipTokenProvider>();
                     break;
                 case char number when char.IsNumber(number):
-                    provider = new NumberTokenProvider();
+                    provider = GetProvider<NumberTokenProvider>();
                     break;
                 case '(':
-                    provider = new ParenthesisTokenProvider();
+                    provider = GetProvider<ParenthesisTokenProvider>();
                     break;
                 case ')':
-                    provider = new ParenthesisTokenProvider();
+                    provider = GetProvider<ParenthesisTokenProvider>();
                     break;
                 default:
-                    provider = new LiteralTokenProvider();
+                    provider = GetProvider<OperatorTokenProvider>();
                     break;
             }
 
             return provider;
+        }
+
+        private ITokenProvider GetProvider<T>()
+        {
+            return providerCache[typeof(T)];
         }
     }
 }
