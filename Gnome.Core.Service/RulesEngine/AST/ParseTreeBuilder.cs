@@ -35,7 +35,7 @@ namespace Gnome.Core.Service.RulesEngine.AST
              *             b  2 c  3
              */
 
-            /* a = 1 and ( not  b = 2 ) or c = 3 
+            /* a = 1 and ( not b = 2 ) or c = 3 
             *          
             *              or
             *            /    \
