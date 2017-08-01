@@ -7,48 +7,63 @@ namespace Gnome.Core.Service.RulesEngine.AST
 {
     public class ParseTreeBuilder
     {
-        public void Build(List<IToken> tokens)
+        private readonly ExpressionFactory expressionFactory;
+
+        public ParseTreeBuilder(ExpressionFactory expressionFactory)
         {
-            var filtered = tokens.Where(t => !(t is SkipToken));
+            this.expressionFactory = expressionFactory;
+        }
 
-            /* a = 1 and ( b = 2 or c = 3 )
-             *           
-             *          and
-             *          /  \
-             *         =   or
-             *        /\    /\
-             *       a 1   =  =
-             *            /|  |\
-             *           b 2  c 3
-             */
+        public Node Build(List<IToken> tokens)
+        {
+            var filtered = tokens.Where(t => !(t is SkipToken)).ToList();
+            var addParentheses = AddParentheses(filtered);
+            var index = 0;
+            var root = new Node(null);
+            var pointer = root;
+            do
+            {
+                var current = tokens[index];
 
-            /* a = 1 and not ( b = 2 or c = 3 )
-             *           
-             *          and
-             *          /  \
-             *         =   not
-             *        /\     \
-             *       a  1     or
-             *                / \
-             *               =   =
-             *              /\   /\
-             *             b  2 c  3
-             */
+                if (current is OpenParenthesisToken)
+                {
+                    pointer.LeftChild = new Node(pointer);
+                    pointer = pointer.LeftChild;
+                }
+                else if (IsOperator(current))
+                {
+                    pointer.Token = current;
+                    pointer.RightChild = new Node(pointer);
+                    pointer = pointer.RightChild;
+                }
+                else if (IsOperand(current))
+                {
+                    pointer.Token = current;
+                    pointer = pointer.Parent;
+                }
+                else if (current is ClosingParenthesisToken)
+                {
+                    pointer = pointer.Parent;
+                }
+                index += 1;
+            } while (pointer.Parent != null);
 
-            /* a = 1 and ( not b = 2 ) or c = 3 
-            *          
-            *              or
-            *            /    \
-            *          and     =
-            *          / \     |\ 
-            *         =  not   c 3
-            *        /\    \
-            *       a  1    =
-            *              / \
-            *              b  2
-            */
+            return root;
+        }
 
+        private List<IToken> AddParentheses(List<IToken> tokens)
+        {
             throw new NotImplementedException();
+        }
+
+        private bool IsOperator(IToken token)
+        {
+            return token is NumberToken || token is FieldToken || token is StringToken;
+        }
+
+        private bool IsOperand(IToken token)
+        {
+            return token is OperatorToken;
         }
     }
 }
