@@ -4,26 +4,26 @@ using Xunit;
 
 namespace Gnome.Core.Service.Tests.RulesEngine.Tokenizer
 {
-    public class TokenizerTests
+    public class LexerTests
     {
         [Fact]
         public void Should_Return_Tokens()
         {
             var e = "comment contains  'hello world' and( x = 32.5) ";
-            var tokenizer = new Gnome.Core.Service.RulesEngine.Tokenizer.Tokenizer();
+            var tokenizer = new Lexer();
             var enumerator = new List<IToken>() {
                 new FieldToken("comment"),
                 new SkipToken(" "),
-                new OperatorToken("contains"),
+                new OperatorToken("contains", 20),
                 new SkipToken("  "),
                 new StringToken("hello world"),
                 new SkipToken(" "),
-                new OperatorToken("and"),
+                new OperatorToken("and", 10),
                 new OpenParenthesisToken(),
                 new SkipToken(" "),
                 new FieldToken("x"),
                 new SkipToken(" "),
-                new OperatorToken("="),
+                new OperatorToken("=", 20),
                 new SkipToken(" "),
                 new NumberToken("32.5"),
                 new ClosingParenthesisToken(),

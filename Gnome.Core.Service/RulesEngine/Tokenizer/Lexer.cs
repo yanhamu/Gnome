@@ -3,15 +3,26 @@ using System.Collections.Generic;
 
 namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
-    public class Tokenizer
+    public class Lexer
     {
         private readonly Dictionary<Type, ITokenProvider> providerCache;
-        private readonly HashSet<string> operatorKeywords;
+        private readonly Dictionary<string, int> operatorKeywords;
         private readonly HashSet<char> stopCharacters;
 
-        public Tokenizer()
+        public Lexer()
         {
-            this.operatorKeywords = new HashSet<string>() { "=", "!=", "<", ">", "<=", ">=", "contains", "and", "or", "not" };
+            this.operatorKeywords = new Dictionary<string, int>() {
+                { "=", 10 },
+                { "!=", 10 },
+                { "<", 10 },
+                { ">", 10 },
+                { "<=", 10 },
+                { ">=", 10 },
+                { "contains", 10 },
+                { "and", 2 },
+                { "or", 2 },
+                { "not", 2 }
+            };
             this.stopCharacters = new HashSet<char>() { ' ', '(', ')' };
             this.providerCache = InitializeProviderCache();
         }

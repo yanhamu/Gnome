@@ -5,10 +5,10 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
     public class LiteralTokenProvider : ITokenProvider
     {
-        private readonly HashSet<string> operatorKeywords;
+        private readonly Dictionary<string, int> operatorKeywords;
         private readonly HashSet<char> stopCharacters;
 
-        public LiteralTokenProvider(HashSet<string> operatorKeywords, HashSet<char> stopCharacters)
+        public LiteralTokenProvider(Dictionary<string, int> operatorKeywords, HashSet<char> stopCharacters)
         {
             this.operatorKeywords = operatorKeywords;
             this.stopCharacters = stopCharacters;
@@ -38,8 +38,8 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
         private IToken GetToken(string expression, int startIndex, int charcount)
         {
             var value = expression.Substring(startIndex, charcount);
-            return operatorKeywords.Contains(value)
-                ? (IToken)new OperatorToken(value)
+            return operatorKeywords.ContainsKey(value)
+                ? (IToken)new OperatorToken(value, operatorKeywords[value])
                 : new FieldToken(value);
         }
     }

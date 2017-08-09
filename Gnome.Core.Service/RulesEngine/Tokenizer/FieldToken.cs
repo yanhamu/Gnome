@@ -1,6 +1,6 @@
 ﻿namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
-    public class FieldToken : IToken
+    public class FieldToken : IToken, IOperand
     {
         public string Value { get; }
         public FieldToken(string value)

@@ -10,7 +10,7 @@ namespace Gnome.Core.Service.Tests.RulesEngine.Tokenizer
         [Fact]
         public void Should_Return_FieldToken()
         {
-            var provider = new LiteralTokenProvider(new HashSet<string>(), new HashSet<char>());
+            var provider = new LiteralTokenProvider(OperatorKeywords.Empty, StopCahracters.Empty);
             var expression = "name";
             var result = provider.GetToken(0, expression);
 
@@ -23,7 +23,7 @@ namespace Gnome.Core.Service.Tests.RulesEngine.Tokenizer
         [Fact]
         public void Should_Return_FieldToken_At_End()
         {
-            var provider = new LiteralTokenProvider(new HashSet<string>(), new HashSet<char>());
+            var provider = new LiteralTokenProvider(OperatorKeywords.Empty, StopCahracters.Empty);
             var expression = "name";
             var result = provider.GetToken(0, expression);
 
@@ -36,7 +36,7 @@ namespace Gnome.Core.Service.Tests.RulesEngine.Tokenizer
         [Fact]
         public void Should_Return_OperatorToken()
         {
-            var provider = new LiteralTokenProvider(new HashSet<string>() { "contains" }, new HashSet<char>());
+            var provider = new LiteralTokenProvider(OperatorKeywords.Basic, StopCahracters.Empty);
             var expression = "contains";
             var result = provider.GetToken(0, expression);
 
@@ -49,7 +49,7 @@ namespace Gnome.Core.Service.Tests.RulesEngine.Tokenizer
         [Fact]
         public void Should_Return_OperatorToken_When_Stop_Token_Appears()
         {
-            var provider = new LiteralTokenProvider(new HashSet<string>() { "contains" }, new HashSet<char>() { '(' });
+            var provider = new LiteralTokenProvider(OperatorKeywords.Basic, StopCahracters.Basic);
             var expression = "contains(";
             var result = provider.GetToken(0, expression);
 
@@ -62,9 +62,21 @@ namespace Gnome.Core.Service.Tests.RulesEngine.Tokenizer
         [Fact]
         public void Should_Throw_ArgumentException_When_Invalid_Input()
         {
-            var provider = new LiteralTokenProvider(new HashSet<string>(), new HashSet<char>());
+            var provider = new LiteralTokenProvider(OperatorKeywords.Empty, StopCahracters.Empty);
             var expression = " name";
             Assert.Throws<ArgumentException>(() => provider.GetToken(0, expression));
+        }
+
+        private static class OperatorKeywords
+        {
+            public static Dictionary<string, int> Empty { get; } = new Dictionary<string, int>();
+            public static Dictionary<string, int> Basic { get; } = new Dictionary<string, int>() { { "contains", 10 } };
+        }
+
+        private static class StopCahracters
+        {
+            public static HashSet<char> Empty { get; } = new HashSet<char>();
+            public static HashSet<char> Basic { get; } = new HashSet<char>() { '(' };
         }
     }
 }

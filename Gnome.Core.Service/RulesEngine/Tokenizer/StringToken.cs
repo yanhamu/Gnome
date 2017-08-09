@@ -1,6 +1,6 @@
 ﻿namespace Gnome.Core.Service.RulesEngine.Tokenizer
 {
-    public class StringToken : IToken
+    public class StringToken : IOperand
     {
         public StringToken(string value)
         {
