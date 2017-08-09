@@ -7,5 +7,9 @@
         {
             this.Value = "(";
         }
+        public override string ToString()
+        {
+            return Value;
+        }
     }
 }

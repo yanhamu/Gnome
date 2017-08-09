@@ -11,7 +11,7 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
 
         public Tokenizer()
         {
-            this.operatorKeywords = new HashSet<string>() { "=", "!=", "<", ">", "<=", ">=", "contains", "and", "or" };
+            this.operatorKeywords = new HashSet<string>() { "=", "!=", "<", ">", "<=", ">=", "contains", "and", "or", "not" };
             this.stopCharacters = new HashSet<char>() { ' ', '(', ')' };
             this.providerCache = InitializeProviderCache();
         }

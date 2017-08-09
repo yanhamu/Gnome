@@ -7,63 +7,83 @@ namespace Gnome.Core.Service.RulesEngine.AST
 {
     public class ParseTreeBuilder
     {
-        private readonly ExpressionFactory expressionFactory;
-
-        public ParseTreeBuilder(ExpressionFactory expressionFactory)
-        {
-            this.expressionFactory = expressionFactory;
-        }
-
         public Node Build(List<IToken> tokens)
         {
             var filtered = tokens.Where(t => !(t is SkipToken)).ToList();
-            var addParentheses = AddParentheses(filtered);
             var index = 0;
             var root = new Node(null);
             var pointer = root;
             do
             {
-                var current = tokens[index];
+                var current = filtered[index];
 
                 if (current is OpenParenthesisToken)
                 {
-                    pointer.LeftChild = new Node(pointer);
-                    pointer = pointer.LeftChild;
+                    var node = new Node(pointer);
+                    pointer.AddChild(node);
+
+                    pointer = node;
                 }
                 else if (IsOperator(current))
                 {
-                    pointer.Token = current;
-                    pointer.RightChild = new Node(pointer);
-                    pointer = pointer.RightChild;
+                    if (pointer.Token != null)
+                    {
+                        var node = new Node(null) { Token = current };
+                        if (pointer.Parent == null)
+                        {
+                            pointer.Parent = node;
+                            node.AddChild(pointer);
+
+                            root = node;
+                            pointer = node;
+                        }
+                        else
+                        {
+                            var parent = pointer.Parent;
+                            pointer.Parent = node;
+                            node.AddChild(pointer);
+
+                            node.Parent = parent;
+                            if (parent.Left == pointer)
+                            {
+                                parent.Left = node;
+                            }
+                            else
+                            {
+                                parent.Right = node;
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        pointer.Token = current;
+                    }
                 }
                 else if (IsOperand(current))
                 {
-                    pointer.Token = current;
-                    pointer = pointer.Parent;
+                    var node = new Node(pointer);
+                    node.Token = current;
+                    pointer.AddChild(node);
                 }
                 else if (current is ClosingParenthesisToken)
                 {
                     pointer = pointer.Parent;
                 }
                 index += 1;
-            } while (pointer.Parent != null);
+            } while (index < filtered.Count);
 
             return root;
         }
 
-        private List<IToken> AddParentheses(List<IToken> tokens)
-        {
-            throw new NotImplementedException();
-        }
-
         private bool IsOperator(IToken token)
         {
-            return token is NumberToken || token is FieldToken || token is StringToken;
+            return token is OperatorToken;
         }
 
         private bool IsOperand(IToken token)
         {
-            return token is OperatorToken;
+            return token is NumberToken || token is FieldToken || token is StringToken;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
             var value = expression.Substring(startIndex, charcount);
             return operatorKeywords.Contains(value)
                 ? (IToken)new OperatorToken(value)
-                : (IToken)new FieldToken(value);
+                : new FieldToken(value);
         }
     }
 }
