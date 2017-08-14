@@ -28,7 +28,8 @@ namespace Gnome.Core.Service.RulesEngine.AST
                 {
                     while (operators.Count > 0
                         && operators.Peek() is IOperator top
-                        && top.Precedence >= o.Precedence)
+                        && top.Precedence >= o.Precedence
+                        && top.Associativity == Associativity.Left)
                     {
                         output.Enqueue(operators.Pop());
                     }
@@ -39,9 +40,9 @@ namespace Gnome.Core.Service.RulesEngine.AST
                     operators.Push(openParentheses);
                 else if (token is ClosingParenthesisToken closingParentheses)
                 {
-                    while (operators.Peek() is OpenParenthesisToken matchingOpenParentheses)
+                    while (!(operators.Peek() is OpenParenthesisToken))
                         output.Enqueue(operators.Pop());
-                    output.Enqueue(operators.Pop());
+                    operators.Pop();
                 }
             }
             while (operators.Count > 0)

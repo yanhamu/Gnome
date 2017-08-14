@@ -6,22 +6,22 @@ namespace Gnome.Core.Service.RulesEngine.Tokenizer
     public class Lexer
     {
         private readonly Dictionary<Type, ITokenProvider> providerCache;
-        private readonly Dictionary<string, int> operatorKeywords;
+        private readonly Dictionary<string, OperatorToken> operatorKeywords;
         private readonly HashSet<char> stopCharacters;
 
         public Lexer()
         {
-            this.operatorKeywords = new Dictionary<string, int>() {
-                { "=", 10 },
-                { "!=", 10 },
-                { "<", 10 },
-                { ">", 10 },
-                { "<=", 10 },
-                { ">=", 10 },
-                { "contains", 10 },
-                { "and", 2 },
-                { "or", 2 },
-                { "not", 2 }
+            this.operatorKeywords = new Dictionary<string, OperatorToken>() {
+                { "=", new OperatorToken("=", 10, Associativity.Left) },
+                { "!=", new OperatorToken("!=", 10, Associativity.Left) },
+                { "<", new OperatorToken("<", 10, Associativity.Left)},
+                { ">", new OperatorToken(">", 10, Associativity.Left) },
+                { "<=", new OperatorToken("<=", 10, Associativity.Left) },
+                { ">=", new OperatorToken(">=", 10, Associativity.Left)},
+                { "contains", new OperatorToken("contains", 10, Associativity.Left) },
+                { "and", new OperatorToken("and", 2, Associativity.Left) },
+                { "or", new OperatorToken("or", 2, Associativity.Left) },
+                { "not", new OperatorToken("not", 5, Associativity.Right) }
             };
             this.stopCharacters = new HashSet<char>() { ' ', '(', ')' };
             this.providerCache = InitializeProviderCache();

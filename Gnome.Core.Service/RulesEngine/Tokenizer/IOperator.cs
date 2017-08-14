@@ -3,5 +3,6 @@
     public interface IOperator : IToken
     {
         int Precedence { get; }
+        Associativity Associativity { get; }
     }
 }

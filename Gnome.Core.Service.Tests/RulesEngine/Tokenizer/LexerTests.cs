@@ -7,10 +7,34 @@ namespace Gnome.Core.Service.Tests.RulesEngine.Tokenizer
     public class LexerTests
     {
         [Fact]
+        public void Should_Return_Three_Tokens()
+        {
+            var expression = "a != b";
+            var lexer = new Lexer();
+            var enumerator = new List<IToken>() {
+                new FieldToken("a"),
+                new SkipToken(" "),
+                new OperatorToken("!=",20),
+                new SkipToken(" "),
+                new FieldToken("b")
+            }.GetEnumerator();
+
+            enumerator.MoveNext();
+            foreach (var token in lexer.GetTokens(expression))
+            {
+                var expected = enumerator.Current;
+                var actual = token;
+
+                AssertToken(expected, actual);
+                enumerator.MoveNext();
+            }
+        }
+
+        [Fact]
         public void Should_Return_Tokens()
         {
             var e = "comment contains  'hello world' and( x = 32.5) ";
-            var tokenizer = new Lexer();
+            var lexer = new Lexer();
             var enumerator = new List<IToken>() {
                 new FieldToken("comment"),
                 new SkipToken(" "),
@@ -31,7 +55,7 @@ namespace Gnome.Core.Service.Tests.RulesEngine.Tokenizer
             }.GetEnumerator();
 
             enumerator.MoveNext();
-            foreach (var token in tokenizer.GetTokens(e))
+            foreach (var token in lexer.GetTokens(e))
             {
                 var expected = enumerator.Current;
                 var actual = token;
