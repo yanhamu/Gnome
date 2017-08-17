@@ -5,11 +5,11 @@ using System;
 
 namespace Gnome.Core.Service.RulesEngine.AST
 {
-    public class Parser
+    public class ShuntingYardParser
     {
         private readonly Lexer lexer;
 
-        public Parser(Lexer lexer)
+        public ShuntingYardParser(Lexer lexer)
         {
             this.lexer = lexer;
         }

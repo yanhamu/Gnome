@@ -5,13 +5,13 @@ using Xunit;
 
 namespace Gnome.Core.Service.Tests.RulesEngine.AST
 {
-    public class ParserTests
+    public class ShuntingYardParserTests
     {
-        private Parser parser;
+        private ShuntingYardParser parser;
 
-        public ParserTests()
+        public ShuntingYardParserTests()
         {
-            this.parser = new Parser(new Lexer());
+            this.parser = new ShuntingYardParser(new Lexer());
         }
 
         [Fact]
