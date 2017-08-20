@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\app\account\account-detail.js">
+    <!--<Content Include="wwwroot\app\account\account-detail.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Include="wwwroot\app\category\category-detail.js" />
@@ -21,7 +21,7 @@
     <Content Include="wwwroot\app\transactions\transaction-detail.js" />
     <Content Include="wwwroot\app\transactions\transaction-filter.js" />
     <Content Include="wwwroot\app\transactions\transaction-list.js" />
-    <Content Include="wwwroot\app\transactions\transaction-manager.js" />
+    <Content Include="wwwroot\app\transactions\transaction-manager.js" />-->
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.6.0" />
