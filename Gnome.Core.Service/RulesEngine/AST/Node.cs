@@ -1,22 +1,17 @@
-﻿using Gnome.Core.Service.RulesEngine.Tokenizer;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Gnome.Core.Service.RulesEngine.AST
 {
-    public class Node
+    public abstract class Node<T>
     {
-        public IToken Token { get; }
-
-        public LinkedList<Node> Children { get; set; } = new LinkedList<Node>();
-
-        public Node(IToken token)
+        public Node(T value)
         {
-            this.Token = token;
+            this.Value = value;
+            this.Children = new LinkedList<Node<T>>();
         }
 
-        public void AddChild(Node node)
-        {
-            Children.AddFirst(node);
-        }
+        public T Value { get; }
+        public LinkedList<Node<T>> Children { get; }
+        public bool IsLeaf { get { return Children.Count == 0; } }
     }
 }

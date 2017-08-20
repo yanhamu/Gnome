@@ -6,18 +6,18 @@ namespace Gnome.Core.Service.RulesEngine.AST
 {
     public class AbstractSyntaxTreeParser
     {
-        public Node Build(IEnumerable<IToken> tokens)
+        public TokenNode Build(IEnumerable<IToken> tokens)
         {
-            var nodes = new Stack<Node>();
+            var nodes = new Stack<TokenNode>();
             foreach (var token in tokens)
             {
                 switch (token)
                 {
                     case IOperand operand:
-                        nodes.Push(new Node(operand));
+                        nodes.Push(new TokenNode(operand));
                         break;
                     case IOperator @operator:
-                        var o = new Node(@operator);
+                        var o = new TokenNode(@operator);
                         while (nodes.Count != 0)
                             o.AddChild(nodes.Pop());
                         nodes.Push(o);

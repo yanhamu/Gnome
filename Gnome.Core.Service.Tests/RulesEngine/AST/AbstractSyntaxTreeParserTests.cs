@@ -15,9 +15,9 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
             var treeBuilder = new AbstractSyntaxTreeParser();
             var root = treeBuilder.Build(tokens);
 
-            Assert.Equal(tokens[2], root.Token);
-            Assert.Equal(tokens[0], root.Children.First.Value.Token);
-            Assert.Equal(tokens[1], root.Children.Last.Value.Token);
+            Assert.Equal(tokens[2], root.Value);
+            Assert.Equal(tokens[0], root.Children.First.Value.Value);
+            Assert.Equal(tokens[1], root.Children.Last.Value.Value);
         }
     }
 }
