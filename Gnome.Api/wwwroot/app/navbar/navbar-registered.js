@@ -14,8 +14,15 @@ const nr = Vue.component('navbar-registered', {
                 <li>
                     <router-link to="/accounts">accounts</router-link>
                 </li>
-                <li>
-                    <router-link to="/reports">reports</router-link>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        reports <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">basic aggregation report</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">configuration</a></li>
+                    </ul>
                 </li>
                 <li>
                     <router-link to="/categories">categories</router-link>
