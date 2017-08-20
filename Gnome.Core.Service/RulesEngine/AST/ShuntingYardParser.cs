@@ -1,7 +1,6 @@
 ﻿using Gnome.Core.Service.RulesEngine.Tokenizer;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace Gnome.Core.Service.RulesEngine.AST
 {

@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RulesEngine\AST\SyntaxNodes\**" />
+    <EmbeddedResource Remove="RulesEngine\AST\SyntaxNodes\**" />
+    <None Remove="RulesEngine\AST\SyntaxNodes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.1" />
   </ItemGroup>
@@ -12,10 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Gnome.Core.DataAccess\Gnome.Core.DataAccess.csproj" />
     <ProjectReference Include="..\Gnome.Core.Model\Gnome.Core.Model.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="RulesEngine\AST\SyntaxNodes\" />
   </ItemGroup>
 
 </Project>
