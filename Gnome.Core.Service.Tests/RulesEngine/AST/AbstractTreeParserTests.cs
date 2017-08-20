@@ -5,14 +5,14 @@ using Xunit;
 
 namespace Gnome.Core.Service.Tests.RulesEngine.AST
 {
-    public class AbstractSyntaxTreeParserTests
+    public class AbstractTreeParserTests
     {
         [Fact]
         public void Should_Return_Simple_Tree()
         {
             var tokens = new List<IToken>() { new NumberToken("1"), new NumberToken("2"), new OperatorToken("+", 10) };
 
-            var treeBuilder = new AbstractSyntaxTreeParser();
+            var treeBuilder = new AbstractTreeParser();
             var root = treeBuilder.Build(tokens);
 
             Assert.Equal(tokens[2], root.Value);
