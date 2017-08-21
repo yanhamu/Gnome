@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Gnome.Core.Service.RulesEngine.AST
 {
-    public class AbstractTreeParser
+    public class TreeParser
     {
         public TokenNode Build(IEnumerable<IToken> tokens)
         {
