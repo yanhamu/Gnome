@@ -1,4 +1,4 @@
-﻿CREATE TABLE [fio].[fio_transaction]
+﻿CREATE TABLE [fio_transaction]
 (
 	[id] int identity(1,1) not null primary key,
 	[account_id] int not null,

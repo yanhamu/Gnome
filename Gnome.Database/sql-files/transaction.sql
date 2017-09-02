@@ -1,6 +1,6 @@
-﻿CREATE TABLE [dbo].[transaction]
+﻿CREATE TABLE [transaction]
 (
-	[id] uniqueidentifier NOT NULL PRIMARY KEY,
+	[id] uniqueidentifier not null primary key,
 	[account_id] int not null,
 	[date] datetime not null,
 	[amount] decimal(18,2) not null,

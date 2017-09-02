@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Gnome.Database
@@ -7,16 +8,24 @@ namespace Gnome.Database
     {
         private readonly SqliteConnection sqlConnection;
         private readonly string sqlFilePath;
+        private List<string> createTableFiles { get; }
 
         public Initializer(SqliteConnection sqlConnection, string sqlFilePath)
         {
             this.sqlConnection = sqlConnection;
             this.sqlFilePath = sqlFilePath;
+            this.createTableFiles = new List<string>() {
+                "user",
+                "fio_account",
+                "category",
+                "transaction",
+                "category_transaction"
+            };
         }
 
         public void Initialize()
         {
-            CreateTable("user");
+            createTableFiles.ForEach(f => CreateTable(f));
         }
 
         private void CreateTable(string fileName)

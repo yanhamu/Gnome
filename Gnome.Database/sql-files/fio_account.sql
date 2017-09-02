@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[fio_account]
+﻿CREATE TABLE [fio_account]
 (
 	[id] INT NOT NULL identity(1,1) PRIMARY KEY,
 	userid uniqueidentifier not null,
