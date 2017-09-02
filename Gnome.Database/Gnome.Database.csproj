@@ -15,9 +15,6 @@
     <None Update="sql-files\category_transaction.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="sql-files\FioSchema.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="sql-files\fio_account.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

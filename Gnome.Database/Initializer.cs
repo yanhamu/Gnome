@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Gnome.Database
 {
@@ -23,9 +24,29 @@ namespace Gnome.Database
             };
         }
 
-        public void Initialize()
+        public void Initialize(bool dropIfExists)
         {
-            createTableFiles.ForEach(f => CreateTable(f));
+            if (dropIfExists)
+            {
+                createTableFiles
+                    .AsEnumerable()
+                    .Reverse()
+                    .Where(f => ExistTable(f))
+                    .ToList()
+                    .ForEach(f => DropTable(f));
+            }
+
+            createTableFiles
+                .ForEach(f => CreateTable(f));
+        }
+
+        private void DropTable(string tableName)
+        {
+            using (var command = sqlConnection.CreateCommand())
+            {
+                command.CommandText = "drop table " + tableName;
+                command.ExecuteNonQuery();
+            }
         }
 
         private void CreateTable(string fileName)
@@ -34,6 +55,17 @@ namespace Gnome.Database
             {
                 command.CommandText = File.ReadAllText(sqlFilePath + fileName + ".sql");
                 command.ExecuteNonQuery();
+            }
+        }
+
+        private bool ExistTable(string tableName)
+        {
+            using (var command = sqlConnection.CreateCommand())
+            {
+                command.CommandText = "select count(*) as exist from sqlite_master where type = 'table' and name = @tn";
+                command.Parameters.Add(new SqliteParameter("tn", tableName));
+                var result = command.ExecuteScalar();
+                return (System.Int64)result == 1;
             }
         }
     }
