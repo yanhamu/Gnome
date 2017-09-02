@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Gnome.Api.AuthenticationMiddleware;
 using Gnome.Api.Configuration;
+using Gnome.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,7 @@ namespace Gnome.Api
             return container.Resolve<IServiceProvider>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Initializer initializer)
         {
             loggerFactory.AddConsole();
 
@@ -58,6 +59,8 @@ namespace Gnome.Api
             }
 
             var options = GetTokenProviderOptions(signingKey);
+
+            initializer.Initialize(); //TODO if needed
 
             app.UseStaticFiles();
 

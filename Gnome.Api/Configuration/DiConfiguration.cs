@@ -26,7 +26,12 @@ namespace Gnome.Api.Configuration
             services.AddMediatR(CoreServiceAssembly);
 
             var containerBuilder = ContainerInitializer.CreateContainer();
-            containerBuilder.Register(c => new SqliteConnection(configuration["db:dev"]));
+            containerBuilder.Register(c =>
+            {
+                var connection = new SqliteConnection(configuration["db:dev"]);
+                connection.Open();
+                return connection;
+            });
             containerBuilder.RegisterSource(new ContravariantRegistrationSource());
 
             containerBuilder.RegisterAssemblyTypes(CoreServiceAssembly)

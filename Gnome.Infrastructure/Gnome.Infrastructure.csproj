@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Gnome.Core.Reports\Gnome.Core.Reports.csproj" />
     <ProjectReference Include="..\Gnome.Core.Service\Gnome.Core.Service.csproj" />
+    <ProjectReference Include="..\Gnome.Database\Gnome.Database.csproj" />
   </ItemGroup>
 
 </Project>
