@@ -6,10 +6,12 @@ namespace Gnome.Database
     public class Initializer
     {
         private readonly SqliteConnection sqlConnection;
+        private readonly string sqlFilePath;
 
-        public Initializer(SqliteConnection sqlConnection)
+        public Initializer(SqliteConnection sqlConnection, string sqlFilePath)
         {
             this.sqlConnection = sqlConnection;
+            this.sqlFilePath = sqlFilePath;
         }
 
         public void Initialize()
@@ -21,7 +23,7 @@ namespace Gnome.Database
         {
             using (var command = sqlConnection.CreateCommand())
             {
-                command.CommandText = File.ReadAllText("bin\\Debug\\netcoreapp1.1\\sql-files\\" + fileName + ".sql");
+                command.CommandText = File.ReadAllText(sqlFilePath + fileName + ".sql");
                 command.ExecuteNonQuery();
             }
         }

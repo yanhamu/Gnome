@@ -2,6 +2,7 @@
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Features.Variance;
 using Gnome.Core.DataAccess;
+using Gnome.Database;
 using Gnome.Infrastructure;
 using MediatR;
 using Microsoft.Data.Sqlite;
@@ -41,6 +42,11 @@ namespace Gnome.Api.Configuration
             containerBuilder.RegisterAssemblyTypes(CoreServiceAssembly)
                 .Where(t => t.Name.EndsWith("Factory"))
                 .AsImplementedInterfaces();
+
+            containerBuilder
+                .RegisterType<Initializer>()
+                .AsSelf()
+                .WithParameter("sqlFilePath", "bin\\Debug\\netcoreapp1.1\\sql-files\\");
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();

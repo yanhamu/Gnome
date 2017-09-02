@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Gnome.Core.DataAccess;
 using Gnome.Core.Service;
-using Gnome.Database;
 using System.Reflection;
 
 namespace Gnome.Infrastructure
@@ -31,9 +30,6 @@ namespace Gnome.Infrastructure
             builder.RegisterAssemblyTypes(CoreRepositoryAssembly)
                 .Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces();
-
-            builder.RegisterType<Initializer>()
-                .AsSelf();
 
             return builder;
         }
