@@ -1,14 +1,15 @@
 ﻿using Gnome.Core.DataAccess;
 using Gnome.Core.Model;
+using System;
 
 namespace Gnome.Core.Service.Categories
 {
     public interface ICategoryInitializeService
     {
-        void Initialize(int userId);
+        void Initialize(Guid userId);
     }
 
-    public class CategoryInitializeService: ICategoryInitializeService
+    public class CategoryInitializeService : ICategoryInitializeService
     {
         private readonly ICategoryRepository repository;
 
@@ -17,7 +18,7 @@ namespace Gnome.Core.Service.Categories
             this.repository = repository;
         }
 
-        public void Initialize(int userId)
+        public void Initialize(Guid userId)
         {
             var root = repository.Create(new Category()
             {

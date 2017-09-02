@@ -1,14 +1,15 @@
 ﻿using MediatR;
+using System;
 
 namespace Gnome.Api.Services.Accounts.Requests
 {
     public class CreateAccount : IRequest<Account>
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public string Token { get; set; }
         public string Name { get; set; }
 
-        public CreateAccount(int userId, string token, string name)
+        public CreateAccount(Guid userId, string token, string name)
         {
             this.UserId = userId;
             this.Name = name;

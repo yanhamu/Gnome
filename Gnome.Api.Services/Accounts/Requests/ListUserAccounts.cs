@@ -1,13 +1,14 @@
 ﻿using MediatR;
+using System;
 using System.Collections.Generic;
 
 namespace Gnome.Api.Services.Accounts.Requests
 {
     public class ListUserAccounts : IRequest<List<Account>>
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
-        public ListUserAccounts(int userId)
+        public ListUserAccounts(Guid userId)
         {
             this.UserId = userId;
         }

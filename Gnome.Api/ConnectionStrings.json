@@ -1,5 +1,5 @@
 ﻿{
   "db": {
-    "dev": "Data Source=.\\sqlexpress;Initial Catalog=gnome;Integrated Security=True;Connect Timeout=10;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+    "dev": "Data Source=gnome.db;"
   }
 }

@@ -1,4 +1,5 @@
 ﻿using Gnome.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,14 +7,14 @@ namespace Gnome.Core.DataAccess
 {
     public interface ICategoryRepository : IGenericRepository<Category>
     {
-        List<Category> GetAll(int userId);
+        List<Category> GetAll(Guid userId);
     }
 
     public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
     {
         public CategoryRepository(GnomeDb context) : base(context) { }
 
-        public List<Category> GetAll(int userId)
+        public List<Category> GetAll(Guid userId)
         {
             return context.Categories.Where(c => c.UserId == userId).ToList();
         }

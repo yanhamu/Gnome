@@ -1,9 +1,11 @@
-﻿namespace Gnome.Core.Model
+﻿using System;
+
+namespace Gnome.Core.Model
 {
     public class Category
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; }
         public int? ParentId { get; set; }
         public Category Parent { get; set; }

@@ -1,13 +1,14 @@
 ﻿using Gnome.Core.Service.Categories;
 using MediatR;
+using System;
 
 namespace Gnome.Api.Services.Categories.Requests
 {
     public class ListCategories : IRequest<CategoryNode>
     {
-        public int UserId { get; }
+        public Guid UserId { get; }
 
-        public ListCategories(int userId)
+        public ListCategories(Guid userId)
         {
             this.UserId = userId;
         }

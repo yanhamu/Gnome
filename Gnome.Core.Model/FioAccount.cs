@@ -1,4 +1,6 @@
-﻿namespace Gnome.Core.Model
+﻿using System;
+
+namespace Gnome.Core.Model
 {
     public class FioAccount
     {
@@ -6,7 +8,7 @@
 
         public FioAccount(
             int id,
-            int userId,
+            Guid userId,
             string name,
             string token)
         {
@@ -17,7 +19,7 @@
         }
 
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; }
         public string Name { get; set; }
         public string Token { get; set; }

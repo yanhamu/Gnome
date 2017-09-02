@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
+
 namespace Gnome.Core.DataAccess
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class

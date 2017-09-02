@@ -1,11 +1,12 @@
 ﻿using Gnome.Core.Model;
+using System;
 
 namespace Gnome.Core.Service.Interfaces
 {
     public interface IUserService
     {
         bool CheckEmailAvailability(string email);
-        int CreateNew(string email, string password);
+        void CreateNew(string email, string password, Guid userId);
         User Verify(string email, string password);
     }
 }

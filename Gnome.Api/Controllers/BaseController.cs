@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Gnome.Api.Controllers
 {
     public class BaseController : Controller
     {
-        public int UserId { get { return int.Parse(HttpContext.User.FindFirst("user_id").Value); } }
+        public Guid UserId { get { return Guid.Parse(HttpContext.User.FindFirst("user_id").Value); } }
     }
 }

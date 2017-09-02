@@ -17,12 +17,12 @@ namespace Gnome.Core.Service.Tests.Categories
             var repository = Substitute.For<ICategoryRepository>();
             var categories = GetCategories();
 
-            repository.GetAll(Arg.Any<int>())
+            repository.GetAll(Arg.Any<Guid>())
                 .Returns(categories);
 
             var factory = new CategoryTreeFactory(repository);
 
-            var tree = factory.Create(0);
+            var tree = factory.Create(Guid.NewGuid());
 
             Assert.Equal(categories[0].Id, tree.Root.Id);
             Assert.Contains(tree.Root.Children.Select(c => c.Id), p => p == 1 || p == 2);
@@ -40,10 +40,10 @@ namespace Gnome.Core.Service.Tests.Categories
             var categories = GetCategories();
             categories[0].ParentId = 1; // circular reference
 
-            repository.GetAll(Arg.Any<int>())
+            repository.GetAll(Arg.Any<Guid>())
                 .Returns(categories);
 
-            Assert.Throws<ArgumentException>(() => new CategoryTreeFactory(repository).Create(0));
+            Assert.Throws<ArgumentException>(() => new CategoryTreeFactory(repository).Create(Guid.NewGuid()));
         }
 
         [Fact]
@@ -53,10 +53,10 @@ namespace Gnome.Core.Service.Tests.Categories
             var categories = GetCategories();
             categories[1].ParentId = null; // second root
 
-            repository.GetAll(Arg.Any<int>())
+            repository.GetAll(Arg.Any<Guid>())
                 .Returns(categories);
 
-            Assert.Throws<ArgumentException>(() => new CategoryTreeFactory(repository).Create(0));
+            Assert.Throws<ArgumentException>(() => new CategoryTreeFactory(repository).Create(Guid.NewGuid()));
         }
 
         public List<Category> GetCategories()

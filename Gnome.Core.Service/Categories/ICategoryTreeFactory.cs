@@ -1,7 +1,9 @@
-﻿namespace Gnome.Core.Service.Categories
+﻿using System;
+
+namespace Gnome.Core.Service.Categories
 {
     public interface ICategoryTreeFactory
     {
-        CategoryTree Create(int userId);
+        CategoryTree Create(Guid userId);
     }
 }

@@ -15,7 +15,7 @@ namespace Gnome.Core.Service.Categories
             this.categoryRepository = categoryRepository;
         }
 
-        public CategoryTree Create(int userId)
+        public CategoryTree Create(Guid userId)
         {
             var categories = categoryRepository.GetAll(userId);
 

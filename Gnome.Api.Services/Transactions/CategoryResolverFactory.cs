@@ -3,13 +3,14 @@ using Gnome.Core.Model;
 using Gnome.Core.Service.Categories;
 using Gnome.Core.Service.Search.Filters;
 using Gnome.Core.Service.Search.QueryBuilders;
+using System;
 using System.Linq;
 
 namespace Gnome.Api.Services.Transactions
 {
     public interface ICategoryResolverFactory
     {
-        CategoriesResolver Create(int userId, SingleAccountTransactionSearchFilter filter);
+        CategoriesResolver Create(Guid userId, SingleAccountTransactionSearchFilter filter);
     }
 
     public class CategoryResolverFactory : ICategoryResolverFactory
@@ -28,7 +29,7 @@ namespace Gnome.Api.Services.Transactions
             this.categoryTransactionRepository = categoryTransactionRepository;
         }
 
-        public CategoriesResolver Create(int userId, SingleAccountTransactionSearchFilter filter)
+        public CategoriesResolver Create(Guid userId, SingleAccountTransactionSearchFilter filter)
         {
             var categoryTree = categoryTreeFactory.Create(userId);
             var categoryTransactionsQuery = categoryTransactionQueryBuilderService.Filter(categoryTransactionRepository.Query, filter);

@@ -21,10 +21,10 @@ namespace Gnome.Api.Services.Users
         public void Handle(RegisterUser user)
         {
             if (this.userService.CheckEmailAvailability(user.Email) == false)
-            {
                 throw new InvalidOperationException("email already exists");
-            }
-            var userId = this.userService.CreateNew(user.Email, user.Password);
+
+            var userId = Guid.NewGuid();
+            this.userService.CreateNew(user.Email, user.Password, userId);
             categoryInitService.Initialize(userId);
         }
     }

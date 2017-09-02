@@ -1,6 +1,7 @@
 ﻿using Gnome.Core.DataAccess;
 using Gnome.Core.Model;
 using Gnome.Core.Service.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Gnome.Core.Service
@@ -25,7 +26,7 @@ namespace Gnome.Core.Service
             return repository.Find(accountId);
         }
 
-        public IEnumerable<FioAccount> List(int userId)
+        public IEnumerable<FioAccount> List(Guid userId)
         {
             return repository.GetAccounts(userId);
         }

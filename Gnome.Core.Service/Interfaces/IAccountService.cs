@@ -1,4 +1,5 @@
 ﻿using Gnome.Core.Model;
+using System;
 using System.Collections.Generic;
 
 namespace Gnome.Core.Service.Interfaces
@@ -7,7 +8,7 @@ namespace Gnome.Core.Service.Interfaces
     {
         int Create(FioAccount account);
         FioAccount Get(int accountId);
-        IEnumerable<FioAccount> List(int userId);
+        IEnumerable<FioAccount> List(Guid userId);
         void Remove(int accountId);
         FioAccount Update(int accountId, string name, string token);
     }

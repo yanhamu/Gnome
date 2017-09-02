@@ -4,10 +4,10 @@ using Autofac.Features.Variance;
 using Gnome.Core.DataAccess;
 using Gnome.Infrastructure;
 using MediatR;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
 
@@ -22,11 +22,11 @@ namespace Gnome.Api.Configuration
                 .AddJsonFile("ConnectionStrings.json")
                 .Build();
 
-            services.AddDbContext<GnomeDb>(c => c.UseSqlServer(configuration["db:dev"]));
+            services.AddDbContext<GnomeDb>(c => c.UseSqlite(configuration["db:dev"]));
             services.AddMediatR(CoreServiceAssembly);
 
             var containerBuilder = ContainerInitializer.CreateContainer();
-            containerBuilder.Register(c => new SqlConnection(configuration["db:dev"]));
+            containerBuilder.Register(c => new SqliteConnection(configuration["db:dev"]));
             containerBuilder.RegisterSource(new ContravariantRegistrationSource());
 
             containerBuilder.RegisterAssemblyTypes(CoreServiceAssembly)

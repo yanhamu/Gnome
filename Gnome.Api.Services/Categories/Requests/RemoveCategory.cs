@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System;
 
 namespace Gnome.Api.Services.Categories.Requests
 {
@@ -6,10 +7,12 @@ namespace Gnome.Api.Services.Categories.Requests
     {
         public int Id { get; }
         public bool RemoveChildren { get; }
-        public int UserId { get; }
+        public Guid UserId { get; }
 
-        public RemoveCategory(int id, bool removeChildren,
-            int userId)
+        public RemoveCategory(
+            int id,
+            bool removeChildren,
+            Guid userId)
         {
             this.Id = id;
             this.RemoveChildren = removeChildren;

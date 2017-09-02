@@ -26,16 +26,14 @@ namespace Gnome.Core.Service
             return repository.CheckEmailAvailability(email);
         }
 
-        public int CreateNew(string email, string password)
+        public void CreateNew(string email, string password, Guid userId)
         {
             var salt = securityService.GetSalt();
             var pwd = securityService.CreatePassword(password, salt);
-            var result = securityRepository.CreateNew(email, pwd, salt);
+            var result = securityRepository.CreateNew(email, pwd, salt, userId);
 
             if (result == null)
                 throw new InvalidOperationException("user was not registered");
-
-            return result.Id;
         }
 
         public User Verify(string email, string password)

@@ -22,13 +22,13 @@ namespace Gnome.Api.Controllers
             return new OkObjectResult(await mediator.Send(new ListCategories(UserId)));
         }
 
-        [HttpGet("{categoryId:int}")]
+        [HttpGet("{categoryId:Guid}")]
         public async Task<IActionResult> Get(int categoryId)
         {
             return new OkObjectResult(await mediator.Send(new GetCategory(categoryId, UserId)));
         }
 
-        [HttpPut("{categoryId:int}")]
+        [HttpPut("{categoryId:Guid}")]
         public async Task<IActionResult> Update(int categoryId, [FromBody]Category category)
         {
             return new OkObjectResult(await mediator.Send(new UpdateCategory(categoryId, category.ParentId, category.Name, category.Color)));

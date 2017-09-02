@@ -1,27 +1,28 @@
 ﻿using Dapper;
 using Gnome.Core.Model;
-using System.Data.SqlClient;
+using Microsoft.Data.Sqlite;
+using System;
 
 namespace Gnome.Core.DataAccess
 {
     public interface IUserSecurityRepository
     {
-        UserSecurity CreateNew(string email, byte[] pwd, byte[] salt);
+        UserSecurity CreateNew(string email, byte[] pwd, byte[] salt, Guid userId);
         UserSecurity GetBy(string email);
     }
 
     public class UserSecurityRepository : IUserSecurityRepository
     {
-        private readonly SqlConnection connection;
+        private readonly SqliteConnection connection;
 
-        public UserSecurityRepository(SqlConnection connection)
+        public UserSecurityRepository(SqliteConnection connection)
         {
             this.connection = connection;
         }
-        public UserSecurity CreateNew(string email, byte[] pwd, byte[] salt)
+        public UserSecurity CreateNew(string email, byte[] pwd, byte[] salt, Guid userId)
         {
-            var sql = "insert into [user] values(@email, @pwd, @salt)";
-            var result = connection.Execute(sql, new { email = email, pwd = pwd, salt = salt });
+            var sql = "insert into [user] values(@userId, @email, @pwd, @salt)";
+            var result = connection.Execute(sql, new { userId = userId, email = email, pwd = pwd, salt = salt });
             return GetBy(email);
         }
 
