@@ -23,7 +23,6 @@ namespace Gnome.Api.IntegrationTests
                 .AddJsonFile("ConnectionStrings.json")
                 .Build();
 
-            services.AddDbContext<GnomeDb>(c => c.UseSqlite(configuration["db:dev"]));
             services.AddMediatR(CoreServiceAssembly);
 
             var containerBuilder = ContainerInitializer.CreateContainer();
@@ -32,7 +31,14 @@ namespace Gnome.Api.IntegrationTests
                 var connection = new SqliteConnection(configuration["db:dev"]);
                 connection.Open();
                 return connection;
+            }).SingleInstance();
+
+            services.AddDbContext<GnomeDb>((p, b) =>
+            {
+                var connection = p.GetService<SqliteConnection>();
+                b.UseSqlite(connection);
             });
+
             containerBuilder.RegisterSource(new ContravariantRegistrationSource());
 
             containerBuilder.RegisterAssemblyTypes(CoreServiceAssembly)
@@ -47,7 +53,6 @@ namespace Gnome.Api.IntegrationTests
                 .RegisterType<Initializer>()
                 .AsSelf()
                 .WithParameter("sqlFilePath", "sql-files\\");
-            //C:\Sources\Gnome\Gnome.Api.IntegrationTests\bin\Debug\netcoreapp1.1\sql-files
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();

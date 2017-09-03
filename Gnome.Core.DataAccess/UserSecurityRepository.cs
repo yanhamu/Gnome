@@ -29,8 +29,29 @@ namespace Gnome.Core.DataAccess
         public UserSecurity GetBy(string email)
         {
             var sql = "select id, email, pwd as 'password', salt from [user] where email = @email";
-            var result = connection.QueryFirstOrDefault<UserSecurity>(sql, new { email = email });
-            return result;
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = sql;
+                command.Parameters.Add(new SqliteParameter("email", email));
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        return new UserSecurity()
+                        {
+                            Id = reader.GetGuid(0),
+                            Email = reader.GetString(1),
+                            Password = (byte[])reader[2],
+                            Salt = (byte[])reader[3]
+                        };
+                    }
+                }
+            }
+
+
+            return null;
+            // var result = connection.QueryFirstOrDefault<UserSecurity>(sql, new { email = email });
+            //return result;
         }
     }
 }
