@@ -25,7 +25,7 @@ namespace Gnome.Core.Service.Categories
                 .Where(c => c.ParentId.HasValue)
                 .ToLookup(k => k.ParentId.Value, v => v.Id);
 
-            var categoryNodes = new Dictionary<int, CategoryNode>();
+            var categoryNodes = new Dictionary<Guid, CategoryNode>();
             var root = default(CategoryNode);
 
             foreach (var currentCategory in categories)
@@ -48,7 +48,7 @@ namespace Gnome.Core.Service.Categories
                 throw new ArgumentException("there is no single root");
         }
 
-        private void SetRelations(CategoryNode parent, ILookup<int, int> parentChildren, Dictionary<int, CategoryNode> categories)
+        private void SetRelations(CategoryNode parent, ILookup<Guid, Guid> parentChildren, Dictionary<Guid, CategoryNode> categories)
         {
             var children = parentChildren[parent.Id];
             foreach (var childId in children)

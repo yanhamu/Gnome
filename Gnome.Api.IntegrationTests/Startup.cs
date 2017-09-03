@@ -3,10 +3,8 @@ using Gnome.Api.IntegrationTests;
 using Gnome.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.IO;
 
 namespace Gnome.Api
 {
@@ -22,13 +20,6 @@ namespace Gnome.Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, Initializer initializer)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("config.json")
-                .Build();
-
-            var secretKey = configuration["key"];
-
             app.UseCors(builder =>
             {
                 builder.AllowAnyOrigin();

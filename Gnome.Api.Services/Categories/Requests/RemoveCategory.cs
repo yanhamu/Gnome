@@ -5,12 +5,12 @@ namespace Gnome.Api.Services.Categories.Requests
 {
     public class RemoveCategory : INotification
     {
-        public int Id { get; }
+        public Guid Id { get; }
         public bool RemoveChildren { get; }
         public Guid UserId { get; }
 
         public RemoveCategory(
-            int id,
+            Guid id,
             bool removeChildren,
             Guid userId)
         {

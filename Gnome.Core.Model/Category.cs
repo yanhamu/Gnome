@@ -4,10 +4,10 @@ namespace Gnome.Core.Model
 {
     public class Category
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public User User { get; set; }
-        public int? ParentId { get; set; }
+        public Guid? ParentId { get; set; }
         public Category Parent { get; set; }
         public string Name { get; set; }
         public bool IsSystem { get; set; }

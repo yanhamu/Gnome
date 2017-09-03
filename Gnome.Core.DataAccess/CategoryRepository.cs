@@ -19,7 +19,7 @@ namespace Gnome.Core.DataAccess
             return context.Categories.Where(c => c.UserId == userId).ToList();
         }
 
-        public void Remove(List<int> toDelete)
+        public void Remove(List<Guid> toDelete)
         {
             var categories = context.Categories.Where(c => toDelete.Contains(c.Id)).ToList();
             categories.ForEach(c => context.Categories.Remove(c));

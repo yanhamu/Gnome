@@ -6,10 +6,10 @@ namespace Gnome.Core.Service.Interfaces
 {
     public interface IAccountService
     {
-        int Create(FioAccount account);
-        FioAccount Get(int accountId);
+        Guid Create(FioAccount account);
+        FioAccount Get(Guid accountId);
         IEnumerable<FioAccount> List(Guid userId);
-        void Remove(int accountId);
-        FioAccount Update(int accountId, string name, string token);
+        void Remove(Guid accountId);
+        FioAccount Update(Guid accountId, string name, string token);
     }
 }

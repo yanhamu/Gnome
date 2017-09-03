@@ -2,6 +2,7 @@
 using Gnome.Api.Services.Accounts.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
@@ -22,14 +23,14 @@ namespace Gnome.Api.Controllers
             return new OkObjectResult(await mediator.Send(new ListUserAccounts(UserId)));
         }
 
-        [HttpGet("{accountId:int}")]
-        public async Task<IActionResult> Get(int accountId)
+        [HttpGet("{accountId:Guid}")]
+        public async Task<IActionResult> Get(Guid accountId)
         {
             return new OkObjectResult(await mediator.Send(new GetAccount(accountId)));
         }
 
-        [HttpPut("{accountId:int}")]
-        public async Task<IActionResult> Update(int accountId, [FromBody]Account account)
+        [HttpPut("{accountId:Guid}")]
+        public async Task<IActionResult> Update(Guid accountId, [FromBody]Account account)
         {
             return new OkObjectResult(await mediator.Send(new UpdateAccount(accountId, account.Name, account.Token)));
         }
@@ -40,8 +41,8 @@ namespace Gnome.Api.Controllers
             return new OkObjectResult(await mediator.Send(new CreateAccount(UserId, account.Token, account.Name)));
         }
 
-        [HttpDelete("{accountId:int}")]
-        public async Task<IActionResult> Remove(int accountId)
+        [HttpDelete("{accountId:Guid}")]
+        public async Task<IActionResult> Remove(Guid accountId)
         {
             await mediator.Publish(new RemoveAccount(accountId));
             return new NoContentResult();

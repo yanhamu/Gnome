@@ -6,9 +6,9 @@ namespace Gnome.Api.Services.CategoryTransactions.Requests
     public class CreateCategoryTransaction : IRequest
     {
         public Guid TransactionId { get; set; }
-        public int CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
 
-        public CreateCategoryTransaction(int categoryId, Guid transactionId)
+        public CreateCategoryTransaction(Guid categoryId, Guid transactionId)
         {
             this.CategoryId = categoryId;
             this.TransactionId = transactionId;

@@ -34,7 +34,6 @@ namespace Fio.Downloader
                 var transactions = await client.GetNew();
 
                 await transactionRepository.SaveAll(account.Id, transactions.AccountStatement.TransactionList.Transactions);
-                accountRepository.SetSyncDate(account.Id, DateTime.Now);
             }
         }
 

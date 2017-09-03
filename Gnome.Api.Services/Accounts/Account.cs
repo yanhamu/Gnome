@@ -1,14 +1,16 @@
-﻿namespace Gnome.Api.Services.Accounts
+﻿using System;
+
+namespace Gnome.Api.Services.Accounts
 {
     public class Account
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Token { get; set; }
 
         public Account() { }
 
-        public Account(int id, string name, string token)
+        public Account(Guid id, string name, string token)
         {
             this.Id = id;
             this.Name = name;

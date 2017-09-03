@@ -6,11 +6,11 @@ namespace Gnome.Api.Services.Categories.Requests
 {
     public class CreateCategory : IRequest<Category>
     {
-        public int ParentId { get; set; }
+        public Guid ParentId { get; set; }
         public string Name { get; set; }
         public Guid UserId { get; set; }
 
-        public CreateCategory(int parentId, string name, Guid userId)
+        public CreateCategory(Guid parentId, string name, Guid userId)
         {
             this.ParentId = parentId;
             this.Name = name;

@@ -2,9 +2,9 @@
 using Gnome.Core.DataAccess;
 using Gnome.Core.Service.Interfaces;
 using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace Gnome.Api.Services.Accounts
 {
@@ -47,7 +47,8 @@ namespace Gnome.Api.Services.Accounts
 
         public Account Handle(CreateAccount message)
         {
-            var created = repository.Create(new Core.Model.FioAccount(0, message.UserId, message.Name, message.Token));
+            var id = Guid.NewGuid();
+            var created = repository.Create(new Core.Model.FioAccount(id, message.UserId, message.Name, message.Token));
             repository.Save();
             return new Account(created.Id, created.Name, created.Token);
         }

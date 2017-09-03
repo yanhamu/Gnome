@@ -46,7 +46,8 @@ namespace Gnome.Api.IntegrationTests
             containerBuilder
                 .RegisterType<Initializer>()
                 .AsSelf()
-                .WithParameter("sqlFilePath", "bin\\Debug\\netcoreapp1.1\\sql-files\\");
+                .WithParameter("sqlFilePath", "sql-files\\");
+            //C:\Sources\Gnome\Gnome.Api.IntegrationTests\bin\Debug\netcoreapp1.1\sql-files
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();

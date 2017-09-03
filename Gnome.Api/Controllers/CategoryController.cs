@@ -2,6 +2,7 @@
 using Gnome.Core.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
@@ -23,13 +24,13 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpGet("{categoryId:Guid}")]
-        public async Task<IActionResult> Get(int categoryId)
+        public async Task<IActionResult> Get(Guid categoryId)
         {
             return new OkObjectResult(await mediator.Send(new GetCategory(categoryId, UserId)));
         }
 
         [HttpPut("{categoryId:Guid}")]
-        public async Task<IActionResult> Update(int categoryId, [FromBody]Category category)
+        public async Task<IActionResult> Update(Guid categoryId, [FromBody]Category category)
         {
             return new OkObjectResult(await mediator.Send(new UpdateCategory(categoryId, category.ParentId, category.Name, category.Color)));
         }

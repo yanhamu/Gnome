@@ -1,14 +1,15 @@
 ﻿using MediatR;
+using System;
 
 namespace Gnome.Api.Services.Accounts.Requests
 {
     public class RemoveAccount : INotification
     {
-        public RemoveAccount(int accountId)
+        public Guid Id { get; }
+
+        public RemoveAccount(Guid accountId)
         {
             this.Id = accountId;
         }
-
-        public int Id { get; }
     }
 }

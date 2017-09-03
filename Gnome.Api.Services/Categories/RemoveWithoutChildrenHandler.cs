@@ -2,6 +2,7 @@
 using Gnome.Core.DataAccess;
 using Gnome.Core.Service.Categories;
 using MediatR;
+using System;
 using System.Collections.Generic;
 
 namespace Gnome.Api.Services.Categories
@@ -33,7 +34,7 @@ namespace Gnome.Api.Services.Categories
             foreach (var child in node.Children)
                 mediator.Send(new UpdateCategory(child.Id, node.ParentId, child.Name, child.Color));
 
-            categoryRepository.Remove(new List<int>() { node.Id });
+            categoryRepository.Remove(new List<Guid>() { node.Id });
         }
     }
 }

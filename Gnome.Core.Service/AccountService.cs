@@ -15,13 +15,13 @@ namespace Gnome.Core.Service
             this.repository = repository;
         }
 
-        public int Create(FioAccount account)
+        public Guid Create(FioAccount account)
         {
             var created = repository.Create(account);
             return created.Id;
         }
 
-        public FioAccount Get(int accountId)
+        public FioAccount Get(Guid accountId)
         {
             return repository.Find(accountId);
         }
@@ -31,13 +31,13 @@ namespace Gnome.Core.Service
             return repository.GetAccounts(userId);
         }
 
-        public void Remove(int accountId)
+        public void Remove(Guid accountId)
         {
             repository.Remove(accountId);
             repository.Save();
         }
 
-        public FioAccount Update(int accountId, string name, string token)
+        public FioAccount Update(Guid accountId, string name, string token)
         {
             var fioAccount = repository.Find(accountId);
 

@@ -8,10 +8,10 @@ namespace Gnome.Api.Services.Transactions
     public class CategoriesResolver
     {
         private readonly CategoryTree tree;
-        private readonly ILookup<Guid, int> transactionCategories;
+        private readonly ILookup<Guid, Guid> transactionCategories;
         private Dictionary<CategoryNode, Model.Category> categoryCache = new Dictionary<CategoryNode, Model.Category>();
 
-        public CategoriesResolver(CategoryTree tree, ILookup<Guid, int> transactionCategories)
+        public CategoriesResolver(CategoryTree tree, ILookup<Guid, Guid> transactionCategories)
         {
             this.tree = tree;
             this.transactionCategories = transactionCategories;

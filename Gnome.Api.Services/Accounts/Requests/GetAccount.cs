@@ -1,11 +1,12 @@
 ﻿using MediatR;
+using System;
 
 namespace Gnome.Api.Services.Accounts.Requests
 {
     public class GetAccount : IRequest<Account>
     {
-        public int AccountId { get; set; }
-        public GetAccount(int accountId)
+        public Guid AccountId { get; set; }
+        public GetAccount(Guid accountId)
         {
             this.AccountId = accountId;
         }
