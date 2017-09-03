@@ -2,6 +2,7 @@
 using Gnome.Core.Reports.AggregateReport.Model;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
+using System;
 
 namespace Gnome.Api.Services.Reports
 {
@@ -9,9 +10,9 @@ namespace Gnome.Api.Services.Reports
     {
         public Interval Interval { get; set; }
         public int DaysPerAggregate { get; set; }
-        public int AccountId { get; set; }
+        public Guid AccountId { get; set; }
 
-        public GetSingleAccountAggregateReport(Interval interval, int daysPerAggregate, int accountId)
+        public GetSingleAccountAggregateReport(Interval interval, int daysPerAggregate, Guid accountId)
         {
             this.Interval = interval;
             this.DaysPerAggregate = daysPerAggregate;

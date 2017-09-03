@@ -16,7 +16,7 @@ namespace Gnome.Core.Reports.AggregateReport
             this.repository = repository;
         }
 
-        public AggregateEnvelope CreateReport(int accountId, Interval interval, int numberOfDaysToAggregate)
+        public AggregateEnvelope CreateReport(Guid accountId, Interval interval, int numberOfDaysToAggregate)
         {
             var report = new AggregateEnvelope();
 
@@ -26,7 +26,7 @@ namespace Gnome.Core.Reports.AggregateReport
             return report;
         }
 
-        private List<Aggregate> GetAggregates(int accountId, Interval interval, int numberOfDaysToAggregate)
+        private List<Aggregate> GetAggregates(Guid accountId, Interval interval, int numberOfDaysToAggregate)
         {
             var startDate = interval.From.Value.AddDays(-numberOfDaysToAggregate).Date;
 

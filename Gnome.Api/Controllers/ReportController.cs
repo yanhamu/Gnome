@@ -17,7 +17,7 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpGet("{accountId:int}")]
-        public async Task<IActionResult> AggregateReport(int accountId)
+        public async Task<IActionResult> AggregateReport(Guid accountId)
         {
             var result = await mediator.Send(new GetSingleAccountAggregateReport(
                 new Core.Service.Search.Filters.Interval(DateTime.UtcNow.AddMonths(-1).Date, DateTime.UtcNow.Date),

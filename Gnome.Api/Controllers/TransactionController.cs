@@ -3,6 +3,7 @@ using Gnome.Core.Model;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
@@ -23,8 +24,8 @@ namespace Gnome.Api.Controllers
             return new OkObjectResult(await mediator.Send(new CreateFioTransaction(transaction)));
         }
 
-        [HttpPost("accounts/{accountId:int}/transactions")]
-        public async Task<IActionResult> Search(int accountId, [FromBody] SingleAccountTransactionSearchFilter filter)
+        [HttpPost("accounts/{accountId:Guid}/transactions")]
+        public async Task<IActionResult> Search(Guid accountId, [FromBody] SingleAccountTransactionSearchFilter filter)
         {
             filter.AccountId = accountId;
 

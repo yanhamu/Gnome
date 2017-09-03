@@ -1,12 +1,10 @@
 ﻿using Autofac;
-using Gnome.Api.IntegrationTests;
 using Gnome.Database;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Gnome.Api
+namespace Gnome.Api.IntegrationTests
 {
     public class Startup
     {
@@ -18,7 +16,7 @@ namespace Gnome.Api
             return container.Resolve<IServiceProvider>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Initializer initializer)
+        public void Configure(IApplicationBuilder app, Initializer initializer)
         {
             app.UseCors(builder =>
             {

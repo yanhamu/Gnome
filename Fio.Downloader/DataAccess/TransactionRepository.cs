@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Fio.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Fio.Downloader.DataAccess
             this.transactionClient = transactionClient;
         }
 
-        public async Task SaveAll(int accountId, List<Transaction> transactions)
+        public async Task SaveAll(Guid accountId, List<Transaction> transactions)
         {
             foreach (var t in transactions)
             {
@@ -62,7 +63,7 @@ namespace Fio.Downloader.DataAccess
             });
         }
 
-        private Gnome.Core.Model.FioTransaction Convert(int accountId, Transaction t)
+        private Gnome.Core.Model.FioTransaction Convert(Guid accountId, Transaction t)
         {
             return new Gnome.Core.Model.FioTransaction()
             {

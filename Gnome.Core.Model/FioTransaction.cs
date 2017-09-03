@@ -4,8 +4,8 @@ namespace Gnome.Core.Model
 {
     public class FioTransaction
     {
-        public int Id { get; set; }
-        public int AccountId { get; set; }
+        public Guid Id { get; set; }
+        public Guid AccountId { get; set; }
         public DateTime Date { get; set; }
         public long FioId { get; set; }
         public FioAccount Account { get; set; }
