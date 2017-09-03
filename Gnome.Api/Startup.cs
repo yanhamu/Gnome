@@ -60,7 +60,8 @@ namespace Gnome.Api
 
             var options = GetTokenProviderOptions(signingKey);
 
-            initializer.Initialize(true); //TODO if needed
+            if (initializer.HasAllTables() == false)
+                initializer.Initialize(true);
 
             app.UseStaticFiles();
 

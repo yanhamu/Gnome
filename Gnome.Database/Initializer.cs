@@ -24,6 +24,11 @@ namespace Gnome.Database
             };
         }
 
+        public bool HasAllTables()
+        {
+            return createTableFiles.All(t => ExistTable(t));
+        }
+
         public void Initialize(bool dropIfExists)
         {
             if (dropIfExists)
