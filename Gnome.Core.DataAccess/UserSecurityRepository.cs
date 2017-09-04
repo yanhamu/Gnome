@@ -1,5 +1,4 @@
-﻿using Dapper;
-using Gnome.Core.Model;
+﻿using Gnome.Core.Model;
 using Microsoft.Data.Sqlite;
 using System;
 
@@ -19,10 +18,22 @@ namespace Gnome.Core.DataAccess
         {
             this.connection = connection;
         }
+
         public UserSecurity CreateNew(string email, byte[] pwd, byte[] salt, Guid userId)
         {
             var sql = "insert into [user] values(@userId, @email, @pwd, @salt)";
-            var result = connection.Execute(sql, new { userId = userId, email = email, pwd = pwd, salt = salt });
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = sql;
+                command.Parameters.Add(CreateParameter("@userId", userId));
+                command.Parameters.Add(CreateParameter("@email", email));
+                command.Parameters.Add(CreateParameter("@pwd", pwd));
+                command.Parameters.Add(CreateParameter("@salt", salt));
+
+                if (command.ExecuteNonQuery() != 1)
+                    throw new InvalidOperationException("User was not created!");
+            }
+
             return GetBy(email);
         }
 
@@ -32,7 +43,7 @@ namespace Gnome.Core.DataAccess
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = sql;
-                command.Parameters.Add(new SqliteParameter("email", email));
+                command.Parameters.Add(CreateParameter("email", email));
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -48,10 +59,12 @@ namespace Gnome.Core.DataAccess
                 }
             }
 
-
             return null;
-            // var result = connection.QueryFirstOrDefault<UserSecurity>(sql, new { email = email });
-            //return result;
+        }
+
+        private SqliteParameter CreateParameter<T>(string name, T value)
+        {
+            return new SqliteParameter(name, value);
         }
     }
 }
