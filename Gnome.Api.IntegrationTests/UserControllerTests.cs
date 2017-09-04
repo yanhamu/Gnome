@@ -1,5 +1,7 @@
+using Gnome.Api.Services.Users;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using System.Net;
 using System.Net.Http;
 using Xunit;
 
@@ -7,24 +9,28 @@ namespace Gnome.Api.IntegrationTests
 {
     public class UserControllerTests
     {
+        private TestServer server;
+        private HttpClient client;
+
+        public UserControllerTests()
+        {
+            server = new TestServer(new WebHostBuilder()
+                .UseStartup<Startup>());
+            client = server.CreateClient();
+        }
+
         [Fact]
         public async void Should_Register_New_User()
         {
-            var server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
-            var client = server.CreateClient();
-
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/users");
-
-            var content = Newtonsoft.Json.JsonConvert.SerializeObject(new
+            var newUser = new RegisterUser()
             {
                 Email = "email@email.com",
                 Password = "secret"
-            });
+            };
 
-            request.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json");
+            var response = await client.Post(newUser, "/api/users");
 
-            var response = await client.SendAsync(request);
-            Assert.Equal(System.Net.HttpStatusCode.NoContent, response.StatusCode);
+            response.HasStatusCode(HttpStatusCode.NoContent);
         }
     }
 }
