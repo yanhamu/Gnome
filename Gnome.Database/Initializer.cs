@@ -41,8 +41,19 @@ namespace Gnome.Database
                     .ForEach(f => DropTable(f));
             }
 
+            EnableForeignKeys();
+
             createTableFiles
                 .ForEach(f => CreateTable(f));
+        }
+
+        private void EnableForeignKeys()
+        {
+            using (var command = sqlConnection.CreateCommand())
+            {
+                command.CommandText = "PRAGMA foreign_keys = ON";
+                command.ExecuteNonQuery();
+            }
         }
 
         private void DropTable(string tableName)

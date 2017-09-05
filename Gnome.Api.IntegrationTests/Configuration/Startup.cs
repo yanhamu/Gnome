@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Gnome.Api.IntegrationTests
+namespace Gnome.Api.IntegrationTests.Configuration
 {
     public class Startup
     {
@@ -27,7 +27,7 @@ namespace Gnome.Api.IntegrationTests
 
             if (initializer.HasAllTables() == false)
                 initializer.Initialize(true);
-
+            app.UseMiddleware<IdentityMiddleware>();
             app.UseMvc();
         }
     }

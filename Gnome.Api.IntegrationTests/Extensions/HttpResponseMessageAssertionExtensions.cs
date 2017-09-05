@@ -2,7 +2,7 @@
 using System.Net.Http;
 using Xunit;
 
-namespace Gnome.Api.IntegrationTests
+namespace Gnome.Api.IntegrationTests.Extensions
 {
     public static class HttpResponseMessageAssertionExtensions
     {

@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.IO;
 using System.Reflection;
 
-namespace Gnome.Api.IntegrationTests
+namespace Gnome.Api.IntegrationTests.Configuration
 {
     public static class DiConfiguration
     {
@@ -30,6 +30,11 @@ namespace Gnome.Api.IntegrationTests
             {
                 var connection = new SqliteConnection(configuration["db:dev"]);
                 connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "PRAGMA foreign_keys = ON";
+                    command.ExecuteNonQuery();
+                }
                 return connection;
             }).SingleInstance();
 
