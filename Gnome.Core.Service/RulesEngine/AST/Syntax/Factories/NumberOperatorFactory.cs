@@ -27,6 +27,10 @@ namespace Gnome.Core.Service.RulesEngine.AST.Syntax.Factories
                     return new NumberLess(children);
                 case ">":
                     return new NumberMore(children);
+                case ">=":
+                    return new NumberMoreOrEqual(children);
+                case "<=":
+                    return new NumberLessOrEqual(children);
                 default:
                     throw new ArgumentException();
             }

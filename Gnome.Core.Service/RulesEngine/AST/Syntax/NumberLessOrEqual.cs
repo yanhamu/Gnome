@@ -3,18 +3,20 @@ using System.Linq;
 
 namespace Gnome.Core.Service.RulesEngine.AST.Syntax
 {
-    public class NumberEqual : ISyntaxNode<bool>
+    public class NumberLessOrEqual : ISyntaxNode<bool>
     {
         private readonly ISyntaxNode<decimal>[] numbers;
 
-        public NumberEqual(params ISyntaxNode<decimal>[] numbers)
+        public NumberLessOrEqual(ISyntaxNode<decimal>[] numbers)
         {
             this.numbers = numbers;
         }
 
         public bool Evaluate(TransactionRow row)
         {
-            return numbers.Select(n => n.Evaluate(row)).Distinct().Count() == 1;
+            return Enumerable
+                .Range(0, numbers.Length - 1)
+                .All(i => numbers[i].Evaluate(row) <= numbers[i + 1].Evaluate(row));
         }
     }
 }

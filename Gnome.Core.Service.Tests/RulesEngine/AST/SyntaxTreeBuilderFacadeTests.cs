@@ -17,11 +17,15 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
         {
             Assert.True(builder.Build("1 = 1").Evaluate(null));
             Assert.True(builder.Build("1 < 2").Evaluate(null));
+            Assert.True(builder.Build("2 <= 2").Evaluate(null));
+            Assert.True(builder.Build("2 >= 2").Evaluate(null));
             Assert.True(builder.Build("2 > 1").Evaluate(null));
             Assert.True(builder.Build("1 != 2").Evaluate(null));
 
             Assert.False(builder.Build("1 != 1").Evaluate(null));
             Assert.False(builder.Build("1 > 2").Evaluate(null));
+            Assert.False(builder.Build("1 >= 2").Evaluate(null));
+            Assert.False(builder.Build("2 <= 1").Evaluate(null));
             Assert.False(builder.Build("2 < 1").Evaluate(null));
             Assert.False(builder.Build("1 = 2").Evaluate(null));
         }
@@ -47,6 +51,16 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
             Assert.False(builder.Build("'Alice' = 'Bob'").Evaluate(null));
 
             Assert.True(builder.Build("'red green blue' contains 'green'").Evaluate(null));
+        }
+
+        [Fact]
+        public void Should_Build_Syntax_Tree_With_Fields()
+        {
+            Assert.True(builder.Build("address contains 'Penn'").Evaluate(Fixture.TransactionRow));
+            Assert.True(builder.Build("order > 99 and order < 101 and order = 100").Evaluate(Fixture.TransactionRow));
+
+            Assert.False(builder.Build("address contains 'Down'").Evaluate(Fixture.TransactionRow));
+            Assert.False(builder.Build("order >= 101").Evaluate(Fixture.TransactionRow));
         }
     }
 }
