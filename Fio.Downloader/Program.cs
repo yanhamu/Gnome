@@ -1,6 +1,6 @@
 ﻿using Fio.Downloader.DataAccess;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
-using System.Data.SqlClient;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -25,13 +25,17 @@ namespace Fio.Downloader
             var baseApiUrl = configuration["app-api:base-url"];
             var transactionUrl = configuration["app-api:transactions"];
 
-            using (var connection = new SqlConnection(configuration["db:dev"]))
+            using (var accountConnection = new SqliteConnection(configuration["db:dev"]))
+            using (var transactionConnection = new SqliteConnection(configuration["db:transactions"]))
             using (var httpClient = new HttpClient())
             {
+                accountConnection.Open();
+                transactionConnection.Open();
+
                 httpClient.BaseAddress = new System.Uri(baseApiUrl);
-                var accountRepository = new AccountRepository(connection);
+                var accountRepository = new AccountRepository(accountConnection);
                 var transactionApiClient = new TransactionApiClient(httpClient, transactionUrl);
-                var transactionRepository = new TransactionRepository(connection, transactionApiClient);
+                var transactionRepository = new TransactionRepository(transactionConnection, transactionApiClient);
                 var syncService = new SyncService(accountRepository, transactionRepository);
 
                 await syncService.Sync();

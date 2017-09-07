@@ -1,20 +1,19 @@
-﻿using Dapper;
-using Fio.Core.Model;
+﻿using Fio.Core.Model;
+using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace Fio.Downloader.DataAccess
 {
     public class TransactionRepository : ITransactionRepository
     {
-        private readonly SqlConnection connection;
+        private readonly SqliteConnection connection;
         private readonly ITransactionRepository transactionClient;
 
-        private const string sql = "insert into [fio].fio_transaction values(@accountId, @fioId, @date, @amount, @currency, @counterAccount, @counterAccountName, @counterBankCode, @counterBankName, @constantSymbol, @variableSymbol, @specificSymbol, @identification, @message, @type, @accountant, @comment, @bankIdentificationNumber, @instructionId)";
+        private const string sql = "insert into fio_transaction values(@accountId, @fioId, @date, @amount, @currency, @counterAccount, @counterAccountName, @counterBankCode, @counterBankName, @constantSymbol, @variableSymbol, @specificSymbol, @identification, @message, @type, @accountant, @comment, @bankIdentificationNumber, @instructionId)";
 
-        public TransactionRepository(SqlConnection connection, ITransactionRepository transactionClient)
+        public TransactionRepository(SqliteConnection connection, ITransactionRepository transactionClient)
         {
             this.connection = connection;
             this.transactionClient = transactionClient;
@@ -39,28 +38,31 @@ namespace Fio.Downloader.DataAccess
 
         public async Task SaveTransaction(Gnome.Core.Model.FioTransaction t)
         {
-            var id = await connection.ExecuteAsync(sql, new
+            using (var command = connection.CreateCommand())
             {
-                @accountId = t.AccountId,
-                @fioId = t.FioId,
-                @date = t.Date,
-                @amount = t.Amount,
-                @currency = t.Currency,
-                @counterAccount = t.CounterpartAccount,
-                @counterAccountName = t.CounterpartAccountName,
-                @counterBankCode = t.CounterpartBankCode,
-                @counterBankName = t.CounterpartBankName,
-                @constantSymbol = t.ConstantSymbol,
-                @variableSymbol = t.VariableSymbol,
-                @specificSymbol = t.SpefificSymbol,
-                @identification = t.Identification,
-                @message = t.MessageForReceipient,
-                @type = t.Type,
-                @accountant = t.Accountant,
-                @comment = t.Comment,
-                @bankIdentificationNumber = t.Bic,
-                @instructionId = t.InstructionId
-            });
+                command.CommandText = sql;
+                command.Parameters.Add(new SqliteParameter("accountId", t.AccountId));
+                command.Parameters.Add(new SqliteParameter("@fioId", t.FioId));
+                command.Parameters.Add(new SqliteParameter("@date", t.Date));
+                command.Parameters.Add(new SqliteParameter("@amount", t.Amount));
+                command.Parameters.Add(new SqliteParameter("@currency", t.Currency));
+                command.Parameters.Add(new SqliteParameter("@counterAccount", t.CounterpartAccount));
+                command.Parameters.Add(new SqliteParameter("@counterAccountName", t.CounterpartAccountName));
+                command.Parameters.Add(new SqliteParameter("@counterBankCode", t.CounterpartBankCode));
+                command.Parameters.Add(new SqliteParameter("@counterBankName", t.CounterpartBankName));
+                command.Parameters.Add(new SqliteParameter("@constantSymbol", t.ConstantSymbol));
+                command.Parameters.Add(new SqliteParameter("@variableSymbol", t.VariableSymbol));
+                command.Parameters.Add(new SqliteParameter("@specificSymbol", t.SpefificSymbol));
+                command.Parameters.Add(new SqliteParameter("@identification", t.Identification));
+                command.Parameters.Add(new SqliteParameter("@message", t.MessageForReceipient));
+                command.Parameters.Add(new SqliteParameter("@type", t.Type));
+                command.Parameters.Add(new SqliteParameter("@accountant", t.Accountant));
+                command.Parameters.Add(new SqliteParameter("@comment", t.Comment));
+                command.Parameters.Add(new SqliteParameter("@bankIdentificationNumber", t.Bic));
+                command.Parameters.Add(new SqliteParameter("@instructionId", t.InstructionId));
+
+                await command.ExecuteNonQueryAsync();
+            }
         }
 
         private Gnome.Core.Model.FioTransaction Convert(Guid accountId, Transaction t)

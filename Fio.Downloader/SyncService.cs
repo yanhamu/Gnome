@@ -1,7 +1,5 @@
 ﻿using Fio.Core;
 using Fio.Downloader.DataAccess;
-using Fio.Downloader.Model;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,7 +21,7 @@ namespace Fio.Downloader
             var accounts = accountRepository
                 .GetAccountsToSync()
                 .ToList()
-                .Where(a => ShouldSync(a));
+                .Where(a => string.IsNullOrWhiteSpace(a.Token) == false);
 
             foreach (var account in accounts)
             {
@@ -35,14 +33,6 @@ namespace Fio.Downloader
 
                 await transactionRepository.SaveAll(account.Id, transactions.AccountStatement.TransactionList.Transactions);
             }
-        }
-
-        private bool ShouldSync(Account a)
-        {
-            if (string.IsNullOrWhiteSpace(a.Token))
-                return false;
-
-            return a.LastSync.HasValue == false || ((DateTime.Now - a.LastSync.Value) > TimeSpan.FromHours(2));
         }
     }
 }

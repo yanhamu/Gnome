@@ -6,6 +6,5 @@ namespace Fio.Downloader.Model
     {
         public Guid Id { get; set; }
         public string Token { get; set; }
-        public DateTime? LastSync { get; set; }
     }
 }
