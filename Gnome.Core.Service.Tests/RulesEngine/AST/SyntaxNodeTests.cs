@@ -17,7 +17,7 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
 
         private ISyntaxNode<bool> GetExpression()
         {
-            var firstBranch = new NumberEquals(new Number(120m), new NumberField("amount"));
+            var firstBranch = new NumberEqual(new Number(120m), new NumberField("amount"));
             var secondBranch = new DateLess(new DateField("date"), new Date(new DateTime(2011, 1, 1)));
             return new And(firstBranch, secondBranch);
         }

@@ -12,7 +12,24 @@ namespace Gnome.Core.Service.RulesEngine.AST.Syntax.Factories
             foreach (var token in enumerable)
                 nodes.Add(GetNode(token));
 
-            return new NumberEquals(nodes.ToArray());
+            return GetBoolNode(value, nodes.ToArray());
+        }
+
+        private ISyntaxNode<bool> GetBoolNode(IOperator value, ISyntaxNode<decimal>[] children)
+        {
+            switch (value.Value)
+            {
+                case "=":
+                    return new NumberEqual(children);
+                case "!=":
+                    return new NumberNotEqual(children);
+                case "<":
+                    return new NumberLess(children);
+                case ">":
+                    return new NumberMore(children);
+                default:
+                    throw new ArgumentException();
+            }
         }
 
         private ISyntaxNode<decimal> GetNode(IToken token)

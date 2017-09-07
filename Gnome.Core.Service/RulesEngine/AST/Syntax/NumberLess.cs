@@ -1,21 +1,22 @@
 ﻿using Gnome.Core.Service.Transactions;
+using System.Linq;
 
 namespace Gnome.Core.Service.RulesEngine.AST.Syntax
 {
     public class NumberLess : ISyntaxNode<bool>
     {
-        private readonly ISyntaxNode<decimal> number;
-        private readonly ISyntaxNode<decimal> than;
+        private readonly ISyntaxNode<decimal>[] numbers;
 
-        public NumberLess(ISyntaxNode<decimal> number, ISyntaxNode<decimal> than)
+        public NumberLess(ISyntaxNode<decimal>[] numbers)
         {
-            this.number = number;
-            this.than = than;
+            this.numbers = numbers;
         }
 
         public bool Evaluate(TransactionRow row)
         {
-            return number.Evaluate(row) < than.Evaluate(row);
+            return Enumerable
+                .Range(0, numbers.Length - 1)
+                .All(i => numbers[i].Evaluate(row) < numbers[i + 1].Evaluate(row));
         }
     }
 }

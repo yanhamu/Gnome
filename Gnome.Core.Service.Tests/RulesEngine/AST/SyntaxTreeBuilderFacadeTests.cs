@@ -12,12 +12,12 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
 
             Assert.True(builder.Build("1 = 1").Evaluate(null));
             Assert.True(builder.Build("1 < 2").Evaluate(null));
-            Assert.True(builder.Build("1 > 2").Evaluate(null));
+            Assert.True(builder.Build("2 > 1").Evaluate(null));
             Assert.True(builder.Build("1 != 2").Evaluate(null));
 
             Assert.False(builder.Build("1 != 1").Evaluate(null));
             Assert.False(builder.Build("1 > 2").Evaluate(null));
-            Assert.False(builder.Build("1 < 2").Evaluate(null));
+            Assert.False(builder.Build("2 < 1").Evaluate(null));
             Assert.False(builder.Build("1 = 2").Evaluate(null));
         }
 
@@ -40,8 +40,8 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
             Assert.True(builder.Build("'Alice' = 'Alice'").Evaluate(null));
             Assert.True(builder.Build("'Alice' != 'Bob'").Evaluate(null));
 
-            Assert.False(builder.Build("'Alice' = 'Alice'").Evaluate(null));
-            Assert.False(builder.Build("'Alice' != 'Bob'").Evaluate(null));
+            Assert.False(builder.Build("'Alice' != 'Alice'").Evaluate(null));
+            Assert.False(builder.Build("'Alice' = 'Bob'").Evaluate(null));
         }
     }
 }

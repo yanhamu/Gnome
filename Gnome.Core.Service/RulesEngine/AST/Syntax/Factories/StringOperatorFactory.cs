@@ -11,7 +11,20 @@ namespace Gnome.Core.Service.RulesEngine.AST.Syntax.Factories
             var nodes = new List<ISyntaxNode<string>>();
             foreach (var token in enumerable)
                 nodes.Add(GetNode(token));
-            return new StringEquals(nodes.ToArray());
+            return GetBoolNode(value, nodes.ToArray());
+        }
+
+        private ISyntaxNode<bool> GetBoolNode(IOperator value, ISyntaxNode<string>[] syntaxNode)
+        {
+            switch (value.Value)
+            {
+                case "=":
+                    return new StringEquals(syntaxNode);
+                case "!=":
+                    return new StringNotEqual(syntaxNode);
+                default:
+                    throw new ArgumentException();
+            }
         }
 
         private ISyntaxNode<string> GetNode(IToken token)

@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Gnome.Core.Model\Gnome.Core.Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="RulesEngine\AST\Syntax\" />
-  </ItemGroup>
-
 </Project>
