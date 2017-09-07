@@ -1,20 +1,21 @@
 ﻿using Gnome.Core.Service.Transactions;
+using System.Linq;
 
 namespace Gnome.Core.Service.RulesEngine.AST.Syntax
 {
     public class StringContains : ISyntaxNode<bool>
     {
-        private readonly ISyntaxNode<string> @string;
         private readonly ISyntaxNode<string> value;
+        private readonly ISyntaxNode<string> shouldContain;
 
-        public StringContains(ISyntaxNode<string> @string, ISyntaxNode<string> value)
+        public StringContains(ISyntaxNode<string>[] strings)
         {
-            this.@string = @string;
-            this.value = value;
+            this.value = strings.ElementAt(0);
+            this.shouldContain = strings.ElementAt(1);
         }
         public bool Evaluate(TransactionRow row)
         {
-            return @string.Evaluate(row).Contains(value.Evaluate(row));
+            return value.Evaluate(row).Contains(shouldContain.Evaluate(row));
         }
     }
 }

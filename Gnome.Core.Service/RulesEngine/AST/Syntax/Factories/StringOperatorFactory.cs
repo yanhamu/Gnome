@@ -14,14 +14,16 @@ namespace Gnome.Core.Service.RulesEngine.AST.Syntax.Factories
             return GetBoolNode(value, nodes.ToArray());
         }
 
-        private ISyntaxNode<bool> GetBoolNode(IOperator value, ISyntaxNode<string>[] syntaxNode)
+        private ISyntaxNode<bool> GetBoolNode(IOperator value, ISyntaxNode<string>[] syntaxNodes)
         {
             switch (value.Value)
             {
                 case "=":
-                    return new StringEquals(syntaxNode);
+                    return new StringEquals(syntaxNodes);
                 case "!=":
-                    return new StringNotEqual(syntaxNode);
+                    return new StringNotEqual(syntaxNodes);
+                case "contains":
+                    return new StringContains(syntaxNodes);
                 default:
                     throw new ArgumentException();
             }
