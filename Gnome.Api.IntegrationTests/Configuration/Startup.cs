@@ -26,7 +26,7 @@ namespace Gnome.Api.IntegrationTests.Configuration
             });
 
             if (initializer.HasAllTables() == false)
-                initializer.Initialize(true);
+                initializer.DropAndCreate();
             app.UseMiddleware<IdentityMiddleware>();
             app.UseMvc();
         }

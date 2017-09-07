@@ -11,17 +11,11 @@ namespace Gnome.Database
         private readonly string sqlFilePath;
         private List<string> createTableFiles { get; }
 
-        public Initializer(SqliteConnection sqlConnection, string sqlFilePath)
+        public Initializer(SqliteConnection sqlConnection, string sqlFilePath, List<string> tableNames)
         {
             this.sqlConnection = sqlConnection;
             this.sqlFilePath = sqlFilePath;
-            this.createTableFiles = new List<string>() {
-                "user",
-                "fio_account",
-                "category",
-                "transaction",
-                "category_transaction"
-            };
+            this.createTableFiles = tableNames;
         }
 
         public bool HasAllTables()
@@ -29,17 +23,14 @@ namespace Gnome.Database
             return createTableFiles.All(t => ExistTable(t));
         }
 
-        public void Initialize(bool dropIfExists)
+        public void DropAndCreate()
         {
-            if (dropIfExists)
-            {
-                createTableFiles
-                    .AsEnumerable()
-                    .Reverse()
-                    .Where(f => ExistTable(f))
-                    .ToList()
-                    .ForEach(f => DropTable(f));
-            }
+            createTableFiles
+                .AsEnumerable()
+                .Reverse()
+                .Where(f => ExistTable(f))
+                .ToList()
+                .ForEach(f => DropTable(f));
 
             EnableForeignKeys();
 

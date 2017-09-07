@@ -1,8 +1,7 @@
 ﻿CREATE TABLE [fio_transaction]
 (
-	[id] int identity(1,1) not null primary key,
 	[account_id] int not null,
-	[fio_id] bigint not null,
+	[fio_id] bigint not null primary key,
 	[date] datetime not null,
 	[amount] decimal(18,2) not null,
 	[currency] nvarchar(3) not null,

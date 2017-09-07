@@ -61,7 +61,7 @@ namespace Gnome.Api
             var options = GetTokenProviderOptions(signingKey);
 
             if (initializer.HasAllTables() == false)
-                initializer.Initialize(true);
+                initializer.DropAndCreate();
 
             app.UseStaticFiles();
 

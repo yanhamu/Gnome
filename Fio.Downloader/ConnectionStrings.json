@@ -1,6 +1,6 @@
 ﻿{
   "db": {
     "transactions": "Data Source=transactions.db;",
-    "dev": "Data Source=gnome.db;"
+    "dev": "Data Source=C:\\Sources\\Gnome\\Gnome.Api\\bin\\Debug\\netcoreapp1.1\\gnome.db;"
   }
 }

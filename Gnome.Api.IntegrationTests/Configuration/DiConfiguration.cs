@@ -9,6 +9,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -57,7 +58,14 @@ namespace Gnome.Api.IntegrationTests.Configuration
             containerBuilder
                 .RegisterType<Initializer>()
                 .AsSelf()
-                .WithParameter("sqlFilePath", "sql-files\\");
+                .WithParameter("sqlFilePath", "sql-files\\")
+                .WithParameter("tableNames", new List<string>() {
+                    "user",
+                    "fio_account",
+                    "category",
+                    "transaction",
+                    "category_transaction"
+                });
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();

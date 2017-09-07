@@ -1,6 +1,8 @@
 ﻿using Fio.Downloader.DataAccess;
+using Gnome.Database;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -21,7 +23,6 @@ namespace Fio.Downloader
                 .AddJsonFile("ConnectionStrings.json")
                 .AddJsonFile("config.json")
                 .Build();
-
             var baseApiUrl = configuration["app-api:base-url"];
             var transactionUrl = configuration["app-api:transactions"];
 
@@ -31,6 +32,9 @@ namespace Fio.Downloader
             {
                 accountConnection.Open();
                 transactionConnection.Open();
+                var initializer = new Initializer(transactionConnection, "bin\\Debug\\netcoreapp1.1\\sql-files\\", new List<string>() { "fio_transaction" });
+                if (initializer.HasAllTables() == false)
+                    initializer.DropAndCreate();
 
                 httpClient.BaseAddress = new System.Uri(baseApiUrl);
                 var accountRepository = new AccountRepository(accountConnection);
