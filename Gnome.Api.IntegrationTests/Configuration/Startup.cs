@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Gnome.Api.Filters;
 using Gnome.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +11,11 @@ namespace Gnome.Api.IntegrationTests.Configuration
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new UserFilter());
+            });
+
             services.AddCors();
             var container = DiConfiguration.CreateContainer(services);
             return container.Resolve<IServiceProvider>();

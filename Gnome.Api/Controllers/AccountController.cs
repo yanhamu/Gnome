@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 namespace Gnome.Api.Controllers
 {
     [Route("api/accounts")]
-    public class AccountController : BaseController
+    public class AccountController : IUserAuthenticatedController
     {
         private readonly IMediator mediator;
+
+        public Guid UserId { get; set; }
 
         public AccountController(IMediator mediator)
         {

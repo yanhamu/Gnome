@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace Gnome.Api.Controllers
 {
     [Route("api/reports")]
-    public class ReportController : BaseController
+    public class ReportController : IUserAuthenticatedController
     {
         private readonly IMediator mediator;
+        public Guid UserId { get; set; }
 
         public ReportController(IMediator mediator)
         {
