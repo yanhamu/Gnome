@@ -1,4 +1,4 @@
-﻿CREATE TABLE [category]
+﻿create table [category]
 (
 	[id] uniqueidentifier not null primary key,
 	[user_id] uniqueidentifier not null,

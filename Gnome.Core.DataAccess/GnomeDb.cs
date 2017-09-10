@@ -19,6 +19,16 @@ namespace Gnome.Core.DataAccess
             base.OnModelCreating(modelBuilder);
         }
 
+        private void MapFilter(EntityTypeBuilder<Filter> builder)
+        {
+            builder.ToTable("filter");
+            builder.HasKey(f => f.Id);
+            builder.Property(f => f.Expression);
+            builder.Property(f => f.UserId).IsRequired();
+            builder.HasOne(u => u.User).WithMany().HasForeignKey(f => f.UserId);
+
+        }
+
         private void MapTransaction(EntityTypeBuilder<Transaction> builder)
         {
             builder.ToTable("transaction");
@@ -63,7 +73,7 @@ namespace Gnome.Core.DataAccess
             builder.HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).IsRequired();
             builder.HasOne(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId).IsRequired(false);
         }
-        
+
         private void MapFioAccount(EntityTypeBuilder<FioAccount> builder)
         {
             builder.ToTable("fio_account");

@@ -53,7 +53,8 @@ namespace Gnome.Api.Configuration
                     "fio_account",
                     "category",
                     "transaction",
-                    "category_transaction"
+                    "category_transaction",
+                    "filter"
                 });
 
             containerBuilder.Populate(services);
