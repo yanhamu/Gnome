@@ -23,5 +23,26 @@ namespace Gnome.Api.Controllers
         {
             return new OkObjectResult(await mediator.Send(new GetFilter(filterId)));
         }
+
+        [HttpDelete("{filterId:Guid}")]
+        public async Task<IActionResult> Remove(Guid filterId)
+        {
+            await mediator.Send(new RemoveFilter() { FilterId = filterId });
+            return new OkResult();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateFilter toCreate)
+        {
+            var id = await mediator.Send(toCreate);
+            return new OkObjectResult(id);
+        }
+
+        [HttpPut("filterId:Guid")]
+        public async Task<IActionResult> Update(Guid filterId, UpdateFilter toUpdate)
+        {
+            await mediator.Send(toUpdate);
+            return new OkResult();
+        }
     }
 }
