@@ -33,5 +33,11 @@ namespace Gnome.Api.Controllers
 
             return new OkObjectResult(await mediator.Send(new SingleAccountSearchTransaction(filter, UserId)));
         }
+
+        [HttpPost("transactions")]
+        public async Task<IActionResult> CreateTransaction([FromBody] CreateTransaction transaction)
+        {
+            return new OkObjectResult(await mediator.Send(transaction));
+        }
     }
 }

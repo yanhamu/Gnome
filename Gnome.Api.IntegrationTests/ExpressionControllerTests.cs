@@ -1,25 +1,14 @@
 ﻿using Gnome.Api.IntegrationTests.Extensions;
 using Gnome.Api.IntegrationTests.Fixtures;
 using Gnome.Api.Services.Expressions.Requests;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
 using System.Net;
 using Xunit;
 
 namespace Gnome.Api.IntegrationTests
 {
-    public class ExpressionControllerTests
+    public class ExpressionControllerTests : BaseControllerTests
     {
-        private TestServer server;
-        private HttpClientWrapper client;
-
-        public ExpressionControllerTests()
-        {
-            server = new TestServer(new WebHostBuilder()
-                .UseStartup<Configuration.Startup>());
-            client = server.CreateClientWrapper()
-                .SetBaseUrl("api/expressions");
-        }
+        public ExpressionControllerTests() : base("api/expressions") { }
 
         [Fact]
         public async void Should_Store_Expression()

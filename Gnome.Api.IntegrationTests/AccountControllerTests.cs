@@ -1,25 +1,14 @@
 ﻿using Gnome.Api.IntegrationTests.Extensions;
 using Gnome.Api.IntegrationTests.Fixtures;
 using Gnome.Api.Services.Accounts;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
 using System.Net;
 using Xunit;
 
 namespace Gnome.Api.IntegrationTests
 {
-    public class AccountControllerTests
+    public class AccountControllerTests : BaseControllerTests
     {
-        private TestServer server;
-        private HttpClientWrapper client;
-
-        public AccountControllerTests()
-        {
-            server = new TestServer(new WebHostBuilder()
-                .UseStartup<Configuration.Startup>());
-            client = server.CreateClientWrapper()
-                .SetBaseUrl("api/accounts");
-        }
+        public AccountControllerTests() : base("api/accounts") { }
 
         [Fact]
         public async void Should_Create_Account()
