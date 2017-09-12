@@ -90,8 +90,7 @@ namespace Fio.Downloader.DataAccess
             protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
             {
                 var properties = base.CreateProperties(type, memberSerialization);
-                var propertiesToIgnore = typeof(Transaction).GetProperties().Select(p => p.Name.ToLower()).ToList();
-
+                var propertiesToIgnore = typeof(Gnome.Core.Model.Transaction).GetProperties().Select(p => p.Name.ToLower()).ToList();
                 return properties.Where(p => !propertiesToIgnore.Contains(p.PropertyName)).ToList();
             }
         }

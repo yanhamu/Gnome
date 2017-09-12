@@ -1,5 +1,5 @@
-﻿using Gnome.Api.Services.Transactions.Requests;
-using Gnome.Core.Model;
+﻿using Gnome.Api.Filters;
+using Gnome.Api.Services.Transactions.Requests;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +28,7 @@ namespace Gnome.Api.Controllers
             return new OkObjectResult(await mediator.Send(new SingleAccountSearchTransaction(filter, UserId)));
         }
 
+        [IgnoreUserFilter]
         [HttpPost("transactions")]
         public async Task<IActionResult> CreateTransaction([FromBody] CreateTransaction transaction)
         {

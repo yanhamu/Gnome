@@ -51,7 +51,7 @@ namespace Gnome.Database
         {
             using (var command = sqlConnection.CreateCommand())
             {
-                command.CommandText = "drop table " + tableName;
+                command.CommandText = $"drop table [{tableName}]";
                 command.ExecuteNonQuery();
             }
         }
