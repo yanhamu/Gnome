@@ -1,17 +1,19 @@
 ﻿using Fio.Core.Model;
 using Microsoft.Data.Sqlite;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Fio.Downloader.DataAccess
 {
-    public class TransactionRepository : ITransactionRepository
+    public class TransactionRepository
     {
         private readonly SqliteConnection connection;
         private readonly ITransactionRepository transactionClient;
-
-        private const string sql = "insert into fio_transaction values(@accountId, @fioId, @date, @amount, @currency, @counterAccount, @counterAccountName, @counterBankCode, @counterBankName, @constantSymbol, @variableSymbol, @specificSymbol, @identification, @message, @type, @accountant, @comment, @bankIdentificationNumber, @instructionId)";
 
         public TransactionRepository(SqliteConnection connection, ITransactionRepository transactionClient)
         {
@@ -23,45 +25,15 @@ namespace Fio.Downloader.DataAccess
         {
             foreach (var t in transactions)
             {
-                var fioTransaction = Convert(accountId, t);
+                var fioTransaction = Convert(Convert(accountId, t));
                 try
                 {
                     await transactionClient.SaveTransaction(fioTransaction);
                 }
-                catch (System.Exception)
+                catch (System.Exception ex)
                 {
                     //TODO log!
-                    await SaveTransaction(fioTransaction);
                 }
-            }
-        }
-
-        public async Task SaveTransaction(Gnome.Core.Model.FioTransaction t)
-        {
-            using (var command = connection.CreateCommand())
-            {
-                command.CommandText = sql;
-                command.Parameters.Add(new SqliteParameter("accountId", t.AccountId));
-                command.Parameters.Add(new SqliteParameter("@fioId", t.FioId));
-                command.Parameters.Add(new SqliteParameter("@date", t.Date));
-                command.Parameters.Add(new SqliteParameter("@amount", t.Amount));
-                command.Parameters.Add(new SqliteParameter("@currency", t.Currency));
-                command.Parameters.Add(new SqliteParameter("@counterAccount", t.CounterpartAccount));
-                command.Parameters.Add(new SqliteParameter("@counterAccountName", t.CounterpartAccountName));
-                command.Parameters.Add(new SqliteParameter("@counterBankCode", t.CounterpartBankCode));
-                command.Parameters.Add(new SqliteParameter("@counterBankName", t.CounterpartBankName));
-                command.Parameters.Add(new SqliteParameter("@constantSymbol", t.ConstantSymbol));
-                command.Parameters.Add(new SqliteParameter("@variableSymbol", t.VariableSymbol));
-                command.Parameters.Add(new SqliteParameter("@specificSymbol", t.SpefificSymbol));
-                command.Parameters.Add(new SqliteParameter("@identification", t.Identification));
-                command.Parameters.Add(new SqliteParameter("@message", t.MessageForReceipient));
-                command.Parameters.Add(new SqliteParameter("@type", t.Type));
-                command.Parameters.Add(new SqliteParameter("@accountant", t.Accountant));
-                command.Parameters.Add(new SqliteParameter("@comment", t.Comment));
-                command.Parameters.Add(new SqliteParameter("@bankIdentificationNumber", t.Bic));
-                command.Parameters.Add(new SqliteParameter("@instructionId", t.InstructionId));
-
-                await command.ExecuteNonQueryAsync();
             }
         }
 
@@ -89,6 +61,39 @@ namespace Fio.Downloader.DataAccess
                 Type = t.Type?.Value,
                 VariableSymbol = t.VariableSymbol?.Value
             };
+        }
+
+        public Gnome.Core.Model.Transaction Convert(Gnome.Core.Model.FioTransaction fio)
+        {
+            var settings = new JsonSerializerSettings();
+            settings.ContractResolver = new TransactionContractResolver();
+
+            var data = JsonConvert.SerializeObject(fio, Formatting.None, settings);
+
+            return new Gnome.Core.Model.Transaction()
+            {
+                AccountId = fio.AccountId,
+                Amount = fio.Amount,
+                Date = fio.Date,
+                Type = "fio",
+                Data = data
+            };
+        }
+
+        public class TransactionContractResolver : DefaultContractResolver
+        {
+            protected override string ResolvePropertyName(string propertyName)
+            {
+                return propertyName.ToLower();
+            }
+
+            protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
+            {
+                var properties = base.CreateProperties(type, memberSerialization);
+                var propertiesToIgnore = typeof(Transaction).GetProperties().Select(p => p.Name.ToLower()).ToList();
+
+                return properties.Where(p => !propertiesToIgnore.Contains(p.PropertyName)).ToList();
+            }
         }
     }
 }

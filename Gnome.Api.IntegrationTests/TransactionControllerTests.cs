@@ -9,10 +9,7 @@ namespace Gnome.Api.IntegrationTests
 {
     public class TransactionControllerTests : BaseControllerTests
     {
-        public TransactionControllerTests() : base("api/transactions")
-        {
-
-        }
+        public TransactionControllerTests() : base("api/transactions") { }
 
         [Fact]
         public async void Should_Create_Transaction()

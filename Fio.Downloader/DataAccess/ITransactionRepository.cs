@@ -5,6 +5,6 @@ namespace Fio.Downloader.DataAccess
 {
     public interface ITransactionRepository
     {
-        Task SaveTransaction(FioTransaction transaction);
+        Task SaveTransaction(Transaction transaction);
     }
 }

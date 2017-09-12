@@ -40,7 +40,6 @@ namespace Fio.Core
             return JsonConvert.DeserializeObject<Transactions>(response);
         }
 
-
         private async Task<string> DownloadContent(string url)
         {
             using (var httpClient = new HttpClient())

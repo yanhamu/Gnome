@@ -20,12 +20,6 @@ namespace Gnome.Api.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost("fio-transactions")]
-        public async Task<IActionResult> CreateFio([FromBody]FioTransaction transaction)
-        {
-            return new OkObjectResult(await mediator.Send(new CreateFioTransaction(transaction)));
-        }
-
         [HttpPost("accounts/{accountId:Guid}/transactions")]
         public async Task<IActionResult> Search(Guid accountId, [FromBody] SingleAccountTransactionSearchFilter filter)
         {

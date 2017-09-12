@@ -17,7 +17,7 @@ namespace Fio.Downloader.DataAccess
             this.uri = uri;
         }
 
-        public async Task SaveTransaction(Gnome.Core.Model.FioTransaction transaction)
+        public async Task SaveTransaction(Gnome.Core.Model.Transaction transaction)
         {
             var json = JsonConvert.SerializeObject(transaction);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
