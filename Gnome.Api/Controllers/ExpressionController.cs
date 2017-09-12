@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
 {
-    [Route("api/filter")]
+    [Route("api/expressions")]
     public class ExpressionController : IUserAuthenticatedController
     {
         private readonly IMediator mediator;
@@ -32,8 +32,9 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateExpression toCreate)
+        public async Task<IActionResult> Create([FromBody]CreateExpression toCreate)
         {
+            toCreate.UserId = UserId;
             var id = await mediator.Send(toCreate);
             return new OkObjectResult(id);
         }

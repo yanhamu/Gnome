@@ -15,6 +15,7 @@ namespace Gnome.Core.DataAccess
             MapCategory(modelBuilder.Entity<Category>());
             MapCategoryTransaction(modelBuilder.Entity<CategoryTransaction>());
             MapTransaction(modelBuilder.Entity<Transaction>());
+            MapExpression(modelBuilder.Entity<Expression>());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -24,7 +25,7 @@ namespace Gnome.Core.DataAccess
             builder.ToTable("expression");
             builder.HasKey(f => f.Id);
             builder.Property(f => f.ExpressionString);
-            builder.Property(f => f.UserId).IsRequired();
+            builder.Property(f => f.UserId).HasColumnName("user_id").IsRequired();
             builder.HasOne(u => u.User).WithMany().HasForeignKey(f => f.UserId);
 
         }
@@ -88,5 +89,6 @@ namespace Gnome.Core.DataAccess
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryTransaction> CategoryTransactions { get; set; }
+
     }
 }

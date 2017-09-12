@@ -64,7 +64,8 @@ namespace Gnome.Api.IntegrationTests.Configuration
                     "fio_account",
                     "category",
                     "transaction",
-                    "category_transaction"
+                    "category_transaction",
+                    "expression"
                 });
 
             containerBuilder.Populate(services);
