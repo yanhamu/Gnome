@@ -54,7 +54,7 @@ namespace Gnome.Api.Configuration
                     "category",
                     "transaction",
                     "category_transaction",
-                    "filter"
+                    "expression"
                 });
 
             containerBuilder.Populate(services);

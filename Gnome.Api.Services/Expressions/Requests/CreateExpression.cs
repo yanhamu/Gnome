@@ -1,12 +1,11 @@
 ﻿using MediatR;
 using System;
 
-namespace Gnome.Api.Services.Filters.Requests
+namespace Gnome.Api.Services.Expressions.Requests
 {
-    public class UpdateFilter : IRequest
+    public class CreateExpression : IRequest<Guid>
     {
         public Guid UserId { get; set; }
         public string Expression { get; set; }
-        public Guid FilterId { get; set; }
     }
 }

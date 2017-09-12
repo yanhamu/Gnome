@@ -19,11 +19,11 @@ namespace Gnome.Core.DataAccess
             base.OnModelCreating(modelBuilder);
         }
 
-        private void MapFilter(EntityTypeBuilder<Filter> builder)
+        private void MapExpression(EntityTypeBuilder<Expression> builder)
         {
-            builder.ToTable("filter");
+            builder.ToTable("expression");
             builder.HasKey(f => f.Id);
-            builder.Property(f => f.Expression);
+            builder.Property(f => f.ExpressionString);
             builder.Property(f => f.UserId).IsRequired();
             builder.HasOne(u => u.User).WithMany().HasForeignKey(f => f.UserId);
 
