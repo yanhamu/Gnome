@@ -47,7 +47,7 @@ namespace Gnome.Api.Configuration
             containerBuilder
                 .RegisterType<Initializer>()
                 .AsSelf()
-                .WithParameter("sqlFilePath", "bin\\Debug\\netcoreapp1.1\\sql-files\\")
+                .WithParameter("sqlFilePath", "bin\\Debug\\netcoreapp2.0\\sql-files\\")
                 .WithParameter("tableNames", new List<string>() {
                     "user",
                     "fio_account",

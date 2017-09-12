@@ -3,6 +3,7 @@ using Gnome.Api.AuthenticationMiddleware;
 using Gnome.Api.Configuration;
 using Gnome.Api.Filters;
 using Gnome.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,36 +21,46 @@ namespace Gnome.Api
     {
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("config.json")
+                .Build();
+
+            var signingKey = GetKey(configuration);
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(new UserFilter());
             });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o => { o.TokenValidationParameters = GetTokenValidationParameters(signingKey); });
 
             services.AddCors();
             var container = DiConfiguration.CreateContainer(services);
             return container.Resolve<IServiceProvider>();
         }
 
+        private static SymmetricSecurityKey GetKey(IConfigurationRoot configuration)
+        {
+            var secretKey = configuration["key"];
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            return signingKey;
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Initializer initializer)
         {
-            loggerFactory.AddConsole();
-
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("config.json")
                 .Build();
 
-            var secretKey = configuration["key"];
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            loggerFactory.AddConsole();
 
-            var tokenValidationParameters = GetTokenValidationParameters(signingKey);
-
-            app.UseJwtBearerAuthentication(new JwtBearerOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                TokenValidationParameters = tokenValidationParameters
-            });
+            app.UseAuthentication();
 
             app.UseCors(builder =>
             {
@@ -63,6 +74,7 @@ namespace Gnome.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            var signingKey = GetKey(configuration);
             var options = GetTokenProviderOptions(signingKey);
 
             if (initializer.HasAllTables() == false)
