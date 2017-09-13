@@ -2,13 +2,10 @@
 using Gnome.Api.Services.Transactions.Requests;
 using Gnome.Core.DataAccess;
 using Gnome.Core.Model;
-using Gnome.Core.Service.Categories;
 using Gnome.Core.Service.Search.Filters;
 using Gnome.Core.Service.Search.QueryBuilders;
 using Gnome.Core.Service.Transactions.RowFactories;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Gnome.Api.Services.Transactions
