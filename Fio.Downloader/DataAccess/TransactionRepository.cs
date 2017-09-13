@@ -1,11 +1,11 @@
 ﻿using Fio.Core.Model;
+using Fio.Downloader.Model;
 using Microsoft.Data.Sqlite;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Fio.Downloader.DataAccess
@@ -37,9 +37,9 @@ namespace Fio.Downloader.DataAccess
             }
         }
 
-        private Gnome.Core.Model.FioTransaction Convert(Guid accountId, Transaction t)
+        private FioTransaction Convert(Guid accountId, Transaction t)
         {
-            return new Gnome.Core.Model.FioTransaction()
+            return new FioTransaction()
             {
                 Accountant = t.Accountant?.Value,
                 AccountId = accountId,
@@ -63,7 +63,7 @@ namespace Fio.Downloader.DataAccess
             };
         }
 
-        public Gnome.Core.Model.Transaction Convert(Gnome.Core.Model.FioTransaction fio)
+        public Gnome.Core.Model.Transaction Convert(FioTransaction fio)
         {
             var settings = new JsonSerializerSettings();
             settings.ContractResolver = new TransactionContractResolver();
