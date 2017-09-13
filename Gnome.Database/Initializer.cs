@@ -60,6 +60,7 @@ namespace Gnome.Database
         {
             using (var command = sqlConnection.CreateCommand())
             {
+
                 command.CommandText = File.ReadAllText(sqlFilePath + fileName + ".sql");
                 command.ExecuteNonQuery();
             }

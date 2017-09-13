@@ -22,11 +22,9 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="1.1.7" />
-    <PackageReference Include="SQLitePCLRaw.ugly" Version="1.1.7" />
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3.linux" Version="1.1.8-pre20170717084758" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="1.1.8" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3.linux" Version="1.1.8" />
+    <PackageReference Include="SQLitePCLRaw.ugly" Version="1.1.8" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gnome.Api.Services\Gnome.Api.Services.csproj" />
