@@ -248,3 +248,6 @@ _Pvt_Extensions
 # Separate db connection string config
 Gnome.Web/db-connection.json
 GnomeDb/GnomeDb.jfm
+
+Gnome.Api/Tools
+gnome.db

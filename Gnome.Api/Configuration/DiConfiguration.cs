@@ -21,7 +21,7 @@ namespace Gnome.Api.Configuration
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("ConnectionStrings.json")
+                .AddJsonFile("config.json")
                 .Build();
 
             services.AddDbContext<GnomeDb>(c => c.UseSqlite(configuration["db:dev"]));
@@ -47,7 +47,7 @@ namespace Gnome.Api.Configuration
             containerBuilder
                 .RegisterType<Initializer>()
                 .AsSelf()
-                .WithParameter("sqlFilePath", "bin\\Debug\\netcoreapp2.0\\sql-files\\")
+                .WithParameter("sqlFilePath", configuration["db:dev"])
                 .WithParameter("tableNames", new List<string>() {
                     "user",
                     "fio_account",

@@ -24,6 +24,11 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="1.1.7" />
+    <PackageReference Include="SQLitePCLRaw.ugly" Version="1.1.7" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3.linux" Version="1.1.8-pre20170717084758" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Gnome.Api.Services\Gnome.Api.Services.csproj" />
     <ProjectReference Include="..\Gnome.Core.DataAccess\Gnome.Core.DataAccess.csproj" />
     <ProjectReference Include="..\Gnome.Core.Model\Gnome.Core.Model.csproj" />
