@@ -4,5 +4,4 @@
   "db": {
     "dev": "Data Source=gnome.db;"
   }
-
 }

@@ -47,7 +47,7 @@ namespace Gnome.Api.Configuration
             containerBuilder
                 .RegisterType<Initializer>()
                 .AsSelf()
-                .WithParameter("sqlFilePath", configuration["db:dev"])
+                .WithParameter("sqlFilePath", configuration["sql"])
                 .WithParameter("tableNames", new List<string>() {
                     "user",
                     "fio_account",
