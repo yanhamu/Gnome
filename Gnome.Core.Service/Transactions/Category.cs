@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Gnome.Api.Services.Transactions.Model
+namespace Gnome.Core.Service.Transactions
 {
     public class Category
     {

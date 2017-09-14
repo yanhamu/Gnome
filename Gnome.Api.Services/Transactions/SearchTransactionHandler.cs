@@ -1,10 +1,6 @@
 ﻿using Gnome.Api.Services.Transactions.Model;
 using Gnome.Api.Services.Transactions.Requests;
-using Gnome.Core.DataAccess;
-using Gnome.Core.Model;
-using Gnome.Core.Service.Search.Filters;
-using Gnome.Core.Service.Search.QueryBuilders;
-using Gnome.Core.Service.Transactions.RowFactories;
+using Gnome.Core.Service.Transactions.QueryBuilders;
 using MediatR;
 using System.Linq;
 
@@ -12,31 +8,16 @@ namespace Gnome.Api.Services.Transactions
 {
     public class SearchTransactionHandler : IRequestHandler<SingleAccountSearchTransaction, SearchTransactionResult>
     {
-        private readonly ITransactionRepository repository;
-        private readonly IQueryBuilderService<Transaction, SingleAccountTransactionSearchFilter> queryBuilder;
-        private readonly IAbstractTransactionFactory rowFactory;
-        private readonly ICategoryResolverFactory categoryResolverFactory;
+        private ITransactionCategoryRowQueryBuilder queryBuilder;
 
-        public SearchTransactionHandler(
-            ITransactionRepository repository,
-            IQueryBuilderService<Transaction, SingleAccountTransactionSearchFilter> queryBuilder,
-            IAbstractTransactionFactory transactionRowFactory,
-            ICategoryResolverFactory categoryResolverFactory)
+        public SearchTransactionHandler(ITransactionCategoryRowQueryBuilder queryBuilder)
         {
-            this.repository = repository;
             this.queryBuilder = queryBuilder;
-            this.rowFactory = transactionRowFactory;
-            this.categoryResolverFactory = categoryResolverFactory;
         }
 
         public SearchTransactionResult Handle(SingleAccountSearchTransaction message)
         {
-            var categoryResolver = categoryResolverFactory.Create(message.UserId, message.Filter);
-            var transactionsQuery = queryBuilder.Filter(repository.Query, message.Filter);
-            var rows = transactionsQuery.OrderByDescending(t => t.Date).ToList()
-                .Select(t => rowFactory.Create(t))
-                .Select(t => new TransactionCategoriesRow() { Row = t, Categories = categoryResolver.GetCategories(t.Id) });
-
+            var rows = queryBuilder.Query(message.UserId, message.Filter);
             var result = new SearchTransactionResult()
             {
                 Rows = rows.ToList()

@@ -1,19 +1,18 @@
 ﻿using Gnome.Core.DataAccess;
 using Gnome.Core.Model;
-using Gnome.Core.Service.Categories;
 using Gnome.Core.Service.Search.Filters;
 using Gnome.Core.Service.Search.QueryBuilders;
 using System;
 using System.Linq;
 
-namespace Gnome.Api.Services.Transactions
+namespace Gnome.Core.Service.Categories.Resolvers
 {
-    public interface ICategoryResolverFactory
+    public interface IResolverFactory
     {
-        CategoriesResolver Create(Guid userId, SingleAccountTransactionSearchFilter filter);
+        Resolver Create(Guid userId, SingleAccountTransactionSearchFilter filter);
     }
 
-    public class CategoryResolverFactory : ICategoryResolverFactory
+    public class CategoryResolverFactory : IResolverFactory
     {
         private readonly ICategoryTreeFactory categoryTreeFactory;
         private readonly IQueryBuilderService<CategoryTransaction, SingleAccountTransactionSearchFilter> categoryTransactionQueryBuilderService;
@@ -29,13 +28,13 @@ namespace Gnome.Api.Services.Transactions
             this.categoryTransactionRepository = categoryTransactionRepository;
         }
 
-        public CategoriesResolver Create(Guid userId, SingleAccountTransactionSearchFilter filter)
+        public Resolver Create(Guid userId, SingleAccountTransactionSearchFilter filter)
         {
             var categoryTree = categoryTreeFactory.Create(userId);
             var categoryTransactionsQuery = categoryTransactionQueryBuilderService.Filter(categoryTransactionRepository.Query, filter);
             var transactionCategories = categoryTransactionsQuery.ToLookup(k => k.TransactionId, v => v.CategoryId);
 
-            return new CategoriesResolver(categoryTree, transactionCategories);
+            return new Resolver(categoryTree, transactionCategories);
         }
     }
 }

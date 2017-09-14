@@ -1,9 +1,10 @@
-﻿using Gnome.Core.Service.Transactions;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace Gnome.Api.Services.Transactions.Model
+namespace Gnome.Core.Service.Transactions
 {
-    public class TransactionCategoriesRow
+    public class TransactionCategoryRow
     {
         public TransactionRow Row { get; set; }
         public List<Category> Categories { get; set; } = new List<Category>();
