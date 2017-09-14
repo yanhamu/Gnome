@@ -14,11 +14,11 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
     public class SingleAccountTransactionCategoryRowQueryBuilder : ITransactionCategoryRowQueryBuilder
     {
         private readonly IResolverFactory resolverFactory;
-        private readonly TransactionRowQueryBuilder queryBuilder;
+        private readonly ITransactionRowQueryBuilder queryBuilder;
 
         public SingleAccountTransactionCategoryRowQueryBuilder(
             IResolverFactory resolverFactory,
-            TransactionRowQueryBuilder queryBuilder)
+            ITransactionRowQueryBuilder queryBuilder)
         {
             this.resolverFactory = resolverFactory;
             this.queryBuilder = queryBuilder;

@@ -1,6 +1,7 @@
 ﻿using Gnome.Core.DataAccess;
 using Gnome.Core.Reports.AggregateReport.Model;
 using Gnome.Core.Service.Search.Filters;
+using Gnome.Core.Service.Transactions.QueryBuilders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,16 @@ namespace Gnome.Core.Reports.AggregateReport
 {
     public class Service : IAggregateReportService
     {
-        private readonly ITransactionRepository repository;
+        private readonly ITransactionCategoryRowQueryBuilder queryBuilder;
+        private readonly IFioAccountRepository accountRepository;
 
-        public Service(ITransactionRepository repository)
+        public Service(
+            ITransactionCategoryRowQueryBuilder queryBuilder,
+            IFioAccountRepository accountRepository
+            )
         {
-            this.repository = repository;
+            this.queryBuilder = queryBuilder;
+            this.accountRepository = accountRepository;
         }
 
         public AggregateEnvelope CreateReport(Guid accountId, Interval interval, int numberOfDaysToAggregate)
@@ -29,13 +35,18 @@ namespace Gnome.Core.Reports.AggregateReport
         private List<Aggregate> GetAggregates(Guid accountId, Interval interval, int numberOfDaysToAggregate)
         {
             var startDate = interval.From.Value.AddDays(-numberOfDaysToAggregate).Date;
+            var userId = accountRepository.Find(accountId).UserId;
 
-            var groupedSums = repository.Query
-                .Where(t => t.AccountId == accountId)
-                .Where(t => t.Date >= startDate)
-                .Where(t => t.Date <= interval.To)
-                .Where(t => t.Amount < 0)
-                .Select(t => new { t.Date, t.Amount })
+            var filter = new SingleAccountTransactionSearchFilter()
+            {
+                AccountId = accountId,
+                DateFilter = new Interval(startDate, interval.To ?? DateTime.UtcNow.Date)
+            };
+
+            var query = queryBuilder.Query(userId, filter);
+
+            var groupedSums = query
+                .Select(t => new { t.Row.Date, t.Row.Amount })
                 .ToLookup(k => k.Date, v => v.Amount)
                 .ToDictionary(k => k.Key.Date, v => v.Sum(s => s));
 

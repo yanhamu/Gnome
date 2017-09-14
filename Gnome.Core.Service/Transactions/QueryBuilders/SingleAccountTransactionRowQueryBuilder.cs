@@ -9,12 +9,12 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Transactions.QueryBuilders
 {
-    public interface TransactionRowQueryBuilder
+    public interface ITransactionRowQueryBuilder
     {
         IEnumerable<TransactionRow> Query(Guid userId, SingleAccountTransactionSearchFilter filter);
     }
 
-    public class SingleAccountTransactionRowQueryBuilder : TransactionRowQueryBuilder
+    public class SingleAccountTransactionRowQueryBuilder : ITransactionRowQueryBuilder
     {
         private readonly ITransactionRepository repository;
         private readonly IQueryBuilderService<Transaction, SingleAccountTransactionSearchFilter> queryBuilder;
@@ -33,7 +33,8 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
         public IEnumerable<TransactionRow> Query(Guid userId, SingleAccountTransactionSearchFilter filter)
         {
             var transactionsQuery = queryBuilder.Filter(repository.Query, filter);
-            return transactionsQuery.OrderByDescending(t => t.Date).ToList()
+            return transactionsQuery.OrderByDescending(t => t.Date)
+                .ToList()
                 .Select(t => rowFactory.Create(t));
         }
     }
