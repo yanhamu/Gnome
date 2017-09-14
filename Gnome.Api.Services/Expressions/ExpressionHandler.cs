@@ -38,7 +38,8 @@ namespace Gnome.Api.Services.Expressions
             {
                 ExpressionString = message.Expression,
                 Id = id,
-                UserId = message.UserId
+                UserId = message.UserId,
+                Name = message.Name ?? GetName()
             });
             repository.Save();
             return id;
@@ -55,6 +56,12 @@ namespace Gnome.Api.Services.Expressions
         {
             repository.Remove(message.ExpressionId);
             repository.Save();
+        }
+
+        private string GetName()
+        {
+            var date = DateTime.UtcNow;
+            return $"expr-{date.Year}-{date.Month}-{date.Day}/{date.Hour}:{date.Minute}:{date.Second}";
         }
     }
 }

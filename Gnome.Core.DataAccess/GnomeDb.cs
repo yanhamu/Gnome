@@ -24,7 +24,8 @@ namespace Gnome.Core.DataAccess
         {
             builder.ToTable("expression");
             builder.HasKey(f => f.Id);
-            builder.Property(f => f.ExpressionString);
+            builder.Property(f => f.ExpressionString).IsRequired();
+            builder.Property(f => f.Name).IsRequired();
             builder.Property(f => f.UserId).HasColumnName("user_id").IsRequired();
             builder.HasOne(u => u.User).WithMany().HasForeignKey(f => f.UserId);
 
