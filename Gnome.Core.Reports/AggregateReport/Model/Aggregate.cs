@@ -4,8 +4,8 @@ namespace Gnome.Core.Reports.AggregateReport.Model
 {
     public class Aggregate
     {
-        public DateTime Date { get; set; }
-        public decimal Expences { get; set; }
+        public DateTime Date { get; }
+        public decimal Expences { get; }
 
         public Aggregate(DateTime date, decimal expences)
         {

@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Search.QueryBuilders.Transactions
 {
-    public class TransactionQueryBuilderService : IQueryBuilderService<Transaction, SingleAccountTransactionSearchFilter>
+    public class TransactionQueryBuilder : IQueryBuilderService<Transaction, SingleAccountTransactionSearchFilter>
     {
         private readonly IEnumerable<IQueryBuilder<SingleAccountTransactionSearchFilter>> queryBuilders;
 
-        public TransactionQueryBuilderService(IEnumerable<IQueryBuilder<SingleAccountTransactionSearchFilter>> queryBuilders)
+        public TransactionQueryBuilder(IEnumerable<IQueryBuilder<SingleAccountTransactionSearchFilter>> queryBuilders)
         {
             this.queryBuilders = queryBuilders;
         }
