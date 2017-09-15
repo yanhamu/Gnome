@@ -37,7 +37,7 @@ namespace Gnome.Core.Reports.AggregateReport
                     sum += groupedExpenses[d.Date];
             }
 
-            return new Aggregate(interval.To, sum);
+            return new Aggregate(interval, sum);
         }
     }
 }

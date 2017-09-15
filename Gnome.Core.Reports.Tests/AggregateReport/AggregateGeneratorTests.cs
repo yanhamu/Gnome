@@ -30,7 +30,8 @@ namespace Gnome.Core.Reports.Tests.AggregateReport
             var interval = new ClosedInterval(Day(2), Day(5));
             var aggregate = generator.Create(interval);
 
-            Assert.Equal(Day(5), aggregate.Date);
+            Assert.Equal(Day(2), aggregate.Interval.From);
+            Assert.Equal(Day(5), aggregate.Interval.To);
             Assert.Equal(110m, aggregate.Expences);
         }
 
@@ -40,18 +41,20 @@ namespace Gnome.Core.Reports.Tests.AggregateReport
             var interval = new ClosedInterval(Day(2), Day(6));
             var aggregates = generator.Generate(interval, 1);
 
-            AssertAggregate(aggregates, 0, Day(6), 110m);
-            AssertAggregate(aggregates, 1, Day(5), 90m);
-            AssertAggregate(aggregates, 2, Day(4), 40m);
-            AssertAggregate(aggregates, 3, Day(3), 20m);
-            AssertAggregate(aggregates, 4, Day(2), 30m);
+            AssertAggregate(aggregates, 0, ClosedInterval(Day(5), Day(6)), 110m);
+            AssertAggregate(aggregates, 1, ClosedInterval(Day(4), Day(5)), 90m);
+            AssertAggregate(aggregates, 2, ClosedInterval(Day(3), Day(4)), 40m);
+            AssertAggregate(aggregates, 3, ClosedInterval(Day(2), Day(3)), 20m);
+            AssertAggregate(aggregates, 4, ClosedInterval(Day(1), Day(2)), 30m);
         }
 
         public DateTime Day(int day) => new DateTime(2017, 1, day);
 
-        public void AssertAggregate(List<Aggregate> aggregates, int index, DateTime day, decimal amount)
+        public ClosedInterval ClosedInterval(DateTime from, DateTime to) => new ClosedInterval(from, to);
+
+        public void AssertAggregate(List<Aggregate> aggregates, int index, ClosedInterval interval, decimal amount)
         {
-            Assert.Equal(day, aggregates[index].Date);
+            Assert.Equal(interval, aggregates[index].Interval);
             Assert.Equal(amount, aggregates[index].Expences);
         }
     }

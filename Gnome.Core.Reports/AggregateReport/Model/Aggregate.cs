@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Gnome.Core.Service.Search.Filters;
 
 namespace Gnome.Core.Reports.AggregateReport.Model
 {
     public class Aggregate
     {
-        public DateTime Date { get; }
+        public ClosedInterval Interval { get; }
         public decimal Expences { get; }
 
-        public Aggregate(DateTime date, decimal expences)
+        public Aggregate(ClosedInterval interval, decimal expences)
         {
-            this.Date = date.Date;
+            this.Interval = interval;
             this.Expences = expences;
         }
     }
