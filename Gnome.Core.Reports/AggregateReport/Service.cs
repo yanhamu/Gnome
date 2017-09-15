@@ -15,8 +15,7 @@ namespace Gnome.Core.Reports.AggregateReport
 
         public Service(
             ITransactionCategoryRowQueryBuilder queryBuilder,
-            IFioAccountRepository accountRepository
-            )
+            IFioAccountRepository accountRepository)
         {
             this.queryBuilder = queryBuilder;
             this.accountRepository = accountRepository;
@@ -32,6 +31,7 @@ namespace Gnome.Core.Reports.AggregateReport
         {
             var filter = GetFilter(accountId, interval, numberOfDaysToAggregate);
             var userId = accountRepository.Find(accountId).UserId;
+
             var sumsPerDay = queryBuilder
                 .Query(userId, filter)
                 .Select(t => new { t.Row.Date, t.Row.Amount })
