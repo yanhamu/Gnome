@@ -45,11 +45,15 @@ namespace Gnome.Core.Reports.AggregateReport
 
         private SingleAccountTransactionSearchFilter GetFilter(Guid accountId, Interval interval, int numberOfDaysToAggregate)
         {
-            var startDate = interval.From.Value.AddDays(-numberOfDaysToAggregate).Date;
+            var startDate = interval.From.HasValue
+                ? interval.From.Value.AddDays(-numberOfDaysToAggregate).Date
+                : default(DateTime);
+            var endDate = interval.To ?? DateTime.UtcNow.Date;
+
             return new SingleAccountTransactionSearchFilter()
             {
                 AccountId = accountId,
-                DateFilter = new Interval(startDate, interval.To ?? DateTime.UtcNow.Date)
+                DateFilter = new Interval(startDate, endDate)
             };
         }
     }

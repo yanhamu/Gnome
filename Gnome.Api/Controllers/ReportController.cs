@@ -17,7 +17,7 @@ namespace Gnome.Api.Controllers
             this.mediator = mediator;
         }
 
-        [HttpGet("{accountId:int}")]
+        [HttpGet("aggregate/{accountId:int}")]
         public async Task<IActionResult> AggregateReport(Guid accountId)
         {
             var result = await mediator.Send(new GetSingleAccountAggregateReport(
