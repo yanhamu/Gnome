@@ -3,6 +3,7 @@ using Gnome.Api.AuthenticationMiddleware;
 using Gnome.Api.Configuration;
 using Gnome.Api.Filters;
 using Gnome.Database;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +15,8 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IO;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace Gnome.Api
 {
@@ -33,22 +36,18 @@ namespace Gnome.Api
                 options.Filters.Add(new UserFilter());
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o => { o.TokenValidationParameters = GetTokenValidationParameters(signingKey); });
-
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(o =>
+                {
+                    o.RequireHttpsMetadata = false;
+                    o.SaveToken = false;
+                    o.TokenValidationParameters = GetTokenValidationParameters(signingKey);
+                });
+            
             services.AddCors();
             var container = DiConfiguration.CreateContainer(services);
             return container.Resolve<IServiceProvider>();
-        }
-
-        private static SymmetricSecurityKey GetKey(IConfigurationRoot configuration)
-        {
-            var secretKey = configuration["key"];
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
-            return signingKey;
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Initializer initializer)
@@ -60,7 +59,6 @@ namespace Gnome.Api
 
             loggerFactory.AddConsole();
 
-            app.UseAuthentication();
 
             app.UseCors(builder =>
             {
@@ -83,10 +81,17 @@ namespace Gnome.Api
             app.UseStaticFiles();
 
             app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));
+            app.UseAuthentication();
 
             app.UseMvc();
         }
 
+        private static SymmetricSecurityKey GetKey(IConfigurationRoot configuration)
+        {
+            var secretKey = configuration["key"];
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            return signingKey;
+        }
         private static TokenValidationParameters GetTokenValidationParameters(SymmetricSecurityKey signingKey)
         {
             var tokenValidationParameters = new TokenValidationParameters

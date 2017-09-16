@@ -1,12 +1,14 @@
 ﻿using Gnome.Api.Services.Accounts;
 using Gnome.Api.Services.Accounts.Requests;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
 {
+    [Authorize]
     [Route("api/accounts")]
     public class AccountController : IUserAuthenticatedController
     {
