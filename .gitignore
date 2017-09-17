@@ -251,3 +251,4 @@ GnomeDb/GnomeDb.jfm
 
 Gnome.Api/Tools
 gnome.db
+*.db
