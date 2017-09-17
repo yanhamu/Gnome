@@ -4,6 +4,7 @@ const routes = [
     { path: '/accounts', component: Accounts },
     { path: '/categories', component: CategoryManager },
     { path: '/home', component: Home },
+    { path: '/configuration', component: ConfigurationManager },
     { path: '*', redirect: '/home' }]
 
 const router = new VueRouter({ routes })

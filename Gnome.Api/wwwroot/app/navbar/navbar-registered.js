@@ -21,7 +21,9 @@ const nr = Vue.component('navbar-registered', {
                     <ul class="dropdown-menu">
                         <li><a href="#">basic aggregation report</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">configuration</a></li>
+                        <li>
+                            <router-link to="/configuration">configuration</router-link>
+                        </li>
                     </ul>
                 </li>
                 <li>
