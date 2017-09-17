@@ -3,7 +3,7 @@ using System;
 
 namespace Gnome.Api.Services.Filters.Requests
 {
-    public class ListFilters : IRequest<Model.Filters>
+    public class ListFilters : IRequest<Gnome.Core.Model.Filter>
     {
         public Guid UserId { get; }
 

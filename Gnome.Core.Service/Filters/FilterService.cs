@@ -47,19 +47,45 @@ namespace Gnome.Core.Service.Filters
                 .ToList();
         }
 
+        private Model.Filter Update(Model.Filter filter)
+        {
+            var f = filterRepository.Find(filter.Id);
+            f.Name = f.Name;
+            f.UserId = f.UserId;
+            f.Content = FilterContent.Create(filter);
+            filterRepository.Save();
+            return filter;
+        }
+
+        private Model.Filter Create(Model.Filter filter)
+        {
+            var f = new Filter
+            {
+                Id = filter.Id,
+                Content = FilterContent.Create(filter),
+                Name = filter.Name,
+                UserId = filter.UserId
+            };
+
+            filterRepository.Create(f);
+            filterRepository.Save();
+
+            return filter;
+        }
+
         private Model.Filter CreateFilter(Filter f, List<Expression> expressions)
         {
             var filterContent = FilterContent.Create(f.Content);
 
-            var filter = new Model.Filter()
+            return new Model.Filter()
             {
                 Id = f.Id,
                 Name = f.Name,
+                UserId = f.UserId,
                 Accounts = filterContent.Accounts,
-                Excluded = GetExpressions(filterContent.Excluded, expressions),
-                Included = GetExpressions(filterContent.Included, expressions)
+                Excluded = expressions.Where(e => filterContent.Excluded.Contains(e.Id)).ToList(),
+                Included = expressions.Where(e => filterContent.Included.Contains(e.Id)).ToList()
             };
-            return filter;
         }
 
         private List<Expression> GetExpressions(List<Guid> ids, List<Expression> expressions)

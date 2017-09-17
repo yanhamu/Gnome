@@ -4,9 +4,9 @@ using System;
 
 namespace Gnome.Api.Services.Filters
 {
-    public class FilterHandlers : IRequestHandler<ListFilters, Model.Filters>
+    public class FilterHandlers : IRequestHandler<ListFilters, Gnome.Core.Model.Filter>
     {
-        public Model.Filters Handle(ListFilters message)
+        public Gnome.Core.Model.Filter Handle(ListFilters message)
         {
             throw new NotImplementedException();
         }

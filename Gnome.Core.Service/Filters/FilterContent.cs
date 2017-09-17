@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Gnome.Core.Service.Filters
 {
@@ -29,6 +30,14 @@ namespace Gnome.Core.Service.Filters
         public static string Create(FilterContent content)
         {
             return JsonConvert.SerializeObject(content);
+        }
+
+        public static string Create(Model.Filter filter)
+        {
+            return Create(new FilterContent(
+                filter.Included.Select(e => e.Id).ToList(),
+                filter.Excluded.Select(e => e.Id).ToList(), 
+                filter.Accounts));
         }
     }
 }
