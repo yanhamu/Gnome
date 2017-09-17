@@ -1,5 +1,6 @@
 ﻿using Fio.Core;
 using Fio.Downloader.DataAccess;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,15 +22,15 @@ namespace Fio.Downloader
             var accounts = accountRepository
                 .GetAccountsToSync()
                 .ToList()
-                .Where(a => string.IsNullOrWhiteSpace(a.Token) == false);
+                .Where(a => string.IsNullOrWhiteSpace(a.Token) == false)
+                .ToList();
 
             foreach (var account in accounts)
             {
                 var client = new FioClient(account.Token);
 
-                //await client.SetStopFlag(DateTime.UtcNow.AddDays(-300));
-                //var transactions = await client.Get(System.DateTime.Now.AddDays(-100), System.DateTime.Now);
-                var transactions = await client.GetNew();
+                var transactions = await client.Get(DateTime.Now.AddDays(-100), DateTime.UtcNow);
+                //var transactions = await client.GetNew();
 
                 await transactionRepository.SaveAll(account.Id, transactions.AccountStatement.TransactionList.Transactions);
             }

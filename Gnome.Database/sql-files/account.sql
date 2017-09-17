@@ -1,4 +1,4 @@
-﻿CREATE TABLE [fio_account]
+﻿CREATE TABLE [account]
 (
 	[id] uniqueidentifier not null primary key,
 	[userid] uniqueidentifier not null,

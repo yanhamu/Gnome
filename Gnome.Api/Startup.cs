@@ -3,7 +3,6 @@ using Gnome.Api.AuthenticationMiddleware;
 using Gnome.Api.Configuration;
 using Gnome.Api.Filters;
 using Gnome.Database;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,8 +14,6 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IO;
 using System.Text;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 
 namespace Gnome.Api
 {
@@ -44,7 +41,7 @@ namespace Gnome.Api
                     o.SaveToken = false;
                     o.TokenValidationParameters = GetTokenValidationParameters(signingKey);
                 });
-            
+
             services.AddCors();
             var container = DiConfiguration.CreateContainer(services);
             return container.Resolve<IServiceProvider>();

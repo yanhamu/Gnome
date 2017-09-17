@@ -2,5 +2,9 @@
   "app-api": {
     "base-url": "http://localhost:9020",
     "transactions": "api/transactions"
+  },
+  "db": {
+    "fio": "Data Source=transactions.db;",
+    "core": "Data Source=C:\\Sources\\Gnome\\Gnome.Api\\bin\\Debug\\netcoreapp2.0\\gnome.db;"
   }
 }

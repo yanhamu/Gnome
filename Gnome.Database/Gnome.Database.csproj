@@ -18,7 +18,7 @@
     <None Update="sql-files\expression.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="sql-files\fio_account.sql">
+    <None Update="sql-files\account.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="sql-files\fio_transaction.sql">

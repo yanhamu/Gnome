@@ -15,7 +15,7 @@ namespace Fio.Downloader.DataAccess
 
         public IEnumerable<Account> GetAccountsToSync()
         {
-            var sql = "select id, token from fio_account where token is not null";
+            var sql = "select id, token from account where token is not null";
 
             var accounts = new List<Account>();
 

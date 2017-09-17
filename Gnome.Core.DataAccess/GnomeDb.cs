@@ -11,7 +11,7 @@ namespace Gnome.Core.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             MapUser(modelBuilder.Entity<User>());
-            MapFioAccount(modelBuilder.Entity<FioAccount>());
+            MapAccount(modelBuilder.Entity<FioAccount>());
             MapCategory(modelBuilder.Entity<Category>());
             MapCategoryTransaction(modelBuilder.Entity<CategoryTransaction>());
             MapTransaction(modelBuilder.Entity<Transaction>());
@@ -76,9 +76,9 @@ namespace Gnome.Core.DataAccess
             builder.HasOne(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId).IsRequired(false);
         }
 
-        private void MapFioAccount(EntityTypeBuilder<FioAccount> builder)
+        private void MapAccount(EntityTypeBuilder<FioAccount> builder)
         {
-            builder.ToTable("fio_account");
+            builder.ToTable("account");
             builder.HasKey(k => k.Id);
             builder.HasOne(u => u.User)
                 .WithMany()

@@ -20,19 +20,18 @@ namespace Fio.Downloader
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("ConnectionStrings.json")
                 .AddJsonFile("config.json")
                 .Build();
             var baseApiUrl = configuration["app-api:base-url"];
             var transactionUrl = configuration["app-api:transactions"];
 
-            using (var accountConnection = new SqliteConnection(configuration["db:dev"]))
-            using (var transactionConnection = new SqliteConnection(configuration["db:transactions"]))
+            using (var accountConnection = new SqliteConnection(configuration["db:core"]))
+            using (var transactionConnection = new SqliteConnection(configuration["db:fio"]))
             using (var httpClient = new HttpClient())
             {
                 accountConnection.Open();
                 transactionConnection.Open();
-                var initializer = new Initializer(transactionConnection, "bin\\Debug\\netcoreapp1.1\\sql-files\\", new List<string>() { "fio_transaction" });
+                var initializer = new Initializer(transactionConnection, "bin\\Debug\\netcoreapp2.0\\sql-files\\", new List<string>() { "transaction" });
                 if (initializer.HasAllTables() == false)
                     initializer.DropAndCreate();
 

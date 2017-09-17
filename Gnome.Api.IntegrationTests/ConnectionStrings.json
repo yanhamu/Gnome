@@ -1,5 +1,0 @@
-﻿{
-  "db": {
-    "dev": "Data Source=:memory:;"
-  }
-}

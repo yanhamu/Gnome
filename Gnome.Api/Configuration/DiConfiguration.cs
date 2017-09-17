@@ -1,15 +1,12 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Autofac.Features.Variance;
 using Gnome.Core.DataAccess;
-using Gnome.Database;
 using Gnome.Infrastructure;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -24,44 +21,22 @@ namespace Gnome.Api.Configuration
                 .AddJsonFile("config.json")
                 .Build();
 
-            services.AddDbContext<GnomeDb>(c => c.UseSqlite(configuration["db:dev"]));
             services.AddMediatR(CoreServiceAssembly);
 
-            var containerBuilder = ContainerInitializer.CreateContainer();
-            containerBuilder.Register(c =>
+            services.AddDbContext<GnomeDb>((p, b) =>
             {
-                var connection = new SqliteConnection(configuration["db:dev"]);
-                connection.Open();
-                return connection;
+                var connection = p.GetService<SqliteConnection>();
+                b.UseSqlite(connection);
             });
-            containerBuilder.RegisterSource(new ContravariantRegistrationSource());
 
-            containerBuilder.RegisterAssemblyTypes(CoreServiceAssembly)
-                .Where(t => t.Name.EndsWith("Service"))
-                .AsImplementedInterfaces();
-
-            containerBuilder.RegisterAssemblyTypes(CoreServiceAssembly)
-                .Where(t => t.Name.EndsWith("Factory"))
-                .AsImplementedInterfaces();
-
-            containerBuilder
-                .RegisterType<Initializer>()
-                .AsSelf()
-                .WithParameter("sqlFilePath", configuration["sql"])
-                .WithParameter("tableNames", new List<string>() {
-                    "user",
-                    "fio_account",
-                    "category",
-                    "transaction",
-                    "category_transaction",
-                    "expression"
-                });
+            var containerBuilder = ContainerInitializer.CreateContainer(configuration);
 
             containerBuilder.Populate(services);
             return containerBuilder.Build();
         }
 
-        private static Assembly CoreServiceAssembly => typeof(Gnome.Api.Services.Users.RegisterUser).GetTypeInfo().Assembly;
-
+        private static Assembly CoreServiceAssembly => typeof(Services.Users.RegisterUser)
+            .GetTypeInfo()
+            .Assembly;
     }
 }

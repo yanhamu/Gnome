@@ -60,7 +60,11 @@ namespace Gnome.Database
         {
             using (var command = sqlConnection.CreateCommand())
             {
-                var absoluteSqlFilePath = Path.Combine(Directory.GetCurrentDirectory(), sqlFilePath, fileName + ".sql");
+                var absoluteSqlFilePath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    sqlFilePath,
+                    fileName + ".sql");
+
                 command.CommandText = File.ReadAllText(absoluteSqlFilePath);
                 command.ExecuteNonQuery();
             }

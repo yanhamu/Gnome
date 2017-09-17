@@ -6,5 +6,5 @@
 	[amount] decimal(18,2) not null,
 	[type] nvarchar(40) not null,
 	[data] text,
-	foreign key ([account_id]) references fio_account(id)
+	foreign key ([account_id]) references account(id)
 )

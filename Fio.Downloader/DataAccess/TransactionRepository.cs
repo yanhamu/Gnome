@@ -30,9 +30,9 @@ namespace Fio.Downloader.DataAccess
                 {
                     await transactionClient.SaveTransaction(fioTransaction);
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
-                    //TODO log!
+                    throw;
                 }
             }
         }

@@ -27,7 +27,7 @@ namespace Gnome.Api.IntegrationTests.Extensions
             var connection = GetConnection(server);
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "insert into fio_account values(@id, @userid, @name, @token)";
+                command.CommandText = "insert into account values(@id, @userid, @name, @token)";
                 command.Parameters.Add(new SqliteParameter("id", account.Id));
                 command.Parameters.Add(new SqliteParameter("userid", account.UserId));
                 command.Parameters.Add(new SqliteParameter("name", account.Name));

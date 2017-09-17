@@ -2,6 +2,6 @@
   "key": "change-me-please",
   "sql": "bin\\Debug\\netcoreapp2.0\\sql-files\\",
   "db": {
-    "dev": "Data Source=gnome.db;"
+    "core": "Data Source=bin\\Debug\\netcoreapp2.0\\gnome.db;"
   }
 }

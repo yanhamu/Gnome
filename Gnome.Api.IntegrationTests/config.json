@@ -1,0 +1,6 @@
+﻿{
+  "db": {
+    "core": "Data Source=:memory:;"
+  },
+  "sql": "sql-files\\"
+}
