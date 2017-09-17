@@ -11,7 +11,8 @@
     template: `
     <div>
     <li v-on:click="selectNode">
-        <span class="label" v-bind:style="{ backgroundColor : node.color}">{{ node.name }}</span>
+        <span>{{ node['name'] }}</span>
+        <span class="badge" v-bind:style="{ backgroundColor : node['color'] }">&nbsp;</span>
     </li>
     <ul v-if="node.hasChildren">
         <category-node v-bind:node="node" v-for="node in node.children" :key="node.id" v-on:node-selected="nodeSelected"></category-node>
