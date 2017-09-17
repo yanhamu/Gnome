@@ -1,5 +1,5 @@
 ﻿using Gnome.Core.DataAccess;
-using Gnome.Core.Model;
+using Gnome.Core.Model.Database;
 using Gnome.Core.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,25 +8,25 @@ namespace Gnome.Core.Service
 {
     public class AccountService : IAccountService
     {
-        private readonly IFioAccountRepository repository;
+        private readonly IAccountRepository repository;
 
-        public AccountService(IFioAccountRepository repository)
+        public AccountService(IAccountRepository repository)
         {
             this.repository = repository;
         }
 
-        public Guid Create(FioAccount account)
+        public Guid Create(Account account)
         {
             var created = repository.Create(account);
             return created.Id;
         }
 
-        public FioAccount Get(Guid accountId)
+        public Account Get(Guid accountId)
         {
             return repository.Find(accountId);
         }
 
-        public IEnumerable<FioAccount> List(Guid userId)
+        public IEnumerable<Account> List(Guid userId)
         {
             return repository.GetAccounts(userId);
         }
@@ -37,7 +37,7 @@ namespace Gnome.Core.Service
             repository.Save();
         }
 
-        public FioAccount Update(Guid accountId, string name, string token)
+        public Account Update(Guid accountId, string name, string token)
         {
             var fioAccount = repository.Find(accountId);
 

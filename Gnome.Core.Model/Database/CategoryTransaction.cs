@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gnome.Core.Model
+namespace Gnome.Core.Model.Database
 {
     public class CategoryTransaction
     {

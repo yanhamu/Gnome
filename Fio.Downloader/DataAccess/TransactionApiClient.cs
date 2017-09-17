@@ -10,14 +10,14 @@ namespace Fio.Downloader.DataAccess
     {
         private readonly HttpClient httpClient;
         private readonly string uri;
-
+        
         public TransactionApiClient(HttpClient httpClient, string uri)
         {
             this.httpClient = httpClient;
             this.uri = uri;
         }
 
-        public async Task SaveTransaction(Gnome.Core.Model.Transaction transaction)
+        public async Task SaveTransaction(Gnome.Core.Model.Database.Transaction transaction)
         {
             var json = JsonConvert.SerializeObject(transaction);
             var content = new StringContent(json, Encoding.UTF8, "application/json");

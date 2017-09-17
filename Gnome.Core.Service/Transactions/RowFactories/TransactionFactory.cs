@@ -1,4 +1,4 @@
-﻿using Gnome.Core.Model;
+﻿using Gnome.Core.Model.Database;
 using Newtonsoft.Json.Linq;
 
 namespace Gnome.Core.Service.Transactions.RowFactories

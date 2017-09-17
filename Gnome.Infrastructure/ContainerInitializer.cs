@@ -61,7 +61,8 @@ namespace Gnome.Infrastructure
                                 "category",
                                 "transaction",
                                 "category_transaction",
-                                "expression"
+                                "expression",
+                                "filter"
                 });
 
             builder.RegisterAssemblyTypes(CoreApiServiceAssembly)

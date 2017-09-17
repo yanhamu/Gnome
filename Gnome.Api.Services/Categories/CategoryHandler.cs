@@ -1,6 +1,7 @@
 ﻿using Gnome.Api.Services.Categories.Requests;
 using Gnome.Core.DataAccess;
-using Gnome.Core.Model;
+
+using Gnome.Core.Model.Database;
 using Gnome.Core.Service.Categories;
 using MediatR;
 

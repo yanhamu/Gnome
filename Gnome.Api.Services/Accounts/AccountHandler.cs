@@ -15,10 +15,10 @@ namespace Gnome.Api.Services.Accounts
         IRequestHandler<CreateAccount, Account>,
         INotificationHandler<RemoveAccount>
     {
-        private readonly IFioAccountRepository repository;
+        private readonly IAccountRepository repository;
         private readonly IAccountService accountService;
 
-        public AccountHandler(IFioAccountRepository repository,
+        public AccountHandler(IAccountRepository repository,
             IAccountService accountService)
         {
             this.repository = repository;
@@ -48,7 +48,7 @@ namespace Gnome.Api.Services.Accounts
         public Account Handle(CreateAccount message)
         {
             var id = Guid.NewGuid();
-            var created = repository.Create(new Core.Model.FioAccount(id, message.UserId, message.Name, message.Token));
+            var created = repository.Create(new Core.Model.Database.Account(id, message.UserId, message.Name, message.Token));
             repository.Save();
             return new Account(created.Id, created.Name, created.Token);
         }

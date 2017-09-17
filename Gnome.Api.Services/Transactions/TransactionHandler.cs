@@ -1,6 +1,6 @@
 ﻿using Gnome.Api.Services.Transactions.Requests;
 using Gnome.Core.DataAccess;
-using Gnome.Core.Model;
+using Gnome.Core.Model.Database;
 using MediatR;
 using System;
 

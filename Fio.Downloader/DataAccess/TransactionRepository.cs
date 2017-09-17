@@ -63,14 +63,14 @@ namespace Fio.Downloader.DataAccess
             };
         }
 
-        public Gnome.Core.Model.Transaction Convert(FioTransaction fio)
+        public Gnome.Core.Model.Database.Transaction Convert(FioTransaction fio)
         {
             var settings = new JsonSerializerSettings();
             settings.ContractResolver = new TransactionContractResolver();
 
             var data = JsonConvert.SerializeObject(fio, Formatting.None, settings);
 
-            return new Gnome.Core.Model.Transaction()
+            return new Gnome.Core.Model.Database.Transaction()
             {
                 AccountId = fio.AccountId,
                 Amount = fio.Amount,
@@ -90,7 +90,7 @@ namespace Fio.Downloader.DataAccess
             protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
             {
                 var properties = base.CreateProperties(type, memberSerialization);
-                var propertiesToIgnore = typeof(Gnome.Core.Model.Transaction).GetProperties().Select(p => p.Name.ToLower()).ToList();
+                var propertiesToIgnore = typeof(Gnome.Core.Model.Database.Transaction).GetProperties().Select(p => p.Name.ToLower()).ToList();
                 return properties.Where(p => !propertiesToIgnore.Contains(p.PropertyName)).ToList();
             }
         }

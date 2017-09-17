@@ -11,11 +11,11 @@ namespace Gnome.Core.Reports.AggregateReport
     public class Service : IAggregateReportService
     {
         private readonly ITransactionCategoryRowQueryBuilder queryBuilder;
-        private readonly IFioAccountRepository accountRepository;
+        private readonly IAccountRepository accountRepository;
 
         public Service(
             ITransactionCategoryRowQueryBuilder queryBuilder,
-            IFioAccountRepository accountRepository)
+            IAccountRepository accountRepository)
         {
             this.queryBuilder = queryBuilder;
             this.accountRepository = accountRepository;

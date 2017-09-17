@@ -1,4 +1,4 @@
-﻿using Gnome.Core.Model;
+﻿using Gnome.Core.Model.Database;
 
 namespace Gnome.Core.DataAccess
 {

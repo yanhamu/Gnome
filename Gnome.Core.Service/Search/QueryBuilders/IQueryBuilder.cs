@@ -1,4 +1,4 @@
-﻿using Gnome.Core.Model;
+﻿using Gnome.Core.Model.Database;
 using System.Linq;
 
 namespace Gnome.Core.Service.Search.QueryBuilders

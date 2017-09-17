@@ -1,5 +1,5 @@
 ﻿using Gnome.Api.Services.Categories.Requests;
-using Gnome.Core.Model;
+using Gnome.Core.Model.Database;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;

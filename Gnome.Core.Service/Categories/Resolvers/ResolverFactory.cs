@@ -1,5 +1,5 @@
 ﻿using Gnome.Core.DataAccess;
-using Gnome.Core.Model;
+using Gnome.Core.Model.Database;
 using Gnome.Core.Service.Search.Filters;
 using Gnome.Core.Service.Search.QueryBuilders;
 using System;

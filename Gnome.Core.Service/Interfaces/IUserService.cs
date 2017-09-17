@@ -1,4 +1,4 @@
-﻿using Gnome.Core.Model;
+﻿using Gnome.Core.Model.Database;
 using System;
 
 namespace Gnome.Core.Service.Interfaces

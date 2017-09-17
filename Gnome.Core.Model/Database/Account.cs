@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Gnome.Core.Model
+namespace Gnome.Core.Model.Database
 {
-    public class FioAccount
+    public class Account
     {
-        public FioAccount() { }
+        public Account() { }
 
-        public FioAccount(
+        public Account(
             Guid id,
             Guid userId,
             string name,

@@ -1,4 +1,4 @@
-﻿using Gnome.Core.Model;
+﻿using Gnome.Core.Model.Database;
 using MediatR;
 using System;
 
@@ -8,7 +8,7 @@ namespace Gnome.Api.Services.Transactions.Requests
     {
         public Guid Id { get; set; }
         public Guid AccountId { get; set; }
-        public FioAccount Account { get; set; }
+        public Account Account { get; set; }
         public DateTime Date { get; set; }
         public decimal Amount { get; set; }
         public string Type { get; set; }

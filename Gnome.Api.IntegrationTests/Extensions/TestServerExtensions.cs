@@ -1,4 +1,4 @@
-﻿using Gnome.Core.Model;
+﻿using Gnome.Core.Model.Database;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Data.Sqlite;
 using System;
@@ -22,7 +22,7 @@ namespace Gnome.Api.IntegrationTests.Extensions
             }
         }
 
-        public static void PrepareAccount(this TestServer server, FioAccount account)
+        public static void PrepareAccount(this TestServer server, Account account)
         {
             var connection = GetConnection(server);
             using (var command = connection.CreateCommand())

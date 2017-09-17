@@ -1,4 +1,4 @@
-﻿using Gnome.Core.Model;
+﻿using Gnome.Core.Model.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,13 +11,23 @@ namespace Gnome.Core.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             MapUser(modelBuilder.Entity<User>());
-            MapAccount(modelBuilder.Entity<FioAccount>());
+            MapAccount(modelBuilder.Entity<Account>());
             MapCategory(modelBuilder.Entity<Category>());
             MapCategoryTransaction(modelBuilder.Entity<CategoryTransaction>());
             MapTransaction(modelBuilder.Entity<Transaction>());
             MapExpression(modelBuilder.Entity<Expression>());
+            MapFilter(modelBuilder.Entity<Filter>());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void MapFilter(EntityTypeBuilder<Filter> builder)
+        {
+            builder.ToTable("filter");
+            builder.HasKey(f => f.Id);
+            builder.HasOne(f => f.User).WithMany().HasForeignKey(f => f.UserId);
+            builder.Property(f => f.Content);
+            builder.Property(f => f.Name);
         }
 
         private void MapExpression(EntityTypeBuilder<Expression> builder)
@@ -76,7 +86,7 @@ namespace Gnome.Core.DataAccess
             builder.HasOne(x => x.Parent).WithMany().HasForeignKey(x => x.ParentId).IsRequired(false);
         }
 
-        private void MapAccount(EntityTypeBuilder<FioAccount> builder)
+        private void MapAccount(EntityTypeBuilder<Account> builder)
         {
             builder.ToTable("account");
             builder.HasKey(k => k.Id);
@@ -86,7 +96,7 @@ namespace Gnome.Core.DataAccess
                 .IsRequired();
         }
 
-        public DbSet<FioAccount> Accounts { get; set; }
+        public DbSet<Account> Accounts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryTransaction> CategoryTransactions { get; set; }

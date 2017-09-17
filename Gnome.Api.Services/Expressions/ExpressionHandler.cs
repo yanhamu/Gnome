@@ -1,6 +1,6 @@
 ﻿using Gnome.Api.Services.Expressions.Requests;
 using Gnome.Core.DataAccess;
-using Gnome.Core.Model;
+using Gnome.Core.Model.Database;
 using Gnome.Core.Service.RulesEngine.AST;
 using MediatR;
 using System;
