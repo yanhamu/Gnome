@@ -1,6 +1,7 @@
 ﻿using Gnome.Api.IntegrationTests.Extensions;
 using Gnome.Api.IntegrationTests.Fixtures;
 using Gnome.Api.Services.Accounts;
+using System.Collections.Generic;
 using System.Net;
 using Xunit;
 
@@ -34,8 +35,8 @@ namespace Gnome.Api.IntegrationTests
 
             var result = await client.List();
             result.HasStatusCode(HttpStatusCode.OK);
-
-            var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<System.Collections.Generic.List<Account>>(await (result.Content.ReadAsStringAsync()));
+            var content = await result.Content.ReadAsStringAsync();
+            var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Account>>(content);
         }
     }
 }

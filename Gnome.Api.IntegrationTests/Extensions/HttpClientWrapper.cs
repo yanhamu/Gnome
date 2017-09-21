@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gnome.Api.IntegrationTests.Configuration;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,23 @@ namespace Gnome.Api.IntegrationTests.Extensions
     {
         private readonly HttpClient client;
         public string Url { get; set; }
+        public bool IsAuthenticated { get; set; }
 
         public HttpClientWrapper(HttpClient client)
         {
             this.client = client;
+        }
+
+        public HttpClientWrapper SetAuthentication(bool isAuthenticated)
+        {
+            this.IsAuthenticated = isAuthenticated;
+            return this;
+        }
+
+        public HttpClientWrapper SetBaseUrl(string url)
+        {
+            this.Url = url;
+            return this;
         }
 
         public async Task<HttpResponseMessage> Create<T>(T content)
@@ -23,18 +37,24 @@ namespace Gnome.Api.IntegrationTests.Extensions
                 Encoding.UTF8,
                 "application/json");
 
-            var request = new HttpRequestMessage(HttpMethod.Post, Url)
-            {
-                Content = stringContent
-            };
+            var request = CreateRequest(HttpMethod.Post);
+            request.Content = stringContent;
 
             return await client.SendAsync(request);
         }
 
         public async Task<HttpResponseMessage> List()
         {
-            return await client.GetAsync(Url);
+            var request = CreateRequest(HttpMethod.Get);
+            return await client.SendAsync(request);
         }
 
+        private HttpRequestMessage CreateRequest(HttpMethod method)
+        {
+            var request = new HttpRequestMessage(method, Url);
+            if (this.IsAuthenticated)
+                request.Headers.Add(TestIdentityMiddleware.AUTH_HEADER_FLAG, "yeah");
+            return request;
+        }
     }
 }

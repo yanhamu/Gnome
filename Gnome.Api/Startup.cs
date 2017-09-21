@@ -26,7 +26,7 @@ namespace Gnome.Api
                 .AddJsonFile("config.json")
                 .Build();
 
-            var signingKey = GetKey(configuration);
+            var signingKey = GetKey(configuration["key"]);
 
             services.AddMvc(options =>
             {
@@ -65,30 +65,23 @@ namespace Gnome.Api
             });
 
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
-
-            var signingKey = GetKey(configuration);
-            var options = GetTokenProviderOptions(signingKey);
 
             if (initializer.HasAllTables() == false)
                 initializer.DropAndCreate();
 
             app.UseStaticFiles();
 
+            var signingKey = GetKey(configuration["key"]);
+            var options = GetTokenProviderOptions(signingKey);
             app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));
             app.UseAuthentication();
 
             app.UseMvc();
         }
 
-        private static SymmetricSecurityKey GetKey(IConfigurationRoot configuration)
-        {
-            var secretKey = configuration["key"];
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
-            return signingKey;
-        }
+        private static SymmetricSecurityKey GetKey(string secretKey) => new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+
         private static TokenValidationParameters GetTokenValidationParameters(SymmetricSecurityKey signingKey)
         {
             var tokenValidationParameters = new TokenValidationParameters

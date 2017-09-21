@@ -12,7 +12,10 @@ namespace Gnome.Api.IntegrationTests
         public BaseControllerTests(string baseUrl)
         {
             server = new TestServer(new WebHostBuilder().UseStartup<Configuration.Startup>());
-            client = server.CreateClientWrapper().SetBaseUrl(baseUrl);
+            client = server
+                .CreateClientWrapper()
+                .SetBaseUrl(baseUrl)
+                .SetAuthentication(true);
         }
     }
 }

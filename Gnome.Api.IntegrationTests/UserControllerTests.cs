@@ -18,7 +18,7 @@ namespace Gnome.Api.IntegrationTests
                 Password = "secret"
             };
 
-            var response = await client.Create(newUser); 
+            var response = await client.SetAuthentication(false).Create(newUser); 
 
             response.HasStatusCode(HttpStatusCode.NoContent);
         }
