@@ -4,14 +4,17 @@ using Gnome.Core.Model.Database;
 using Gnome.Core.Service.RulesEngine.AST;
 using MediatR;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Gnome.Api.Services.Expressions
 {
     public class ExpressionHandler :
         IRequestHandler<GetExpression, Expression>,
-        IRequestHandler<CreateExpression, Guid>,
+        IRequestHandler<CreateExpression, Model.Expression>,
         IRequestHandler<UpdateExpression>,
-        IRequestHandler<RemoveExpression>
+        IRequestHandler<RemoveExpression>,
+        IRequestHandler<ListExpression, List<Model.Expression>>
     {
         private readonly IExpressionRepository repository;
         private readonly SyntaxTreeBuilderFacade treeBuilderFacade;
@@ -31,10 +34,10 @@ namespace Gnome.Api.Services.Expressions
             return repository.Find(message.ExpressionId);
         }
 
-        public Guid Handle(CreateExpression message)
+        public Model.Expression Handle(CreateExpression message)
         {
             var id = Guid.NewGuid();
-            this.repository.Create(new Expression()
+            var expression = this.repository.Create(new Expression()
             {
                 ExpressionString = message.Expression,
                 Id = id,
@@ -42,7 +45,13 @@ namespace Gnome.Api.Services.Expressions
                 Name = message.Name ?? GetName()
             });
             repository.Save();
-            return id;
+
+            return new Model.Expression()
+            {
+                Id = expression.Id,
+                ExpressionString = expression.ExpressionString,
+                Name = expression.Name
+            };
         }
 
         public void Handle(UpdateExpression message)
@@ -56,6 +65,20 @@ namespace Gnome.Api.Services.Expressions
         {
             repository.Remove(message.ExpressionId);
             repository.Save();
+        }
+
+        public List<Model.Expression> Handle(ListExpression message)
+        {
+            return repository
+                .Query
+                .Where(e => e.UserId == message.UserId)
+                .Select(e => new Model.Expression()
+                {
+                    ExpressionString = e.ExpressionString,
+                    Id = e.Id,
+                    Name = e.Name
+                })
+                .ToList();
         }
 
         private string GetName()

@@ -32,6 +32,6 @@ const Accounts = Vue.component('accounts', {
                 </td>
             </tr>
     </table>
-    <input class='btn btn-default' value='create new' v-on:click="create"/>
+    <input class='btn btn-primary' value='create new' v-on:click="create"/>
 </div>`
 });

@@ -10,5 +10,6 @@
     template: `
   <div class="container-fluid">
     <h3>configuration</h3>
+    <expression-list></expression-list>
   </div>`
 });

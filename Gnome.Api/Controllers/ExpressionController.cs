@@ -18,6 +18,12 @@ namespace Gnome.Api.Controllers
             this.mediator = mediator;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            return new OkObjectResult(await mediator.Send(new ListExpression(UserId)));
+        }
+
         [HttpGet("{expressionId:Guid}")]
         public async Task<IActionResult> Get(Guid expressionId)
         {
@@ -35,8 +41,7 @@ namespace Gnome.Api.Controllers
         public async Task<IActionResult> Create([FromBody]CreateExpression toCreate)
         {
             toCreate.UserId = UserId;
-            var id = await mediator.Send(toCreate);
-            return new OkObjectResult(id);
+            return new OkObjectResult(await mediator.Send(toCreate));
         }
 
         [HttpPut("expressionId:Guid")]
