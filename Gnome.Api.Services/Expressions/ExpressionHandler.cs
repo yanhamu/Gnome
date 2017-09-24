@@ -56,8 +56,8 @@ namespace Gnome.Api.Services.Expressions
 
         public void Handle(UpdateExpression message)
         {
-            var expression = repository.Find(message.ExpressionId);
-            expression.ExpressionString = message.Expression;
+            var expression = repository.Find(message.Id);
+            expression.ExpressionString = message.ExpressionString;
             repository.Save();
         }
 

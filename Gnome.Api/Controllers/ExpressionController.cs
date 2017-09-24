@@ -44,9 +44,10 @@ namespace Gnome.Api.Controllers
             return new OkObjectResult(await mediator.Send(toCreate));
         }
 
-        [HttpPut("expressionId:Guid")]
-        public async Task<IActionResult> Update(Guid expressionId, UpdateExpression toUpdate)
+        [HttpPut("{expressionId:Guid}")]
+        public async Task<IActionResult> Update(Guid expressionId, [FromBody]UpdateExpression toUpdate)
         {
+            toUpdate.UserId = UserId;
             await mediator.Send(toUpdate);
             return new OkResult();
         }

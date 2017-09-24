@@ -26,18 +26,21 @@
                 .then(res => {
                     this.expressions.splice(this.expressions.indexOf(e), 1);
                 });
+        },
+        selectExpression: function (e) {
+            this.$emit('select-expression', e);
         }
     },
     template: `
   <div class="container-fluid">
     <h3>expressions</h3>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-12">
             <input class='btn btn-primary' value='create new' v-on:click="create"/>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-12">
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -45,7 +48,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="e in expressions">
+                    <tr v-for="e in expressions" v-on:click="selectExpression(e)">
                         <td>{{ e.name }}</td>
                         <td>
                             <button class='btn btn-danger' v-on:click="remove(e)">
