@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace Gnome.Core.Service.RulesEngine
 {
-    public class CachedEvaluatorFactory
+    public class CachedEvaluatorFactory : ICachedEvaluatorFactory
     {
-        private readonly SyntaxTreeBuilderFacade treeBuilder;
+        private readonly ISyntaxTreeBuilderFacade treeBuilder;
         private readonly IExpressionRepository expressionRepository;
 
-        public CachedEvaluatorFactory(SyntaxTreeBuilderFacade treeBuilder, IExpressionRepository expressionRepository)
+        public CachedEvaluatorFactory(ISyntaxTreeBuilderFacade treeBuilder, IExpressionRepository expressionRepository)
         {
             this.treeBuilder = treeBuilder;
             this.expressionRepository = expressionRepository;

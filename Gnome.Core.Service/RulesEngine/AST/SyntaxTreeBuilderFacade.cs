@@ -3,7 +3,7 @@ using Gnome.Core.Service.RulesEngine.Tokenizer;
 
 namespace Gnome.Core.Service.RulesEngine.AST
 {
-    public class SyntaxTreeBuilderFacade
+    public class SyntaxTreeBuilderFacade : ISyntaxTreeBuilderFacade
     {
         private readonly ShuntingYardParser parser;
         private readonly TreeParser treeParser;

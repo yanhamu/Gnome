@@ -17,7 +17,6 @@ namespace Gnome.Api.IntegrationTests.Fixtures
                         Color = "FF0000",
                         IsSystem = true,
                         Name = "root",
-                        Type = Category.TypeEnumeration.Envelope,
                         UserId = UserFixture.User.Id
                     };
                 return root;

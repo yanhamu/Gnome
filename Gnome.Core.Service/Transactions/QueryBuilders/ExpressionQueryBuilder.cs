@@ -9,11 +9,11 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
     public class ExpressionQueryBuilder : ITransactionCategoryRowQueryBuilder
     {
         private readonly ITransactionCategoryRowQueryBuilder queryBuilder;
-        private readonly CachedEvaluatorFactory evaluatorFactory;
+        private readonly ICachedEvaluatorFactory evaluatorFactory;
 
         public ExpressionQueryBuilder(
             ITransactionCategoryRowQueryBuilder queryBuilder,
-            CachedEvaluatorFactory evaluatorFactory)
+            ICachedEvaluatorFactory evaluatorFactory)
         {
             this.queryBuilder = queryBuilder;
             this.evaluatorFactory = evaluatorFactory;

@@ -57,13 +57,12 @@ namespace Gnome.Api.IntegrationTests.Extensions
             var connection = GetConnection(server);
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "insert into [category] values(@id, @user_id, @parent_id, @name, @is_system, @type, @color)";
+                command.CommandText = "insert into [category] values(@id, @user_id, @parent_id, @name, @is_system, @color)";
                 command.Parameters.Add(new SqliteParameter("id", category.Id));
                 command.Parameters.Add(new SqliteParameter("user_id", category.UserId));
                 command.Parameters.Add(new SqliteParameter("parent_id", (object)category.ParentId ?? DBNull.Value));
                 command.Parameters.Add(new SqliteParameter("name", category.Name));
                 command.Parameters.Add(new SqliteParameter("is_system", category.IsSystem));
-                command.Parameters.Add(new SqliteParameter("type", (object)category.Type ?? DBNull.Value));
                 command.Parameters.Add(new SqliteParameter("color", (object)category.Color ?? DBNull.Value));
                 command.ExecuteNonQuery();
             }

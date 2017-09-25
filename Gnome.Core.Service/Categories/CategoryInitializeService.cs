@@ -24,7 +24,6 @@ namespace Gnome.Core.Service.Categories
             {
                 IsSystem = true,
                 Name = "root",
-                Type = Category.TypeEnumeration.Envelope,
                 UserId = userId
             });
             repository.Save();
@@ -34,8 +33,7 @@ namespace Gnome.Core.Service.Categories
                 IsSystem = true,
                 Name = "system",
                 ParentId = root.Id,
-                UserId = userId,
-                Type = Category.TypeEnumeration.Envelope
+                UserId = userId
             });
             repository.Save();
 
@@ -44,8 +42,7 @@ namespace Gnome.Core.Service.Categories
                 IsSystem = true,
                 Name = "unread",
                 ParentId = system.Id,
-                UserId = userId,
-                Type = Category.TypeEnumeration.Envelope
+                UserId = userId
             });
             repository.Save();
 
@@ -54,8 +51,7 @@ namespace Gnome.Core.Service.Categories
                 IsSystem = false,
                 Name = "User Category",
                 ParentId = root.Id,
-                UserId = userId,
-                Type = Category.TypeEnumeration.Envelope
+                UserId = userId
             });
             repository.Save();
 
@@ -64,8 +60,7 @@ namespace Gnome.Core.Service.Categories
                 IsSystem = false,
                 Name = "Other",
                 ParentId = user.Id,
-                UserId = userId,
-                Type = Category.TypeEnumeration.Fallback // TODO remove type
+                UserId = userId
             });
             repository.Save();
         }

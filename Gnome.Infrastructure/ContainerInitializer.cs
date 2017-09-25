@@ -1,12 +1,12 @@
 ﻿using Autofac;
 using Autofac.Features.Variance;
 using Gnome.Core.DataAccess;
-using Gnome.Core.Service;
 using Gnome.Database;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Reflection;
+using CoreReports = Gnome.Core.Reports;
 
 namespace Gnome.Infrastructure
 {
@@ -26,7 +26,13 @@ namespace Gnome.Infrastructure
 
             builder.RegisterAssemblyTypes(CoreServiceAssembly)
                 .Where(t => t.Name.EndsWith("Builder"))
+                .Where(t => typeof(Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder).IsAssignableFrom(t) == false)
                 .AsImplementedInterfaces();
+
+            builder.RegisterAssemblyTypes(CoreServiceAssembly)
+                .Where(t => t.Name.EndsWith("Facade"))
+                .AsImplementedInterfaces();
+
 
             builder.RegisterAssemblyTypes(CoreReportAssembly)
                 .Where(t => t.Name.EndsWith("Service"))
@@ -73,24 +79,25 @@ namespace Gnome.Infrastructure
                 .AsImplementedInterfaces();
 
             builder.RegisterType<Core.Service.Transactions.QueryBuilders.SingleAccountTransactionCategoryRowQueryBuilder>()
-                .Named<Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder>("transaction-category-qb");
+                .Named<Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder>("satcrqb-decoree");
 
-            builder.RegisterType<Core.Service.Transactions.QueryBuilders.ExpressionQueryBuilder>();
+            builder.RegisterType<Core.Service.Transactions.QueryBuilders.ExpressionQueryBuilder>()
+                .Named<Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder>("satcrqb-decorator");
 
-            builder.RegisterDecorator(
-                (IComponentContext c, Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder inner) => c.Resolve<Core.Service.Transactions.QueryBuilders.ExpressionQueryBuilder>(),
-                fromKey: "transaction-category-qb");
+            builder.RegisterDecorator<Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder>(
+                (c, inner) =>
+                c.ResolveNamed<Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder>("satcrqb-decorator", TypedParameter.From(inner), TypedParameter.From(c.Resolve<Core.Service.RulesEngine.ICachedEvaluatorFactory>())), fromKey: "satcrqb-decoree");
 
             return builder;
         }
 
-        private static Assembly CoreReportAssembly { get { return typeof(Core.Reports.AggregateReport.IAggregateReportService).GetTypeInfo().Assembly; } }
+        private static Assembly CoreReportAssembly { get { return typeof(CoreReports.AggregateReport.IAggregateReportService).GetTypeInfo().Assembly; } }
 
-        private static Assembly CoreServiceAssembly { get { return typeof(UserSecurityService).GetTypeInfo().Assembly; } }
+        private static Assembly CoreServiceAssembly { get { return typeof(Core.Service.UserSecurityService).GetTypeInfo().Assembly; } }
 
         private static Assembly CoreRepositoryAssembly { get { return typeof(IUserRepository).GetTypeInfo().Assembly; } }
 
-        private static Assembly CoreApiServiceAssembly => typeof(Gnome.Api.Services.Users.RegisterUser).GetTypeInfo().Assembly;
+        private static Assembly CoreApiServiceAssembly => typeof(Api.Services.Users.RegisterUser).GetTypeInfo().Assembly;
 
     }
 }

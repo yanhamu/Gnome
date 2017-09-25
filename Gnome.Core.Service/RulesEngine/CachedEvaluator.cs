@@ -10,10 +10,10 @@ namespace Gnome.Core.Service.RulesEngine
     public class CachedEvaluator
     {
         private readonly List<Expression> expressions;
-        private SyntaxTreeBuilderFacade treeBuilder;
+        private ISyntaxTreeBuilderFacade treeBuilder;
         private readonly Dictionary<Guid, ISyntaxNode<bool>> cache = new Dictionary<Guid, ISyntaxNode<bool>>();
 
-        public CachedEvaluator(List<Expression> expressions, SyntaxTreeBuilderFacade treeBuilder)
+        public CachedEvaluator(List<Expression> expressions, ISyntaxTreeBuilderFacade treeBuilder)
         {
             this.expressions = expressions;
             this.treeBuilder = treeBuilder;
