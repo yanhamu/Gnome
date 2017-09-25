@@ -68,6 +68,20 @@ namespace Gnome.Api.IntegrationTests.Extensions
             }
         }
 
+        public static void PrepareExpression(this TestServer server, Expression expression)
+        {
+            var connection = GetConnection(server);
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "insert into [expression] values(@id, @user_id, @name, @expressionString)";
+                command.Parameters.Add(new SqliteParameter("id", expression.Id));
+                command.Parameters.Add(new SqliteParameter("user_id", expression.UserId));
+                command.Parameters.Add(new SqliteParameter("name", expression.Name));
+                command.Parameters.Add(new SqliteParameter("expressionString", expression.ExpressionString));
+                command.ExecuteNonQuery();
+            }
+        }
+
         public static HttpClientWrapper CreateClientWrapper(this TestServer server)
         {
             return new HttpClientWrapper(server.CreateClient());

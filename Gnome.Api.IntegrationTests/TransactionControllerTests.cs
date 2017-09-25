@@ -3,6 +3,7 @@ using Gnome.Api.IntegrationTests.Fixtures;
 using Gnome.Api.Services.Transactions.Requests;
 using Gnome.Core.Service.Search.Filters;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Xunit;
 
@@ -31,20 +32,22 @@ namespace Gnome.Api.IntegrationTests
         }
 
         [Fact]
-        public async void Should_Query_Transaction()
+        public async void Should_Query_Transaction_With_Include_Expression()
         {
             this.server.PrepareUser(UserFixture.User);
             this.server.PrepareCategory(CategoryFixture.Root);
             this.server.PrepareAccount(AccountFixtures.Fio);
             this.server.PrepareTransaction(TransactionFixtures.Income);
             this.server.PrepareTransaction(TransactionFixtures.Expense);
+            this.server.PrepareExpression(ExpressionFixtures.VariableSymbol);
 
             client.SetBaseUrl($"api/accounts/{AccountFixtures.Fio.Id.ToString()}/transactions");
 
             var response = await client.Create(new SingleAccountTransactionSearchFilter()
             {
                 AccountId = AccountFixtures.Fio.Id,
-                DateFilter = new Interval()
+                DateFilter = new Interval(),
+                IncludeExpressions = new List<Guid>() { ExpressionFixtures.VariableSymbol.Id }
             });
 
             response.HasStatusCode(HttpStatusCode.OK);

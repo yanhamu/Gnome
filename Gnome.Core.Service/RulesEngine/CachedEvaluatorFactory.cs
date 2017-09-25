@@ -22,7 +22,7 @@ namespace Gnome.Core.Service.RulesEngine
             var expressions = expressionRepository.Query
                 .Where(e => ids.Contains(e.Id))
                 .ToList();
-            return new CachedEvaluator(expressions, treeBuilder);
+            return new CachedEvaluator(treeBuilder).Initialize(expressions);
         }
     }
 }

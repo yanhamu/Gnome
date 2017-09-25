@@ -9,17 +9,15 @@ namespace Gnome.Core.Service.RulesEngine
 {
     public class CachedEvaluator
     {
-        private readonly List<Expression> expressions;
         private ISyntaxTreeBuilderFacade treeBuilder;
         private readonly Dictionary<Guid, ISyntaxNode<bool>> cache = new Dictionary<Guid, ISyntaxNode<bool>>();
 
-        public CachedEvaluator(List<Expression> expressions, ISyntaxTreeBuilderFacade treeBuilder)
+        public CachedEvaluator(ISyntaxTreeBuilderFacade treeBuilder)
         {
-            this.expressions = expressions;
             this.treeBuilder = treeBuilder;
         }
 
-        public void Initialize()
+        public CachedEvaluator Initialize(List<Expression> expressions)
         {
             foreach (var e in expressions)
             {
@@ -28,6 +26,7 @@ namespace Gnome.Core.Service.RulesEngine
 
                 cache.Add(e.Id, treeBuilder.Build(e.ExpressionString));
             }
+            return this;
         }
 
         public bool Evaluate(Guid expressionId, TransactionCategoryRow transaction)

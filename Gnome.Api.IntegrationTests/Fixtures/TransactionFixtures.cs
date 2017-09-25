@@ -16,7 +16,7 @@ namespace Gnome.Api.IntegrationTests.Fixtures
                         Id = new Guid("008fd303-e315-4988-be7f-184e56d8be1c"),
                         AccountId = AccountFixtures.Fio.Id,
                         Amount = 50000m,
-                        Data = "{}",
+                        Data = "{variablesymbol:'111'}",
                         Date = new DateTime(2017, 1, 1),
                         Type = "fio"
                     };
