@@ -9,7 +9,7 @@ namespace Gnome.Core.Service.Search.QueryBuilders.Transactions
         public IQueryable<Transaction> Build(IQueryable<Transaction> query, SingleAccountTransactionSearchFilter filter)
         {
             if (filter.DateFilter == null || filter.DateFilter.To.HasValue == false)
-                return null;
+                return query;
 
             return query.Where(t => t.Date <= filter.DateFilter.To);
         }

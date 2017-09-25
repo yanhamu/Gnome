@@ -7,7 +7,6 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore.Extensions;
 
 namespace Gnome.Infrastructure
 {
@@ -72,6 +71,15 @@ namespace Gnome.Infrastructure
             builder.RegisterAssemblyTypes(CoreApiServiceAssembly)
                 .Where(t => t.Name.EndsWith("Factory"))
                 .AsImplementedInterfaces();
+
+            builder.RegisterType<Core.Service.Transactions.QueryBuilders.SingleAccountTransactionCategoryRowQueryBuilder>()
+                .Named<Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder>("transaction-category-qb");
+
+            builder.RegisterType<Core.Service.Transactions.QueryBuilders.ExpressionQueryBuilder>();
+
+            builder.RegisterDecorator(
+                (IComponentContext c, Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder inner) => c.Resolve<Core.Service.Transactions.QueryBuilders.ExpressionQueryBuilder>(),
+                fromKey: "transaction-category-qb");
 
             return builder;
         }

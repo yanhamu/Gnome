@@ -36,6 +36,39 @@ namespace Gnome.Api.IntegrationTests.Extensions
             }
         }
 
+        public static void PrepareTransaction(this TestServer server, Transaction transaction)
+        {
+            var connection = GetConnection(server);
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "insert into [transaction] values(@id, @account_id, @date, @amount, @type, @data)";
+                command.Parameters.Add(new SqliteParameter("id", transaction.Id));
+                command.Parameters.Add(new SqliteParameter("account_id", transaction.AccountId));
+                command.Parameters.Add(new SqliteParameter("date", transaction.Date));
+                command.Parameters.Add(new SqliteParameter("amount", transaction.Amount));
+                command.Parameters.Add(new SqliteParameter("type", transaction.Type));
+                command.Parameters.Add(new SqliteParameter("data", (object)transaction.Data ?? DBNull.Value));
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public static void PrepareCategory(this TestServer server, Category category)
+        {
+            var connection = GetConnection(server);
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = "insert into [category] values(@id, @user_id, @parent_id, @name, @is_system, @type, @color)";
+                command.Parameters.Add(new SqliteParameter("id", category.Id));
+                command.Parameters.Add(new SqliteParameter("user_id", category.UserId));
+                command.Parameters.Add(new SqliteParameter("parent_id", (object)category.ParentId ?? DBNull.Value));
+                command.Parameters.Add(new SqliteParameter("name", category.Name));
+                command.Parameters.Add(new SqliteParameter("is_system", category.IsSystem));
+                command.Parameters.Add(new SqliteParameter("type", (object)category.Type ?? DBNull.Value));
+                command.Parameters.Add(new SqliteParameter("color", (object)category.Color ?? DBNull.Value));
+                command.ExecuteNonQuery();
+            }
+        }
+
         public static HttpClientWrapper CreateClientWrapper(this TestServer server)
         {
             return new HttpClientWrapper(server.CreateClient());

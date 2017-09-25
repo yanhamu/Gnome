@@ -65,7 +65,7 @@ namespace Gnome.Core.Service.Categories
                 Name = "Other",
                 ParentId = user.Id,
                 UserId = userId,
-                Type = Category.TypeEnumeration.Fallback
+                Type = Category.TypeEnumeration.Fallback // TODO remove type
             });
             repository.Save();
         }

@@ -1,5 +1,4 @@
-﻿using Gnome.Core.Model;
-using Gnome.Core.Model.Database;
+﻿using Gnome.Core.Model.Database;
 using System;
 
 namespace Gnome.Api.IntegrationTests.Fixtures
@@ -13,9 +12,7 @@ namespace Gnome.Api.IntegrationTests.Fixtures
             get
             {
                 if (fio == null)
-                {
                     fio = new Account(new Guid("6ed46731-9265-49f8-9fa5-f9c7a92dbde2"), UserFixture.User.Id, "fio", "token");
-                }
                 return fio;
             }
         }

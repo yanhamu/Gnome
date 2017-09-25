@@ -14,7 +14,6 @@ namespace Gnome.Api.Controllers
         private readonly IMediator mediator;
         public Guid UserId { get; set; }
 
-
         public TransactionController(IMediator mediator)
         {
             this.mediator = mediator;
