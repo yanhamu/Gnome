@@ -17,9 +17,9 @@ namespace Gnome.Api.Services.Expressions
         IRequestHandler<ListExpression, List<Model.Expression>>
     {
         private readonly IExpressionRepository repository;
-        private readonly SyntaxTreeBuilderFacade treeBuilderFacade;
+        private readonly ISyntaxTreeBuilderFacade treeBuilderFacade;
 
-        public ExpressionHandler(SyntaxTreeBuilderFacade treeBuilderFacade)
+        public ExpressionHandler(ISyntaxTreeBuilderFacade treeBuilderFacade)
         {
             this.treeBuilderFacade = treeBuilderFacade;
         }

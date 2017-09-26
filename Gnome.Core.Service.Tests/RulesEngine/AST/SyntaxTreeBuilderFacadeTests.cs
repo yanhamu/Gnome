@@ -5,7 +5,7 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
 {
     public class SyntaxTreeBuilderFacadeTests
     {
-        private readonly SyntaxTreeBuilderFacade builder;
+        private readonly ISyntaxTreeBuilderFacade builder;
 
         public SyntaxTreeBuilderFacadeTests()
         {

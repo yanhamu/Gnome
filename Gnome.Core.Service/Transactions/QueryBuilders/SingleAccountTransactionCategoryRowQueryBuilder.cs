@@ -6,11 +6,6 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Transactions.QueryBuilders
 {
-    public interface ITransactionCategoryRowQueryBuilder
-    {
-        IEnumerable<TransactionCategoryRow> Query(Guid userId, SingleAccountTransactionSearchFilter filter);
-    }
-
     public class SingleAccountTransactionCategoryRowQueryBuilder : ITransactionCategoryRowQueryBuilder
     {
         private readonly IResolverFactory resolverFactory;
