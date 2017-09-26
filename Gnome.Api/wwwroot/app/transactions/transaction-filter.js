@@ -1,4 +1,10 @@
 ﻿const TransactionFilter = Vue.component('transaction-filter', {
+    created: function () {
+        var toDate = new Date();
+        var fromDate = new Date(new Date().setDate(new Date().getDate() - 30))
+        this.fromDate = this.getDateString(fromDate);
+        this.toDate = this.getDateString(toDate);
+    },
     data: function () {
         return {
             fromDate: null,
@@ -6,6 +12,12 @@
         }
     },
     methods: {
+        getDateString: function (d) {
+            var day = d.getDate();
+            var month = d.getMonth() + 1;
+            var year = d.getFullYear();
+            return year + "-" + month + "-" + day;
+        },
         send: function () {
             var data = {
                 pageFilter: null,
