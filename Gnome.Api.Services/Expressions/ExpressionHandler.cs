@@ -19,14 +19,12 @@ namespace Gnome.Api.Services.Expressions
         private readonly IExpressionRepository repository;
         private readonly ISyntaxTreeBuilderFacade treeBuilderFacade;
 
-        public ExpressionHandler(ISyntaxTreeBuilderFacade treeBuilderFacade)
-        {
-            this.treeBuilderFacade = treeBuilderFacade;
-        }
-
-        public ExpressionHandler(IExpressionRepository filterRepository)
+        public ExpressionHandler(
+            IExpressionRepository filterRepository,
+            ISyntaxTreeBuilderFacade treeBuilderFacade)
         {
             this.repository = filterRepository;
+            this.treeBuilderFacade = treeBuilderFacade;
         }
 
         public Expression Handle(GetExpression message)
@@ -58,6 +56,7 @@ namespace Gnome.Api.Services.Expressions
         {
             var expression = repository.Find(message.Id);
             expression.ExpressionString = message.ExpressionString;
+            expression.Name = message.Name;
             repository.Save();
         }
 

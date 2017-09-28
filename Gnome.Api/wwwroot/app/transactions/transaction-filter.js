@@ -1,10 +1,5 @@
 ﻿const TransactionFilter = Vue.component('transaction-filter', {
     created: function () {
-        this.$http.get('expressions')
-            .then(res => {
-                this.expressions = res.body;
-            });
-
         this.fromDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
         this.toDate = moment().format('YYYY-MM-DD');
     },
@@ -30,7 +25,6 @@
             toDate: null,
             includeExpressions: [],
             excludeExpressions: [],
-            expressions: []
         }
     },
     methods: {
