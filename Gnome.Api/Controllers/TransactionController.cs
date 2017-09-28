@@ -27,6 +27,12 @@ namespace Gnome.Api.Controllers
             return new OkObjectResult(await mediator.Send(new SingleAccountSearchTransaction(filter, UserId)));
         }
 
+        [HttpGet("transactions")]
+        public async Task<IActionResult> FilterTransactions(MultiAccountTransactionSearchFilter filter)
+        {
+            return new OkObjectResult(await mediator.Send(new MultiAccountSearchTransaction(UserId, filter)));
+        }
+
         [IgnoreUserFilter]
         [HttpPost("transactions")]
         public async Task<IActionResult> CreateTransaction([FromBody] CreateTransaction transaction)
