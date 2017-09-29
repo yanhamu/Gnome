@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Gnome.Api.AuthenticationMiddleware;
+﻿using Gnome.Api.AuthenticationMiddleware;
 using Gnome.Api.Filters;
 using Gnome.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -36,7 +35,7 @@ namespace Gnome.Api.IntegrationTests.Configuration
 
             services.AddCors();
             var container = DiConfiguration.CreateContainer(services);
-            return container.Resolve<IServiceProvider>();
+            return container.GetInstance<IServiceProvider>();
         }
 
 

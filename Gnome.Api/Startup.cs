@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Gnome.Api.AuthenticationMiddleware;
+﻿using Gnome.Api.AuthenticationMiddleware;
 using Gnome.Api.Configuration;
 using Gnome.Api.Filters;
 using Gnome.Database;
@@ -44,7 +43,7 @@ namespace Gnome.Api
 
             services.AddCors();
             var container = DiConfiguration.CreateContainer(services);
-            return container.Resolve<IServiceProvider>();
+            return container.GetInstance<IServiceProvider>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Initializer initializer)

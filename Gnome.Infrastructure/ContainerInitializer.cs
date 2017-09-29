@@ -1,66 +1,39 @@
-﻿using Autofac;
-using Autofac.Features.Variance;
-using Gnome.Core.DataAccess;
-using Gnome.Database;
+﻿using Gnome.Database;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
+using StructureMap;
 using System.Collections.Generic;
-using System.Reflection;
-using CoreReports = Gnome.Core.Reports;
 
 namespace Gnome.Infrastructure
 {
     public class ContainerInitializer
     {
-        public static ContainerBuilder CreateContainer(IConfigurationRoot configuration)
+        public static Container CreateContainer(IConfigurationRoot configuration)
         {
-            var builder = new ContainerBuilder();
+            var registry = new Registry();
+            registry.IncludeRegistry<DataAccessRegistry>();
+            registry.IncludeRegistry<CoreServiceRegistry>();
+            registry.IncludeRegistry<ReportingRegistry>();
+            registry.IncludeRegistry<ApiServiceRegistry>();
+            registry
+                .For<SqliteConnection>()
+                .Use("Creating new Sqlite connection", c =>
+                 {
+                     var connection = new SqliteConnection(configuration["db:core"]);
+                     connection.Open();
+                     using (var command = connection.CreateCommand())
+                     {
+                         command.CommandText = "PRAGMA foreign_keys = ON";
+                         command.ExecuteNonQuery();
+                     }
+                     return connection;
+                 })
+                 .Singleton();
 
-            builder.RegisterAssemblyTypes(CoreServiceAssembly)
-                .Where(t => t.Name.EndsWith("Service"))
-                .AsImplementedInterfaces();
-
-            builder.RegisterAssemblyTypes(CoreServiceAssembly)
-                .Where(t => t.Name.EndsWith("Factory"))
-                .AsImplementedInterfaces();
-
-            builder.RegisterAssemblyTypes(CoreServiceAssembly)
-                .Where(t => t.Name.EndsWith("Builder"))
-                .Where(t => typeof(Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder).IsAssignableFrom(t) == false)
-                .AsImplementedInterfaces();
-
-            builder.RegisterAssemblyTypes(CoreServiceAssembly)
-                .Where(t => t.Name.EndsWith("Facade"))
-                .AsImplementedInterfaces();
-
-
-            builder.RegisterAssemblyTypes(CoreReportAssembly)
-                .Where(t => t.Name.EndsWith("Service"))
-                .AsImplementedInterfaces();
-
-            builder.RegisterAssemblyTypes(CoreRepositoryAssembly)
-                .Where(t => t.Name.EndsWith("Repository"))
-                .AsImplementedInterfaces();
-
-            builder.Register(c =>
-            {
-                var connection = new SqliteConnection(configuration["db:core"]);
-                connection.Open();
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = "PRAGMA foreign_keys = ON";
-                    command.ExecuteNonQuery();
-                }
-                return connection;
-            }).SingleInstance();
-
-            builder.RegisterSource(new ContravariantRegistrationSource());
-
-            builder
-                .RegisterType<Initializer>()
-                .AsSelf()
-                .WithParameter("sqlFilePath", configuration["sql"])
-                .WithParameter("tableNames", new List<string>() {
+            registry.For<Initializer>()
+                .Use<Initializer>()
+                .Ctor<string>("sqlFilePath").Is(c => configuration["sql"])
+                .Ctor<List<string>>("tableNames").Is(new List<string>() {
                                 "user",
                                 "account",
                                 "category",
@@ -70,34 +43,7 @@ namespace Gnome.Infrastructure
                                 "filter"
                 });
 
-            builder.RegisterAssemblyTypes(CoreApiServiceAssembly)
-                .Where(t => t.Name.EndsWith("Service"))
-                .AsImplementedInterfaces();
-
-            builder.RegisterAssemblyTypes(CoreApiServiceAssembly)
-                .Where(t => t.Name.EndsWith("Factory"))
-                .AsImplementedInterfaces();
-
-            builder.RegisterType<Core.Service.Transactions.QueryBuilders.SingleAccountTransactionCategoryRowQueryBuilder>()
-                .Named<Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder>("satcrqb-decoree");
-
-            builder.RegisterType<Core.Service.Transactions.QueryBuilders.ExpressionQueryBuilder>()
-                .Named<Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder>("satcrqb-decorator");
-
-            builder.RegisterDecorator<Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder>(
-                (c, inner) =>
-                c.ResolveNamed<Core.Service.Transactions.QueryBuilders.ITransactionCategoryRowQueryBuilder>("satcrqb-decorator", TypedParameter.From(inner), TypedParameter.From(c.Resolve<Core.Service.RulesEngine.ICachedEvaluatorFactory>())), fromKey: "satcrqb-decoree");
-
-            return builder;
+            return new Container(registry);
         }
-
-        private static Assembly CoreReportAssembly { get { return typeof(CoreReports.AggregateReport.IAggregateReportService).GetTypeInfo().Assembly; } }
-
-        private static Assembly CoreServiceAssembly { get { return typeof(Core.Service.UserSecurityService).GetTypeInfo().Assembly; } }
-
-        private static Assembly CoreRepositoryAssembly { get { return typeof(IUserRepository).GetTypeInfo().Assembly; } }
-
-        private static Assembly CoreApiServiceAssembly => typeof(Api.Services.Users.RegisterUser).GetTypeInfo().Assembly;
-
     }
 }

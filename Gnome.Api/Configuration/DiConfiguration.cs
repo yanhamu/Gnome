@@ -1,12 +1,11 @@
-﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Gnome.Core.DataAccess;
+﻿using Gnome.Core.DataAccess;
 using Gnome.Infrastructure;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StructureMap;
 using System.IO;
 using System.Reflection;
 
@@ -29,10 +28,10 @@ namespace Gnome.Api.Configuration
                 b.UseSqlite(connection);
             });
 
-            var containerBuilder = ContainerInitializer.CreateContainer(configuration);
+            var container = ContainerInitializer.CreateContainer(configuration);
 
-            containerBuilder.Populate(services);
-            return containerBuilder.Build();
+            container.Populate(services);
+            return container;
         }
 
         private static Assembly CoreServiceAssembly => typeof(Services.Users.RegisterUser)

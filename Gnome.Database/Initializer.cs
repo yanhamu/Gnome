@@ -11,7 +11,10 @@ namespace Gnome.Database
         private readonly string sqlFilePath;
         private List<string> createTableFiles { get; }
 
-        public Initializer(SqliteConnection sqlConnection, string sqlFilePath, List<string> tableNames)
+        public Initializer(
+            SqliteConnection sqlConnection, 
+            string sqlFilePath, 
+            List<string> tableNames)
         {
             this.sqlConnection = sqlConnection;
             this.sqlFilePath = sqlFilePath;
