@@ -4,8 +4,6 @@
             selected: null
         };
     },
-    created: function () {
-    },
     methods: {
         expressionSelected: function (e) {
             this.selected = e;

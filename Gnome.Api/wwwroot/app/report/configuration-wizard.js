@@ -3,20 +3,18 @@
         return {
             step: 1,
             accounts: [],
-            inlcudedExpressions: [],
+            includedExpressions: [],
             excludedExpressions: []
         };
     },
-    created: function () {
-    },
     methods: {
         addAccount: function (a) {
-            if(this.accounts.indexOf(a) < 0)
+            if (this.accounts.indexOf(a) < 0)
                 this.accounts.push(a);
         },
-        removeAccount: function (a) {
-            var indexOf = this.accounts.indexOf(a);
-            this.accounts.splice(indexOf, 1);
+        remove: function (item, collection) {
+            var index = collection.indexOf(item);
+            collection.splice(index, 1);
         },
         next: function () {
             this.step = this.step + 1;
@@ -29,8 +27,8 @@
                 this.excludedExpressions.push(e);
         },
         includeExpression: function (e) {
-            if (this.inlcudedExpressions.indexOf(e) < 0)
-                this.inlcudedExpressions.push(e);
+            if (this.includedExpressions.indexOf(e) < 0)
+                this.includedExpressions.push(e);
         }
     },
     template: `
@@ -40,20 +38,54 @@
         <div class="col-md-6">
             <configuration-account v-if="step == 1" v-on:account-selected="addAccount" />
             <configuration-expression v-if="step == 2" v-on:includeExpression="includeExpression" v-on:excludeExpression="excludeExpression" />
+            <configuration-preview v-if="step == 3"
+                v-bind:excludedExpressions="excludedExpressions"
+                v-bind:includedExpressions="includedExpressions"
+                v-bind:accounts="accounts" />
         </div>
         <div class="col-md-6">
             <h4>summary</h4>
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
-                        <td>accounts</td>
+                        <th colspan="2">accounts</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="a in accounts">
                         <td>{{a.name}}</td>
                         <td>
-                            <button class='btn btn-danger' v-on:click="removeAccount(a)">
+                            <button class='btn btn-danger' v-on:click="remove(a, accounts)">
+                                <span class="glyphicon glyphicon-remove" />
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="2">include expressions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="ie in includedExpressions">
+                        <td>{{ie.name}}</td>
+                        <td>
+                            <button class='btn btn-danger' v-on:click="remove(ie, includedExpressions)">
+                                <span class="glyphicon glyphicon-remove" />
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th colspan="2">exclude expressions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="ee in excludedExpressions">
+                        <td>{{ee.name}}</td>
+                        <td>
+                            <button class='btn btn-danger' v-on:click="remove(ee, excludedExpressions)">
                                 <span class="glyphicon glyphicon-remove" />
                             </button>
                         </td>
