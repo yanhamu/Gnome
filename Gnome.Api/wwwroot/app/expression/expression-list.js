@@ -33,7 +33,6 @@
     },
     template: `
   <div class="container-fluid">
-    <h3>expressions</h3>
     <div class="row">
         <div class="col-md-12">
             <input class='btn btn-primary' value='create new' v-on:click="create"/>
