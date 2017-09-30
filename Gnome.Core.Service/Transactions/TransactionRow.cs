@@ -13,12 +13,12 @@ namespace Gnome.Core.Service.Transactions
             this.Type = type;
         }
 
-        public Guid Id { get; set; }
-        public DateTime Date { get; set; }
-        public decimal Amount { get; set; }
-        public string Type { get; set; }
+        public Guid Id { get; }
+        public DateTime Date { get; }
+        public decimal Amount { get; }
+        public string Type { get; }
 
-        public Dictionary<string, string> Fields { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> Fields { get; } = new Dictionary<string, string>();
 
         public string this[string field]
         {

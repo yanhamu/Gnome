@@ -39,7 +39,7 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
             else if (filter.ExcludeExpressions.Any() && !filter.IncludeExpressions.Any())
             {
                 return transactions
-                    .Where(t => filter.ExcludeExpressions.Any(e => evaluator.Evaluate(e, t)));
+                    .Where(t => !filter.ExcludeExpressions.Any(e => evaluator.Evaluate(e, t)));
             }
             else
             {

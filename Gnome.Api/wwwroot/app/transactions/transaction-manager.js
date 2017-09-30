@@ -8,7 +8,7 @@
     },
     methods: {
         filterSet: function (data) {
-            var url = 'accounts/' + this.id + '/transactions';
+            var url = 'accounts/' + this.id + '/transactions/query';
             this.$http.post(url, data).then(res => {
                 this.transactions = res.body;
             });

@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Transactions.QueryBuilders
 {
-    public class SingleAccountTransactionCategoryRowQueryBuilder : ITransactionCategoryRowQueryBuilder
+    public class TransactionCategoryRowQueryBuilder : ITransactionCategoryRowQueryBuilder
     {
         private readonly ICategoryResolverFactory resolverFactory;
         private readonly ITransactionRowQueryBuilder queryBuilder;
 
-        public SingleAccountTransactionCategoryRowQueryBuilder(
+        public TransactionCategoryRowQueryBuilder(
             ICategoryResolverFactory resolverFactory,
             ITransactionRowQueryBuilder queryBuilder)
         {

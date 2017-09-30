@@ -24,7 +24,7 @@ namespace Gnome.Infrastructure
                 _.AddAllTypesOf<IQueryBuilder<TransactionSearchFilter>>();
                 _.WithDefaultConventions();
 
-                For<ITransactionCategoryRowQueryBuilder>().Use<SingleAccountTransactionCategoryRowQueryBuilder>();
+                For<ITransactionCategoryRowQueryBuilder>().Use<TransactionCategoryRowQueryBuilder>();
                 For<ITransactionCategoryRowQueryBuilder>().DecorateAllWith<ExpressionQueryBuilder>();
 
                 For<IQueryBuilderService<Transaction, TransactionSearchFilter>>().Use<TransactionQueryBuilder>();

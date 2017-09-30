@@ -20,11 +20,17 @@ namespace Gnome.Api.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost("accounts/{accountId:Guid}/transactions")]
+        [HttpPost("accounts/{accountId:Guid}/transactions/query")]
         public async Task<IActionResult> Search(Guid accountId, [FromBody] TransactionSearchFilter filter)
         {
             filter.Accounts = new List<Guid>() { accountId };
 
+            return new OkObjectResult(await mediator.Send(new SearchTransaction(filter, UserId)));
+        }
+
+        [HttpPost("transactions/query")]
+        public async Task<IActionResult> Search([FromBody] TransactionSearchFilter filter)
+        {
             return new OkObjectResult(await mediator.Send(new SearchTransaction(filter, UserId)));
         }
 
