@@ -1,5 +1,4 @@
-﻿using Gnome.Core.Model;
-using Gnome.Core.Model.Database;
+﻿using Gnome.Core.Model.Database;
 using Gnome.Core.Service.Search.Filters;
 using System.Linq;
 

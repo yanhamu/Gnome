@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Categories.Resolvers
 {
-    public interface IResolverFactory
+    public interface ICategoryResolverFactory
     {
         Resolver Create(Guid userId, SingleAccountTransactionSearchFilter filter);
     }
 
-    public class CategoryResolverFactory : IResolverFactory
+    public class CategoryResolverFactory : ICategoryResolverFactory
     {
         private readonly ICategoryTreeFactory categoryTreeFactory;
         private readonly IQueryBuilderService<CategoryTransaction, SingleAccountTransactionSearchFilter> categoryTransactionQueryBuilderService;
