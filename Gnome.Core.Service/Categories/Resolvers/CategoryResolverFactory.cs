@@ -9,18 +9,18 @@ namespace Gnome.Core.Service.Categories.Resolvers
 {
     public interface ICategoryResolverFactory
     {
-        Resolver Create(Guid userId, SingleAccountTransactionSearchFilter filter);
+        Resolver Create(Guid userId, TransactionSearchFilter filter);
     }
 
     public class CategoryResolverFactory : ICategoryResolverFactory
     {
         private readonly ICategoryTreeFactory categoryTreeFactory;
-        private readonly IQueryBuilderService<CategoryTransaction, SingleAccountTransactionSearchFilter> categoryTransactionQueryBuilderService;
+        private readonly IQueryBuilderService<CategoryTransaction, TransactionSearchFilter> categoryTransactionQueryBuilderService;
         private readonly ICategoryTransactionRepository categoryTransactionRepository;
 
         public CategoryResolverFactory(
             ICategoryTreeFactory categoryTreeFactory,
-            IQueryBuilderService<CategoryTransaction, SingleAccountTransactionSearchFilter> categoryTransactionQueryBuilderService,
+            IQueryBuilderService<CategoryTransaction, TransactionSearchFilter> categoryTransactionQueryBuilderService,
             ICategoryTransactionRepository categoryTransactionRepository)
         {
             this.categoryTreeFactory = categoryTreeFactory;
@@ -28,7 +28,7 @@ namespace Gnome.Core.Service.Categories.Resolvers
             this.categoryTransactionRepository = categoryTransactionRepository;
         }
 
-        public Resolver Create(Guid userId, SingleAccountTransactionSearchFilter filter)
+        public Resolver Create(Guid userId, TransactionSearchFilter filter)
         {
             var categoryTree = categoryTreeFactory.Create(userId);
             var categoryTransactionsQuery = categoryTransactionQueryBuilderService.Filter(categoryTransactionRepository.Query, filter);

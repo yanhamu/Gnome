@@ -3,6 +3,7 @@ using Gnome.Core.Reports.AggregateReport.Model;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
 using System;
+using System.Collections.Generic;
 
 namespace Gnome.Api.Services.Reports
 {
@@ -31,7 +32,7 @@ namespace Gnome.Api.Services.Reports
 
         public AggregateEnvelope Handle(GetSingleAccountAggregateReport message)
         {
-            return service.CreateReport(message.AccountId, message.Interval, message.DaysPerAggregate);
+            return service.CreateReport(new List<Guid>() { message.AccountId }, message.Interval, message.DaysPerAggregate);
         }
     }
 }

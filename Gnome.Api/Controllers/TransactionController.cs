@@ -4,6 +4,7 @@ using Gnome.Core.Service.Search.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
@@ -20,17 +21,11 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost("accounts/{accountId:Guid}/transactions")]
-        public async Task<IActionResult> Search(Guid accountId, [FromBody] SingleAccountTransactionSearchFilter filter)
+        public async Task<IActionResult> Search(Guid accountId, [FromBody] TransactionSearchFilter filter)
         {
-            filter.AccountId = accountId;
+            filter.Accounts = new List<Guid>() { accountId };
 
-            return new OkObjectResult(await mediator.Send(new SingleAccountSearchTransaction(filter, UserId)));
-        }
-
-        [HttpGet("transactions")]
-        public async Task<IActionResult> FilterTransactions(MultiAccountTransactionSearchFilter filter)
-        {
-            return new OkObjectResult(await mediator.Send(new MultiAccountSearchTransaction(UserId, filter)));
+            return new OkObjectResult(await mediator.Send(new SearchTransaction(filter, UserId)));
         }
 
         [IgnoreUserFilter]

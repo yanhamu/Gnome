@@ -19,7 +19,7 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
             this.queryBuilder = queryBuilder;
         }
 
-        public IEnumerable<TransactionCategoryRow> Query(Guid userId, SingleAccountTransactionSearchFilter filter)
+        public IEnumerable<TransactionCategoryRow> Query(Guid userId, TransactionSearchFilter filter)
         {
             var categoryResolver = resolverFactory.Create(userId, filter);
             return queryBuilder.Query(userId, filter)

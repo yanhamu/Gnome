@@ -5,12 +5,12 @@ using System;
 
 namespace Gnome.Api.Services.Transactions.Requests
 {
-    public class SingleAccountSearchTransaction : IRequest<SearchTransactionResult>
+    public class SearchTransaction : IRequest<SearchTransactionResult>
     {
-        public SingleAccountTransactionSearchFilter Filter { get; }
+        public TransactionSearchFilter Filter { get; }
         public Guid UserId { get; }
 
-        public SingleAccountSearchTransaction(SingleAccountTransactionSearchFilter filter, Guid userId)
+        public SearchTransaction(TransactionSearchFilter filter, Guid userId)
         {
             this.Filter = filter;
             this.UserId = userId;

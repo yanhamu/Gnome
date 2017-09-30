@@ -21,14 +21,15 @@ namespace Gnome.Infrastructure
                 _.ExcludeType<ITransactionCategoryRowQueryBuilder>(); // decorated manually
                 _.Include(t => t.Name.EndsWith("Builder"));
                 _.Include(t => t.Name.EndsWith("Facade"));
+                _.AddAllTypesOf<IQueryBuilder<TransactionSearchFilter>>();
                 _.WithDefaultConventions();
 
                 For<ITransactionCategoryRowQueryBuilder>().Use<SingleAccountTransactionCategoryRowQueryBuilder>();
                 For<ITransactionCategoryRowQueryBuilder>().DecorateAllWith<ExpressionQueryBuilder>();
 
-                For<IQueryBuilderService<Transaction, SingleAccountTransactionSearchFilter>>().Use<TransactionQueryBuilder>();
-                For<IQueryBuilderService<CategoryTransaction, SingleAccountTransactionSearchFilter>>().Use<CategoryQueryBuilderService>();
-                For<ITransactionRowQueryBuilder>().Use<SingleAccountTransactionRowQueryBuilder>();
+                For<IQueryBuilderService<Transaction, TransactionSearchFilter>>().Use<TransactionQueryBuilder>();
+                For<IQueryBuilderService<CategoryTransaction, TransactionSearchFilter>>().Use<CategoryQueryBuilderService>();
+
             });
         }
     }

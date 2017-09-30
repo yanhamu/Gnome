@@ -6,6 +6,6 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
 {
     public interface ITransactionCategoryRowQueryBuilder
     {
-        IEnumerable<TransactionCategoryRow> Query(Guid userId, SingleAccountTransactionSearchFilter filter);
+        IEnumerable<TransactionCategoryRow> Query(Guid userId, TransactionSearchFilter filter);
     }
 }

@@ -11,18 +11,18 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
 {
     public interface ITransactionRowQueryBuilder
     {
-        IEnumerable<TransactionRow> Query(Guid userId, SingleAccountTransactionSearchFilter filter);
+        IEnumerable<TransactionRow> Query(Guid userId, TransactionSearchFilter filter);
     }
 
-    public class SingleAccountTransactionRowQueryBuilder : ITransactionRowQueryBuilder
+    public class TransactionRowQueryBuilder : ITransactionRowQueryBuilder
     {
         private readonly ITransactionRepository repository;
-        private readonly IQueryBuilderService<Transaction, SingleAccountTransactionSearchFilter> queryBuilder;
+        private readonly IQueryBuilderService<Transaction, TransactionSearchFilter> queryBuilder;
         private readonly IAbstractTransactionFactory rowFactory;
 
-        public SingleAccountTransactionRowQueryBuilder(
+        public TransactionRowQueryBuilder(
             ITransactionRepository repository,
-            IQueryBuilderService<Transaction, SingleAccountTransactionSearchFilter> queryBuilder,
+            IQueryBuilderService<Transaction, TransactionSearchFilter> queryBuilder,
             IAbstractTransactionFactory rowFactory)
         {
             this.repository = repository;
@@ -30,7 +30,7 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
             this.rowFactory = rowFactory;
         }
 
-        public IEnumerable<TransactionRow> Query(Guid userId, SingleAccountTransactionSearchFilter filter)
+        public IEnumerable<TransactionRow> Query(Guid userId, TransactionSearchFilter filter)
         {
             var transactionsQuery = queryBuilder.Filter(repository.Query, filter);
             return transactionsQuery.OrderByDescending(t => t.Date)

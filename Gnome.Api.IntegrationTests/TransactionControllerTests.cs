@@ -43,9 +43,9 @@ namespace Gnome.Api.IntegrationTests
 
             client.SetBaseUrl($"api/accounts/{AccountFixtures.Fio.Id.ToString()}/transactions");
 
-            var response = await client.Create(new SingleAccountTransactionSearchFilter()
+            var response = await client.Create(new TransactionSearchFilter()
             {
-                AccountId = AccountFixtures.Fio.Id,
+                Accounts = new List<Guid>() { AccountFixtures.Fio.Id },
                 DateFilter = new Interval(),
                 IncludeExpressions = new List<Guid>() { ExpressionFixtures.VariableSymbol.Id }
             });

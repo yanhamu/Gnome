@@ -19,7 +19,7 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
             this.evaluatorFactory = evaluatorFactory;
         }
 
-        public IEnumerable<TransactionCategoryRow> Query(Guid userId, SingleAccountTransactionSearchFilter filter)
+        public IEnumerable<TransactionCategoryRow> Query(Guid userId, TransactionSearchFilter filter)
         {
             var evaluator = evaluatorFactory.Create(filter.ExcludeExpressions.Union(filter.IncludeExpressions).ToList());
 

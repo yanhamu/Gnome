@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Search.QueryBuilders.Categories
 {
-    public class CategoryQueryBuilderService : IQueryBuilderService<CategoryTransaction, SingleAccountTransactionSearchFilter>
+    public class CategoryQueryBuilderService : IQueryBuilderService<CategoryTransaction, TransactionSearchFilter>
     {
-        public IQueryable<CategoryTransaction> Filter(IQueryable<CategoryTransaction> query, SingleAccountTransactionSearchFilter filter)
+        public IQueryable<CategoryTransaction> Filter(IQueryable<CategoryTransaction> query, TransactionSearchFilter filter)
         {
             if (filter.DateFilter == null)
                 return query;

@@ -21,16 +21,16 @@ namespace Gnome.Core.Reports.AggregateReport
             this.accountRepository = accountRepository;
         }
 
-        public AggregateEnvelope CreateReport(Guid accountId, Interval interval, int numberOfDaysToAggregate)
+        public AggregateEnvelope CreateReport(List<Guid> accounts, Interval interval, int numberOfDaysToAggregate)
         {
-            var aggregates = GetAggregates(accountId, interval, numberOfDaysToAggregate);
+            var aggregates = GetAggregates(accounts, interval, numberOfDaysToAggregate);
             return new AggregateEnvelope(interval, aggregates);
         }
 
-        private List<Aggregate> GetAggregates(Guid accountId, Interval interval, int numberOfDaysToAggregate)
+        private List<Aggregate> GetAggregates(List<Guid> accounts, Interval interval, int numberOfDaysToAggregate)
         {
-            var filter = GetFilter(accountId, interval, numberOfDaysToAggregate);
-            var userId = accountRepository.Find(accountId).UserId;
+            var filter = GetFilter(accounts, interval, numberOfDaysToAggregate);
+            var userId = accountRepository.Find(accounts).UserId;
 
             var sumsPerDay = queryBuilder
                 .Query(userId, filter)
@@ -43,16 +43,16 @@ namespace Gnome.Core.Reports.AggregateReport
             return generator.Generate(ClosedInterval.Create(interval), numberOfDaysToAggregate);
         }
 
-        private SingleAccountTransactionSearchFilter GetFilter(Guid accountId, Interval interval, int numberOfDaysToAggregate)
+        private TransactionSearchFilter GetFilter(List<Guid> accounts, Interval interval, int numberOfDaysToAggregate)
         {
             var startDate = interval.From.HasValue
                 ? interval.From.Value.AddDays(-numberOfDaysToAggregate).Date
                 : default(DateTime);
             var endDate = interval.To ?? DateTime.UtcNow.Date;
 
-            return new SingleAccountTransactionSearchFilter()
+            return new TransactionSearchFilter()
             {
-                AccountId = accountId,
+                Accounts = accounts,
                 DateFilter = new Interval(startDate, endDate)
             };
         }
