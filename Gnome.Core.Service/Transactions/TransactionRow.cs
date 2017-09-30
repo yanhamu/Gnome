@@ -5,18 +5,20 @@ namespace Gnome.Core.Service.Transactions
 {
     public class TransactionRow
     {
-        public TransactionRow(Guid id, DateTime date, decimal amount, string type)
+        public TransactionRow(Guid id, Guid accountId, DateTime date, decimal amount, string type)
         {
             this.Id = id;
             this.Date = date;
             this.Amount = amount;
             this.Type = type;
+            this.AccountId = accountId;
         }
 
         public Guid Id { get; }
         public DateTime Date { get; }
         public decimal Amount { get; }
         public string Type { get; }
+        public Guid AccountId { get; }
 
         public Dictionary<string, string> Fields { get; } = new Dictionary<string, string>();
 
@@ -24,20 +26,24 @@ namespace Gnome.Core.Service.Transactions
         {
             get
             {
-                if (field == "id")
-                    return this.Id.ToString();
-                if (field == "date")
-                    return this.Date.Date.ToString();
-                if (field == "amount")
-                    return this.Amount.ToString();
-                if (field == "type")
-                    return this.Type;
-
-                return Fields.ContainsKey(field)
-                    ? Fields[field]
-                    : null;
+                switch (field)
+                {
+                    case "id":
+                        return this.Id.ToString();
+                    case "date":
+                        return this.Date.Date.ToString();
+                    case "amount":
+                        return this.Amount.ToString();
+                    case "type":
+                        return this.Type;
+                    case "accountId":
+                        return this.AccountId.ToString();
+                    default:
+                        return Fields.ContainsKey(field)
+                            ? Fields[field]
+                            : null;
+                }
             }
-
             set
             {
                 if (keywords.Contains(field))
@@ -47,6 +53,6 @@ namespace Gnome.Core.Service.Transactions
             }
         }
 
-        private List<string> keywords = new List<string>() { "id", "date", "amount", "type" };
+        private List<string> keywords = new List<string>() { "id", "date", "amount", "type", "accountId" };
     }
 }

@@ -24,9 +24,12 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
 
         private static TransactionRow GetTransaction()
         {
-            var guid = new Guid("1edf80c2-f7e4-4612-befb-1ea79d7cda5d");
-            var transactionRow = new TransactionRow(guid, new DateTime(2010, 1, 1), 120.0m, "fio");
-            return transactionRow;
+            return new TransactionRow(
+                new Guid("1edf80c2-f7e4-4612-befb-1ea79d7cda5d"),
+                new Guid("1d000171-4e13-445f-bd70-5fa5c4e42fc1"),
+                new DateTime(2010, 1, 1),
+                120.0m,
+                "fio");
         }
     }
 }

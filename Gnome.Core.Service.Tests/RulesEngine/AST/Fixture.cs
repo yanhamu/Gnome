@@ -11,6 +11,7 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
             {
                 var transaction = new TransactionRow(
                     new Guid("6333f550-f904-42f0-9206-981acc5629f7"),
+                    new Guid("1d000171-4e13-445f-bd70-5fa5c4e42fc1"),
                     new DateTime(2015, 1, 1),
                     300,
                     "fio");

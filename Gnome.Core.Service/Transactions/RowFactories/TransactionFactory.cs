@@ -14,7 +14,12 @@ namespace Gnome.Core.Service.Transactions.RowFactories
 
         public TransactionRow Create(Transaction transaction)
         {
-            var transactionRow = new TransactionRow(transaction.Id, transaction.Date.Date, transaction.Amount, transaction.Type);
+            var transactionRow = new TransactionRow(
+                transaction.Id,
+                transaction.AccountId,
+                transaction.Date.Date,
+                transaction.Amount,
+                transaction.Type);
 
             var jsonObject = JObject.Parse(transaction.Data);
 
