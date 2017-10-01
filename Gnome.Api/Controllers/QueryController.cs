@@ -1,4 +1,4 @@
-﻿using Gnome.Api.Services.Queries.Model;
+﻿using Gnome.Api.Services.Queries.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,9 +18,37 @@ namespace Gnome.Api.Controllers
             this.mediator = mediator;
         }
 
+        [HttpGet]
         public async Task<IActionResult> List()
         {
             return new OkObjectResult(await mediator.Send(new ListQueries(UserId)));
+        }
+
+        [HttpGet("{queryId:Guid}")]
+        public async Task<IActionResult> Get(Guid queryId)
+        {
+            return new OkObjectResult(await mediator.Send(new GetQuery(queryId)));
+        }
+
+        [HttpPut("{queryId:Guid}")]
+        public async Task<IActionResult> Update(Guid queryId, UpdateQuery updateQuery)
+        {
+            updateQuery.Id = queryId;
+            return new OkObjectResult(await mediator.Send(updateQuery));
+        }
+
+        [HttpDelete("{queryId:Guid}")]
+        public async Task<IActionResult> Remove(Guid queryId)
+        {
+            await mediator.Publish(new RemoveQuery(queryId));
+            return new NoContentResult();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateQuery query)
+        {
+            query.UserId = UserId;
+            return new OkObjectResult(await mediator.Send(query));
         }
     }
 }

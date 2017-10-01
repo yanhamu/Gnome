@@ -3,9 +3,9 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 
-namespace Gnome.Api.Services.Queries.Model
+namespace Gnome.Api.Services.Queries.Requests
 {
-    public class ListQueries : IRequest<List<Query>>
+    public class ListQueries : IRequest<List<Model>>
     {
         private Guid userId;
 
