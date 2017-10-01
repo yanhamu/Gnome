@@ -6,6 +6,7 @@ const routes = [
     { path: '/home', component: Home },
     { path: '/configuration', component: ConfigurationWizard },
     { path: '/expressions', component: ExpressionList },
+    { path: '/expression-builder-wizard', component: ExpressionBuilderWizard },
     { path: '*', redirect: '/home' }]
 
 const router = new VueRouter({ routes })

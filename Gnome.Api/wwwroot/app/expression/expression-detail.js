@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-offset-10 col-sm-2">
+            <div class="col-sm-offset-8 col-sm-4">
                 <input value="save" class="btn btn-primary btn-block" v-on:click="save" />
             </div>
         </div>

@@ -22,7 +22,10 @@ const nr = Vue.component('navbar-registered', {
                         <li><a href="#">basic aggregation report</a></li>
                         <li role="separator" class="divider"></li>
                         <li>
-                            <router-link to="/configuration">configuration</router-link>
+                            <router-link to="/configuration">config-query</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/expression-builder-wizard">config-expressions</router-link>
                         </li>
                     </ul>
                 </li>

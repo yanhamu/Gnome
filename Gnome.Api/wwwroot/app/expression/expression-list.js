@@ -34,12 +34,12 @@
     template: `
   <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
             <input class='btn btn-primary' value='create new' v-on:click="create"/>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
             <table class="table table-hover">
                 <thead>
                     <tr>
