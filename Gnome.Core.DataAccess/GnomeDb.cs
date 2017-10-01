@@ -17,8 +17,16 @@ namespace Gnome.Core.DataAccess
             MapTransaction(modelBuilder.Entity<Transaction>());
             MapExpression(modelBuilder.Entity<Expression>());
             MapFilter(modelBuilder.Entity<Filter>());
+            MapQuery(modelBuilder.Entity<Query>());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void MapQuery(EntityTypeBuilder<Query> builder)
+        {
+            builder.ToTable("query");
+            builder.HasKey(q => q.Id);
+            builder.HasOne(b => b.User).WithMany().HasForeignKey(f => f.UserId);
         }
 
         private void MapFilter(EntityTypeBuilder<Filter> builder)
