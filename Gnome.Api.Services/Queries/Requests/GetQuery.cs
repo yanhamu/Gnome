@@ -1,16 +1,15 @@
-﻿using Gnome.Core.Model.Database;
-using MediatR;
+﻿using MediatR;
 using System;
 
 namespace Gnome.Api.Services.Queries.Requests
 {
     public class GetQuery : IRequest<Model>
     {
-        private Guid queryId;
+        public Guid QueryId { get; }
 
         public GetQuery(Guid queryId)
         {
-            this.queryId = queryId;
+            this.QueryId = queryId;
         }
     }
 }

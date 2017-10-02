@@ -31,7 +31,7 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPut("{queryId:Guid}")]
-        public async Task<IActionResult> Update(Guid queryId, UpdateQuery updateQuery)
+        public async Task<IActionResult> Update(Guid queryId, [FromBody] UpdateQuery updateQuery)
         {
             updateQuery.Id = queryId;
             return new OkObjectResult(await mediator.Send(updateQuery));
@@ -45,7 +45,7 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateQuery query)
+        public async Task<IActionResult> Create([FromBody]CreateQuery query)
         {
             query.UserId = UserId;
             return new OkObjectResult(await mediator.Send(query));

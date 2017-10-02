@@ -5,11 +5,11 @@ namespace Gnome.Api.Services.Queries.Requests
 {
     public class RemoveQuery : INotification
     {
-        private Guid queryId;
+        public Guid QueryId { get; set; }
 
         public RemoveQuery(Guid queryId)
         {
-            this.queryId = queryId;
+            this.QueryId = queryId;
         }
     }
 }
