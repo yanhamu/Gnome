@@ -5,7 +5,7 @@
             selectedTransaction: null
         };
     },
-    props: ['excludedExpressions', 'includedExpressions', 'accounts'],
+    props: ['query'],
     created: function () {
         var data = {
             accounts: [],
@@ -13,9 +13,9 @@
             excludeExpressions: []
         };
 
-        this.accounts.forEach(a => { data.accounts.push(a.id) });
-        this.includedExpressions.forEach(a => { data.includeExpressions.push(a.id) });
-        this.excludedExpressions.forEach(a => { data.excludeExpressions.push(a.id) });
+        this.query.accounts.forEach(a => { data.accounts.push(a.id) });
+        this.query.includedExpressions.forEach(a => { data.includeExpressions.push(a.id) });
+        this.query.excludedExpressions.forEach(a => { data.excludeExpressions.push(a.id) });
         var url = 'transactions/query';
         this.$http.post(url, data)
             .then(res => {

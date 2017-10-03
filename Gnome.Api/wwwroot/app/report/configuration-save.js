@@ -4,7 +4,7 @@
             name: ""
         };
     },
-    props: ['excludedExpressions', 'includedExpressions', 'accounts'],
+    props: ['query'],
     created: function () {
     },
     methods: {
@@ -15,9 +15,9 @@
                 includeExpressions: [],
                 excludeExpressions: []
             };
-            this.excludedExpressions.forEach(e => data.excludeExpressions.push(e.id));
-            this.includedExpressions.forEach(e => data.includeExpressions.push(e.id));
-            this.accounts.forEach(a => data.accounts.push(a.id));
+            this.query.excludedExpressions.forEach(e => data.excludeExpressions.push(e.id));
+            this.query.includedExpressions.forEach(e => data.includeExpressions.push(e.id));
+            this.query.accounts.forEach(a => data.accounts.push(a.id));
             this.$http.post('queries/', data)
                 .then();
         }
