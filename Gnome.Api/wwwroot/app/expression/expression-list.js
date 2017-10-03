@@ -1,20 +1,16 @@
 ﻿const ExpressionList = Vue.component('expression-list', {
     data: function () {
         return {
-            expressions: []
         };
     },
+    props: ['expressions'],
     created: function () {
-        this.$http.get('expressions')
-            .then(res => {
-                this.expressions = res.body;
-            });
     },
     methods: {
         create: function () {
             var data = {
                 name: 'new-expression',
-                expression: '1=1'
+                expression: '1 = 1'
             };
             this.$http.post('expressions', data)
                 .then(res => {

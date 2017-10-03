@@ -4,21 +4,26 @@
             selected: null
         };
     },
+    props: ['query', 'expressions'],
     methods: {
         expressionSelected: function (e) {
             this.selected = e;
         },
         includeExpression: function (e) {
-            this.$emit('includeExpression', e);
+            if (this.query.includeExpressions.indexOf(e) < 0) {
+                this.query.includeExpressions.push(e);
+            }
         },
         excludeExpression: function (e) {
-            this.$emit('excludeExpression', e);
+            if (this.query.excludeExpressions.indexOf(e) < 0) {
+                this.query.excludeExpressions.push(e);
+            }
         }
     },
     template: `
   <div class="container-fluid">
     <h3>expressions</h3>
-    <expression-list v-on:select-expression="expressionSelected"></expression-list>
+    <expression-list v-on:select-expression="expressionSelected" v-bind:expressions="expressions"></expression-list>
     <div class="row">
         <div class="col-sm-12">
             <expression-detail v-bind:expression="selected" v-if="selected"/>

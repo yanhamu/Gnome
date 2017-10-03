@@ -1,22 +1,28 @@
 ﻿const ConfigurationAccount = Vue.component('configuration-account', {
     data: function () {
         return {
-            accounts: []
         };
     },
+    props: ['query', 'accounts'],
     created: function () {
-        this.$http.get('accounts')
-            .then(res => {
-                this.accounts = res.body;
-            });
     },
     methods: {
         select: function (a) {
-            this.$emit('account-selected', a);
+            if (!this.exists(a.id)) {
+                this.query.accounts.push(a);
+            }
         },
         selectAll: function () {
             var self = this;
-            self.accounts.forEach(a => self.$emit('account-selected', a));
+            self.accounts.forEach(a => self.select(a));
+        },
+        exists: function (accountId) {
+            for (var index in this.query.accounts) {
+                if (this.query.accounts[index].id == accountId) {
+                    return true;
+                }
+            }
+            return false;
         }
     },
     template: `

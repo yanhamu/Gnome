@@ -11,8 +11,9 @@
             var index = collection.indexOf(item);
             collection.splice(index, 1);
         },
-        removeAccount: function (accountId) {
-            this.$emit("remove-account", accountId);
+        removeAccount: function (account) {
+            var index = this.query.accounts.indexOf(account)
+            this.query.accounts.splice(index, 1);
         }
     },
     template: `
@@ -40,10 +41,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="ie in query.includedExpressions">
+            <tr v-for="ie in query.includeExpressions">
                 <td>{{ie.name}}</td>
                 <td>
-                    <button class='btn btn-danger' v-on:click="remove(ie, query.includedExpressions)">
+                    <button class='btn btn-danger' v-on:click="remove(ie, query.includeExpressions)">
                         <span class="glyphicon glyphicon-remove" />
                     </button>
                 </td>
@@ -55,10 +56,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="ee in query.excludedExpressions">
+            <tr v-for="ee in query.excludeExpressions">
                 <td>{{ee.name}}</td>
                 <td>
-                    <button class='btn btn-danger' v-on:click="remove(ee, query.excludedExpressions)">
+                    <button class='btn btn-danger' v-on:click="remove(ee, query.excludeExpressions)">
                         <span class="glyphicon glyphicon-remove" />
                     </button>
                 </td>
