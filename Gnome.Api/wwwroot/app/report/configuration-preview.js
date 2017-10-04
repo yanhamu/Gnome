@@ -14,8 +14,8 @@
         };
 
         this.query.accounts.forEach(a => { data.accounts.push(a.id) });
-        this.query.includedExpressions.forEach(a => { data.includeExpressions.push(a.id) });
-        this.query.excludedExpressions.forEach(a => { data.excludeExpressions.push(a.id) });
+        this.query.includeExpressions.forEach(a => { data.includeExpressions.push(a.id) });
+        this.query.excludeExpressions.forEach(a => { data.excludeExpressions.push(a.id) });
         var url = 'transactions/query';
         this.$http.post(url, data)
             .then(res => {
