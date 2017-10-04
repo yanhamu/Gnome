@@ -15,7 +15,7 @@ namespace Gnome.Api.Services.Queries
 
         public void Handle(RemoveQuery removeQuery)
         {
-            repository.Remove(repository.Find(removeQuery.QueryId));
+            repository.Remove(removeQuery.QueryId);
             repository.Save();
         }
     }

@@ -27,8 +27,10 @@
                 .then();
         },
         createQueryObject: function (queryData) {
+            console.log(queryData);
             var data = {
                 id: queryData.queryId,
+                name: queryData.name,
                 includeExpressions: [],
                 excludeExpressions: [],
                 accounts: []
@@ -47,6 +49,13 @@
                     return item;
                 }
             }
+        },
+        create: function () {
+            this.$http.post('queries', { name: 'new-query' })
+                .then(res => {
+                    this.query = this.createQueryObject(res.body);
+                    this.next();
+                });
         }
     },
     template: `
@@ -71,17 +80,13 @@
             <button class="btn btn-primary" v-on:click="next" :disabled="step == 5">next</button>
         </div>
     </div>
-    <div class="row" v-if="step == 1 && query">
-        <div class="col-sm-9"></div>
+    <div class="row">
         <div class="col-sm-3">
-            <button class="btn btn-primary" v-on:click="next"">continue</button>
+            <button class="btn btn-primary" v-if="step == 1" v-on:click="create">create new</button>
         </div>
-    </div>
-    <div class="row" v-if="step == 1">
+        <div class="col-sm-6"></div>
         <div class="col-sm-3">
-            <button class="btn btn-primary" v-on:click="next">create new</button>
-        </div>
-        <div class="col-sm-9">
+            <button class="btn btn-primary" v-if="step == 1 && query" v-on:click="next"">continue</button>
         </div>
     </div>
   </div>`

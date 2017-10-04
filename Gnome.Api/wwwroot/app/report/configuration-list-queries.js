@@ -14,6 +14,12 @@
     methods: {
         select: function (query) {
             this.$emit("query-selected", query);
+        },
+        remove: function (query) {
+            console.log(query);
+            var index = this.queries.indexOf(query);
+            this.queries.splice(index, 1);
+            this.$http.delete('queries/' + query.queryId).then();
         }
     },
     template: `
@@ -25,6 +31,11 @@
                 <tbody>
                     <tr v-for="q in queries" v-on:click="select(q)">
                         <td>{{ q.name }}</td>
+                        <td>                    
+                            <button class='btn btn-danger' v-on:click.stop="remove(q)">
+                                <span class="glyphicon glyphicon-remove" />
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
