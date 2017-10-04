@@ -18,7 +18,10 @@ namespace Gnome.Api.Services.Transactions
 
         public SearchTransactionResult Handle(SearchTransaction message)
         {
-            var rows = queryBuilder.Query(message.UserId, message.Filter).ToList();
+            var rows = queryBuilder
+                .Query(message.UserId, message.Filter)
+                .OrderByDescending(t => t.Row.Date)
+                .ToList();
             return new SearchTransactionResult(rows);
         }
     }

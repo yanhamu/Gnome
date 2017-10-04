@@ -33,7 +33,7 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
         public IEnumerable<TransactionRow> Query(Guid userId, TransactionSearchFilter filter)
         {
             var transactionsQuery = queryBuilder.Filter(repository.Query, filter);
-            return transactionsQuery.OrderByDescending(t => t.Date)
+            return transactionsQuery
                 .ToList()
                 .Select(t => rowFactory.Create(t));
         }
