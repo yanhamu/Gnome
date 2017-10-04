@@ -1,4 +1,4 @@
-﻿const ConfigurationWizard = Vue.component('configuration-wizard', {
+﻿const QueryWizard = Vue.component('query-wizard', {
     data: function () {
         return {
             step: 1,
@@ -63,11 +63,11 @@
     <h3>report creation wizard</h3>
     <div class="row">
         <div class="col-md-6">
-            <configuration-query-list v-on:query-selected="querySelected" v-if="step == 1"/>
-            <configuration-account v-if="step == 2" v-bind:query="query" v-bind:accounts="accounts" />
-            <configuration-expression v-if="step == 3" v-bind:query="query" v-bind:expressions="expressions" />
-            <configuration-preview v-if="step == 4" v-bind:query="query" />
-            <configuration-save v-if="step == 5" v-bind:query="query" />
+            <query-list v-on:query-selected="querySelected" v-if="step == 1"/>
+            <query-accounts v-if="step == 2" v-bind:query="query" v-bind:accounts="accounts" />
+            <query-expressions v-if="step == 3" v-bind:query="query" v-bind:expressions="expressions" />
+            <query-preview v-if="step == 4" v-bind:query="query" />
+            <query-save v-if="step == 5" v-bind:query="query" />
         </div>
         <div class="col-md-6" v-if="query">
             <query-summary v-bind:query="query"></query-summary>

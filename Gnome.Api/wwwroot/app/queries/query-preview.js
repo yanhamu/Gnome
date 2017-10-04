@@ -1,4 +1,4 @@
-﻿const ConfigurationPreview = Vue.component('configuration-preview', {
+﻿const QueryPreview = Vue.component('query-preview', {
     data: function () {
         return {
             transactions: [],

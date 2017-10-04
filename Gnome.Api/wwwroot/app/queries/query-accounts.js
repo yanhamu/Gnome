@@ -1,4 +1,4 @@
-﻿const ConfigurationAccount = Vue.component('configuration-account', {
+﻿const QueryAccounts = Vue.component('query-accounts', {
     data: function () {
         return {
         };

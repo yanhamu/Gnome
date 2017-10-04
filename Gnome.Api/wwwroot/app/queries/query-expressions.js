@@ -1,4 +1,4 @@
-﻿const ConfigurationExpression = Vue.component('configuration-expression', {
+﻿const QueryExpressions = Vue.component('query-expressions', {
     data: function () {
         return {
             selected: null

@@ -1,4 +1,4 @@
-﻿const ConfigurationQueryList = Vue.component('configuration-query-list', {
+﻿const QueryList = Vue.component('query-list', {
     data: function () {
         return {
             selected: null,

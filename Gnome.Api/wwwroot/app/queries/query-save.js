@@ -1,4 +1,4 @@
-﻿const ConfigurationQuerySave = Vue.component('configuration-save', {
+﻿const QuerySave = Vue.component('query-save', {
     data: function () {
         return {
         };

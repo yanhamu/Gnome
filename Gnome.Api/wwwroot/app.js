@@ -4,7 +4,7 @@ const routes = [
     { path: '/accounts', component: Accounts },
     { path: '/categories', component: CategoryManager },
     { path: '/home', component: Home },
-    { path: '/configuration', component: ConfigurationWizard },
+    { path: '/configuration', component: QueryWizard },
     { path: '/expressions', component: ExpressionList },
     { path: '/expression-builder-wizard', component: ExpressionBuilderWizard },
     { path: '*', redirect: '/home' }]
