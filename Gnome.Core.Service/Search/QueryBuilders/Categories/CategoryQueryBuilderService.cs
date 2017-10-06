@@ -13,10 +13,8 @@ namespace Gnome.Core.Service.Search.QueryBuilders.Categories
 
             var interval = filter.DateFilter;
 
-            if (interval.From.HasValue)
-                query = query.Where(i => i.Transaction.Date >= interval.From);
-            if (interval.To.HasValue)
-                query = query.Where(i => i.Transaction.Date <= interval.To);
+            query = query.Where(i => i.Transaction.Date >= interval.From);
+            query = query.Where(i => i.Transaction.Date <= interval.To);
 
             return query;
         }

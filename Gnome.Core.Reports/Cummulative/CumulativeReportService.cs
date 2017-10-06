@@ -1,10 +1,14 @@
 ﻿using Gnome.Core.Service.Search.Filters;
+using Gnome.Core.Service.Transactions;
 using Gnome.Core.Service.Transactions.QueryBuilders;
 using System;
 using System.Collections.Generic;
 
 namespace Gnome.Core.Reports.Cummulative
 {
+    /// <summary>
+    /// Returns cumulative sum of amount by day per each month.
+    /// </summary>
     public class CumulativeReportService
     {
         private readonly ITransactionCategoryRowQueryBuilder queryBuilder;
@@ -16,25 +20,45 @@ namespace Gnome.Core.Reports.Cummulative
 
         public List<Aggregate> Report(TransactionSearchFilter filter, Guid userId)
         {
-            throw new NotImplementedException();
+            return Fill(queryBuilder.Query(userId, filter), filter.DateFilter);
         }
 
-        private bool SameMonth(Aggregate currentAggregate, Service.Transactions.TransactionCategoryRow transaction)
+        public List<Aggregate> Fill(IEnumerable<TransactionCategoryRow> orderedRows, ClosedInterval dateFilter)
+        {
+            var list = new List<Aggregate>();
+            var amount = 0m;
+            var rowEnumerator = orderedRows.GetEnumerator();
+            rowEnumerator.MoveNext();
+
+            for (DateTime date = dateFilter.From.Date; date <= dateFilter.To; date = date.AddDays(1))
+            {
+                if (date.Day == 1)
+                    amount = 0m;
+
+
+                while (rowEnumerator.Current.Row.Date <= date)
+                {
+                    amount += rowEnumerator.Current.Row.Amount;
+                    if (rowEnumerator.MoveNext() == false)
+                        break;
+                }
+
+                list.Add(new Aggregate(new ClosedInterval(date, date), amount));
+            }
+            return list;
+        }
+
+        private bool SameMonth(Aggregate currentAggregate, TransactionCategoryRow transaction)
         {
             return transaction.Row.Date.Year == currentAggregate.Interval.From.Year
                 && transaction.Row.Date.Month == currentAggregate.Interval.From.Month;
         }
 
-        private bool SameDay(Aggregate currentAggregate, Service.Transactions.TransactionCategoryRow transaction)
+        private bool SameDay(Aggregate currentAggregate, TransactionCategoryRow transaction)
         {
             return transaction.Row.Date.Year == currentAggregate.Interval.From.Year
                 && transaction.Row.Date.Month == currentAggregate.Interval.From.Month
                 && transaction.Row.Date.Day == currentAggregate.Interval.From.Day;
-        }
-
-        private ClosedInterval GetInterval(DateTime date)
-        {
-            return new ClosedInterval(date, date);
         }
     }
 }

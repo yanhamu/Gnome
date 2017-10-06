@@ -35,8 +35,9 @@ namespace Gnome.Api.IntegrationTests
 
             var result = await client.List();
             result.HasStatusCode(HttpStatusCode.OK);
-            var content = await result.Content.ReadAsStringAsync();
-            var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Account>>(content);
+            var listAccounts = await result.Deserialize<List<Account>>();
+
+            Assert.Equal(2, listAccounts.Count);
         }
     }
 }

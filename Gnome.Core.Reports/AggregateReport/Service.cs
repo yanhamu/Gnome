@@ -53,7 +53,7 @@ namespace Gnome.Core.Reports.AggregateReport
             return new TransactionSearchFilter()
             {
                 Accounts = accounts,
-                DateFilter = new Interval(startDate, endDate)
+                DateFilter = new ClosedInterval(startDate, endDate)
             };
         }
     }

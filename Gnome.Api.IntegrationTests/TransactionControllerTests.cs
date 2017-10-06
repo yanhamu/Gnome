@@ -46,7 +46,7 @@ namespace Gnome.Api.IntegrationTests
             var response = await client.Create(new TransactionSearchFilter()
             {
                 Accounts = new List<Guid>() { AccountFixtures.Fio.Id },
-                DateFilter = new Interval(),
+                DateFilter = new ClosedInterval(DateTime.Now, DateTime.Now),
                 IncludeExpressions = new List<Guid>() { ExpressionFixtures.VariableSymbol.Id }
             });
 
