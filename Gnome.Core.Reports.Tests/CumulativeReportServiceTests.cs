@@ -3,6 +3,7 @@ using Gnome.Core.Service.Search.Filters;
 using Gnome.Core.Service.Transactions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Gnome.Core.Reports.Tests
@@ -20,7 +21,14 @@ namespace Gnome.Core.Reports.Tests
             var filter = new ClosedInterval(from, to);
             var result = service.Fill(orderedRows, filter);
 
-            //TODO improve and add sparse list tests
+            Assert.Equal(Fibonacci(31) + Fibonacci(28), result.Sum(r => r.Expences));
+        }
+
+        private int Fibonacci(int level)
+        {
+            return level == 1
+                ? 1
+                : Fibonacci(level - 1) + level;
         }
 
         private List<TransactionCategoryRow> GetRows(DateTime from, DateTime to)

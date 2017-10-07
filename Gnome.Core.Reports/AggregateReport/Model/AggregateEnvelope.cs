@@ -5,10 +5,10 @@ namespace Gnome.Core.Reports.AggregateReport.Model
 {
     public class AggregateEnvelope
     {
-        public Interval Requested { get; }
+        public ClosedInterval Requested { get; }
         public List<Aggregate> Aggregates { get; }
 
-        public AggregateEnvelope(Interval interval, List<Aggregate> aggregates)
+        public AggregateEnvelope(ClosedInterval interval, List<Aggregate> aggregates)
         {
             Aggregates = aggregates;
             Requested = interval;

@@ -35,7 +35,6 @@ namespace Gnome.Core.Reports.Cummulative
                 if (date.Day == 1)
                     amount = 0m;
 
-
                 while (rowEnumerator.Current.Row.Date <= date)
                 {
                     amount += rowEnumerator.Current.Row.Amount;
@@ -46,19 +45,6 @@ namespace Gnome.Core.Reports.Cummulative
                 list.Add(new Aggregate(new ClosedInterval(date, date), amount));
             }
             return list;
-        }
-
-        private bool SameMonth(Aggregate currentAggregate, TransactionCategoryRow transaction)
-        {
-            return transaction.Row.Date.Year == currentAggregate.Interval.From.Year
-                && transaction.Row.Date.Month == currentAggregate.Interval.From.Month;
-        }
-
-        private bool SameDay(Aggregate currentAggregate, TransactionCategoryRow transaction)
-        {
-            return transaction.Row.Date.Year == currentAggregate.Interval.From.Year
-                && transaction.Row.Date.Month == currentAggregate.Interval.From.Month
-                && transaction.Row.Date.Day == currentAggregate.Interval.From.Day;
         }
     }
 }
