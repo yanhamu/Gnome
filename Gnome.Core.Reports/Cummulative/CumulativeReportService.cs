@@ -20,10 +20,10 @@ namespace Gnome.Core.Reports.Cummulative
 
         public List<Aggregate> Report(TransactionSearchFilter filter, Guid userId)
         {
-            return Fill(queryBuilder.Query(userId, filter), filter.DateFilter);
+            return Compute(queryBuilder.Query(userId, filter), filter.DateFilter);
         }
 
-        public List<Aggregate> Fill(IEnumerable<TransactionCategoryRow> orderedRows, ClosedInterval dateFilter)
+        public List<Aggregate> Compute(IEnumerable<TransactionCategoryRow> orderedRows, ClosedInterval dateFilter)
         {
             var list = new List<Aggregate>();
             var amount = 0m;

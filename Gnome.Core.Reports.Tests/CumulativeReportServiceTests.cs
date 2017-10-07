@@ -19,7 +19,7 @@ namespace Gnome.Core.Reports.Tests
 
             var orderedRows = GetRows(from, to);
             var filter = new ClosedInterval(from, to);
-            var result = service.Fill(orderedRows, filter);
+            var result = service.Compute(orderedRows, filter);
 
             Assert.Equal(Fibonacci(31) + Fibonacci(28), result.Sum(r => r.Expences));
         }

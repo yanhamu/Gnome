@@ -24,25 +24,28 @@ namespace Gnome.Core.Reports.AggregateReport
 
         public AggregateEnvelope CreateReport(TransactionSearchFilter filter, Guid userId, int numberOfDaysToAggregate)
         {
-            var facilitatedFilter = FacilitateFilter(filter, numberOfDaysToAggregate);
             var orderedRows = queryBuilder
-                .Query(userId, facilitatedFilter)
+                .Query(userId, FacilitateFilter(filter, numberOfDaysToAggregate))
                 .ToList();
 
+            return new AggregateEnvelope(filter.DateFilter, Compute(filter.DateFilter, orderedRows, numberOfDaysToAggregate));
+        }
+
+        public List<Aggregate> Compute(ClosedInterval interval, List<TransactionCategoryRow> orderedRows, int numberOfDaysToAggregate)
+        {
             var aggregates = new List<Aggregate>();
-            for (DateTime date = filter.DateFilter.From; date <= filter.DateFilter.To; date = date.AddDays(1))
+            for (DateTime date = interval.From; date <= interval.To; date = date.AddDays(1))
             {
                 var sumForDay = GetSumForDay(date, numberOfDaysToAggregate, orderedRows);
                 aggregates.Add(new Aggregate(new ClosedInterval(date.AddDays(-numberOfDaysToAggregate), date), sumForDay));
             }
-            return new AggregateEnvelope(filter.DateFilter, aggregates);
+            return aggregates;
         }
 
         private decimal GetSumForDay(DateTime date, int numberOfDaysToAggregate, List<TransactionCategoryRow> orderedRows)
         {
-            var rows = orderedRows.ToList();
             var interval = new ClosedInterval(date.AddDays(-numberOfDaysToAggregate), date);
-            return rows.Where(r => IsInInterval(r.Row.Date, interval)).Sum(r => r.Row.Amount);
+            return orderedRows.Where(r => IsInInterval(r.Row.Date, interval)).Sum(r => r.Row.Amount);
         }
 
         private bool IsInInterval(DateTime date, ClosedInterval interval)
