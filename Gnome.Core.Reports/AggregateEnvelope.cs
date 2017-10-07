@@ -1,7 +1,7 @@
 ﻿using Gnome.Core.Service.Search.Filters;
 using System.Collections.Generic;
 
-namespace Gnome.Core.Reports.AggregateReport.Model
+namespace Gnome.Core.Reports
 {
     public class AggregateEnvelope
     {

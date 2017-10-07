@@ -9,7 +9,7 @@ namespace Gnome.Core.Reports.Cummulative
     /// <summary>
     /// Returns cumulative sum of amount by day per each month.
     /// </summary>
-    public class CumulativeReportService
+    public class CumulativeReportService : ICumulativeReportService
     {
         private readonly ITransactionCategoryRowQueryBuilder queryBuilder;
 

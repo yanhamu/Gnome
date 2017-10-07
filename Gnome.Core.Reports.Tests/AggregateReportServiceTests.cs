@@ -13,7 +13,7 @@ namespace Gnome.Core.Reports.Tests
         [Fact]
         public void Should_Return_Full_Service()
         {
-            var service = new AggregateReportService(null, null);
+            var service = new AggregateReportService(null);
 
             var start = new DateTime(2017, 1, 3);
             var end = start.AddDays(6);

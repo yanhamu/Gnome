@@ -1,6 +1,4 @@
-﻿using Gnome.Core.DataAccess;
-using Gnome.Core.Reports.AggregateReport.Model;
-using Gnome.Core.Service.Search.Filters;
+﻿using Gnome.Core.Service.Search.Filters;
 using Gnome.Core.Service.Transactions;
 using Gnome.Core.Service.Transactions.QueryBuilders;
 using System;
@@ -12,14 +10,10 @@ namespace Gnome.Core.Reports.AggregateReport
     public class AggregateReportService : IAggregateReportService
     {
         private readonly ITransactionCategoryRowQueryBuilder queryBuilder;
-        private readonly IAccountRepository accountRepository;
 
-        public AggregateReportService(
-            ITransactionCategoryRowQueryBuilder queryBuilder,
-            IAccountRepository accountRepository)
+        public AggregateReportService(ITransactionCategoryRowQueryBuilder queryBuilder)
         {
             this.queryBuilder = queryBuilder;
-            this.accountRepository = accountRepository;
         }
 
         public AggregateEnvelope CreateReport(TransactionSearchFilter filter, Guid userId, int numberOfDaysToAggregate)

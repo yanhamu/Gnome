@@ -1,4 +1,4 @@
-﻿using Gnome.Api.Services.Reports;
+﻿using Gnome.Api.Services.Reports.Requests;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +18,16 @@ namespace Gnome.Api.Controllers
             this.mediator = mediator;
         }
 
-        [HttpGet("aggregate")]
+        [HttpPost("aggregate")]
         public async Task<IActionResult> AggregateReport(TransactionSearchFilter filter)
         {
-            return new OkObjectResult(await mediator.Send(new GetSingleAccountAggregateReport(filter, UserId, 30)));
+            return new OkObjectResult(await mediator.Send(new GetAggregateReport(filter, UserId, 30)));
+        }
+
+        [HttpPost("cumulative")]
+        public async Task<IActionResult> CumulativeReport(TransactionSearchFilter filter)
+        {
+            return new OkObjectResult(await mediator.Send(new GetCumulativeReport(filter, UserId)));
         }
     }
 }
