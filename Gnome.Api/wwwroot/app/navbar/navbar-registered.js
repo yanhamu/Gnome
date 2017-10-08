@@ -19,7 +19,9 @@ const nr = Vue.component('navbar-registered', {
                         reports <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">basic aggregation report</a></li>
+                        <li>
+                            <router-link to="/report-manager">reports</router-link>
+                        </li>
                         <li role="separator" class="divider"></li>
                         <li>
                             <router-link to="/configuration">config-query</router-link>
