@@ -41,7 +41,8 @@ namespace Gnome.Infrastructure
                                 "category_transaction",
                                 "expression",
                                 "filter",
-                                "query"
+                                "query",
+                                "report"
                 });
 
             return new Container(registry);

@@ -18,8 +18,17 @@ namespace Gnome.Core.DataAccess
             MapExpression(modelBuilder.Entity<Expression>());
             MapFilter(modelBuilder.Entity<Filter>());
             MapQuery(modelBuilder.Entity<Query>());
+            MapReport(modelBuilder.Entity<Report>());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void MapReport(EntityTypeBuilder<Report> builder)
+        {
+            builder.ToTable("report");
+            builder.HasKey(k => k.Id);
+            builder.HasOne(b => b.User).WithMany().HasForeignKey(b => b.UserId);
+            builder.HasOne(b => b.Query).WithMany().HasForeignKey(b => b.QueryId);
         }
 
         private void MapQuery(EntityTypeBuilder<Query> builder)

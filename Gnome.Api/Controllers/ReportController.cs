@@ -18,6 +18,12 @@ namespace Gnome.Api.Controllers
             this.mediator = mediator;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateReport command)
+        {
+            return new OkObjectResult(await mediator.Send(command));
+        }
+
         [HttpPost("aggregate")]
         public async Task<IActionResult> AggregateReport(TransactionSearchFilter filter)
         {
