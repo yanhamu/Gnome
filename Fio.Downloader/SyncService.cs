@@ -29,7 +29,7 @@ namespace Fio.Downloader
             {
                 var client = new FioClient(account.Token);
 
-                var transactions = await client.Get(DateTime.Now.AddDays(-100), DateTime.UtcNow);
+                var transactions = await client.Get(DateTime.Now.AddYears(-1), DateTime.UtcNow);
                 //var transactions = await client.GetNew();
 
                 await transactionRepository.SaveAll(account.Id, transactions.AccountStatement.TransactionList.Transactions);

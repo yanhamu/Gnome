@@ -88,7 +88,7 @@ namespace Gnome.Api.IntegrationTests.Configuration
             {
                 Audience = "ExampleAudience",
                 Issuer = "ExampleIssuer",
-                Expiration = TimeSpan.FromMinutes(30),
+                Expiration = TimeSpan.FromMinutes(60),
                 Path = "/api/gettoken",
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
             };

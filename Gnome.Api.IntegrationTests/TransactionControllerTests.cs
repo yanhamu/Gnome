@@ -41,7 +41,7 @@ namespace Gnome.Api.IntegrationTests
             this.server.PrepareTransaction(TransactionFixtures.Expense);
             this.server.PrepareExpression(ExpressionFixtures.VariableSymbol);
 
-            client.SetBaseUrl($"api/accounts/{AccountFixtures.Fio.Id.ToString()}/transactions");
+            client.SetBaseUrl($"api/transactions/query");
 
             var response = await client.Create(new TransactionSearchFilter()
             {

@@ -7,10 +7,18 @@
     },
     props: ['query'],
     created: function () {
+
+        var from = moment().subtract(1, 'years').format('YYYY-MM-DD');
+        var to = moment().format('YYYY-MM-DD');
+
         var data = {
             accounts: [],
             includeExpressions: [],
-            excludeExpressions: []
+            excludeExpressions: [],
+            dateFilter: {
+                from: from,
+                to: to
+            }
         };
 
         this.query.accounts.forEach(a => { data.accounts.push(a.id) });
