@@ -19,19 +19,19 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateReport command)
+        public async Task<IActionResult> Create([FromBody]CreateReport command)
         {
             return new OkObjectResult(await mediator.Send(command));
         }
 
         [HttpPost("aggregate")]
-        public async Task<IActionResult> AggregateReport(TransactionSearchFilter filter)
+        public async Task<IActionResult> AggregateReport([FromBody]TransactionSearchFilter filter)
         {
             return new OkObjectResult(await mediator.Send(new GetAggregateReport(filter, UserId, 30)));
         }
 
         [HttpPost("cumulative")]
-        public async Task<IActionResult> CumulativeReport(TransactionSearchFilter filter)
+        public async Task<IActionResult> CumulativeReport([FromBody]TransactionSearchFilter filter)
         {
             return new OkObjectResult(await mediator.Send(new GetCumulativeReport(filter, UserId)));
         }

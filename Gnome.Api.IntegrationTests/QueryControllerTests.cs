@@ -16,9 +16,9 @@ namespace Gnome.Api.IntegrationTests
         [Fact]
         public async void Should_Create_Query()
         {
-            this.server.PrepareUser(UserFixture.User);
-            this.server.PrepareAccount(AccountFixtures.Fio);
-            this.server.PrepareExpression(ExpressionFixtures.VariableSymbol);
+            server.PrepareUser(UserFixture.User);
+            server.PrepareAccount(AccountFixtures.Fio);
+            server.PrepareExpression(ExpressionFixtures.VariableSymbol);
 
             var response = await client.Create(new CreateQuery()
             {
