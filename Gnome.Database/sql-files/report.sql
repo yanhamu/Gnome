@@ -5,7 +5,7 @@
 	[queryid] uniqueidentifier not null,
 	[name] nvarchar(30),
 	[type] text not null,
-	[data] text null
+	[data] text null,
 	foreign key (userid) references [user](id),
 	foreign key (queryid) references [query](id)
 )

@@ -15,7 +15,7 @@ namespace Gnome.Api.IntegrationTests.Fixtures
                     queryAll = new Query()
                     {
                         Id = new Guid("33d7ec3a-b3ad-4ebb-b3ff-b792abe0d410"),
-                        Data = "1 = 1",
+                        Data = $"{{\"Accounts\":[\"{AccountFixtures.Fio.Id.ToString()}\"],\"IncludeExpressions\":[],\"ExcludeExpressions\":[]}}",
                         Name = "All",
                         UserId = UserFixture.User.Id
                     };
