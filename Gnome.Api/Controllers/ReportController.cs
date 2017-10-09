@@ -24,6 +24,19 @@ namespace Gnome.Api.Controllers
             return new OkObjectResult(await mediator.Send(command));
         }
 
+        [HttpDelete("{reportId:Guid}")]
+        public async Task<IActionResult> Remove(Guid id)
+        {
+            await mediator.Publish(new RemoveReport(id));
+            return new NoContentResult();
+        }
+
+        [HttpPut("{reportId:Guid}")]
+        public async Task<IActionResult> Update(Guid reportId, UpdateReport updateReport)
+        {
+            return new OkObjectResult(await mediator.Send(updateReport));
+        }
+
         [HttpPost("aggregate")]
         public async Task<IActionResult> AggregateReport([FromBody]TransactionSearchFilter filter)
         {
