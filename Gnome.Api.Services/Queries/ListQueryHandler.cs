@@ -1,15 +1,24 @@
 ﻿using Gnome.Api.Services.Queries.Requests;
 using Gnome.Core.DataAccess;
+using Gnome.Core.Service.Query;
+using MediatR;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Gnome.Api.Services.Queries
 {
-    public class ListQueryHandler : QueryHandler<ListQueries, List<Model>>
+    public class ListQueryHandler : IRequestHandler<ListQueries, List<Model>>
     {
-        public ListQueryHandler(IQueryRepository queryRepository) : base(queryRepository) { }
+        private readonly IQueryRepository repository;
+        private readonly IQueryDataService service;
 
-        public override List<Model> Handle(ListQueries message)
+        public ListQueryHandler(IQueryRepository queryRepository, IQueryDataService service)
+        {
+            this.repository = queryRepository;
+            this.service = service;
+        }
+
+        public List<Model> Handle(ListQueries message)
         {
             var list = repository
                 .Query
@@ -17,7 +26,7 @@ namespace Gnome.Api.Services.Queries
                 .ToList()
                 .Select(m => new
                 {
-                    model = Deserialize(m.Data),
+                    model = service.Deserialize(m.Data),
                     id = m.Id,
                     name = m.Name
                 })

@@ -1,16 +1,25 @@
 ﻿using Gnome.Api.Services.Queries.Requests;
 using Gnome.Core.DataAccess;
+using Gnome.Core.Service.Query;
+using MediatR;
 
 namespace Gnome.Api.Services.Queries
 {
-    public class GetQueryHandler : QueryHandler<GetQuery, Model>
+    public class GetQueryHandler : IRequestHandler<GetQuery, Model>
     {
-        public GetQueryHandler(IQueryRepository queryRepository) : base(queryRepository) { }
+        private readonly IQueryDataService service;
+        private readonly IQueryRepository repository;
 
-        public override Model Handle(GetQuery message)
+        public GetQueryHandler(IQueryRepository queryRepository, IQueryDataService service)
+        {
+            this.service = service;
+            this.repository = queryRepository;
+        }
+
+        public Model Handle(GetQuery message)
         {
             var result = repository.Find(message.QueryId);
-            var data = Deserialize(result.Data);
+            var data = service.Deserialize(result.Data);
             return new Model()
             {
                 Accounts = data.Accounts,

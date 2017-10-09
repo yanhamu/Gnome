@@ -2,18 +2,27 @@
 using Gnome.Core.DataAccess;
 using Gnome.Core.Model;
 using Gnome.Core.Model.Database;
+using Gnome.Core.Service.Query;
+using MediatR;
 
 namespace Gnome.Api.Services.Queries
 {
-    public class CreateQueryHandler : QueryHandler<CreateQuery, Model>
+    public class CreateQueryHandler : IRequestHandler<CreateQuery, Model>
     {
-        public CreateQueryHandler(IQueryRepository queryRepository) : base(queryRepository) { }
+        private readonly IQueryRepository repository;
+        private readonly IQueryDataService service;
 
-        public override Model Handle(CreateQuery message)
+        public CreateQueryHandler(IQueryRepository queryRepository, IQueryDataService queryDataservice)
+        {
+            this.repository = queryRepository;
+            this.service = queryDataservice;
+        }
+
+        public Model Handle(CreateQuery message)
         {
             var query = new Query()
             {
-                Data = Serialize(new QueryData(message.ExcludeExpressions, message.IncludeExpressions, message.Accounts)),
+                Data = service.Serialize(new QueryData(message.ExcludeExpressions, message.IncludeExpressions, message.Accounts)),
                 Name = message.Name,
                 UserId = message.UserId
             };
@@ -21,7 +30,7 @@ namespace Gnome.Api.Services.Queries
             var saved = repository.Create(query);
             repository.Save();
 
-            var data = Deserialize(saved.Data);
+            var data = service.Deserialize(saved.Data);
             return new Model()
             {
                 QueryId = saved.Id,
