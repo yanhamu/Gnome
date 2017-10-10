@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Gnome.Api.Services.Queries
 {
-    public class UpdateQueryHandler : IRequestHandler<UpdateQuery, Model>
+    public class UpdateQueryHandler : IRequestHandler<UpdateQuery, QueryModel>
     {
         private readonly IQueryRepository repository;
         private readonly IQueryDataService service;
@@ -17,7 +17,7 @@ namespace Gnome.Api.Services.Queries
             this.service = queryDataservice;
         }
 
-        public Model Handle(UpdateQuery message)
+        public QueryModel Handle(UpdateQuery message)
         {
             var query = repository.Find(message.Id);
             var data = new QueryData(message.ExcludeExpressions, message.IncludeExpressions, message.Accounts);
@@ -25,7 +25,7 @@ namespace Gnome.Api.Services.Queries
             query.Name = message.Name;
             repository.Save();
 
-            return new Model()
+            return new QueryModel()
             {
                 Accounts = message.Accounts,
                 Name = query.Name,

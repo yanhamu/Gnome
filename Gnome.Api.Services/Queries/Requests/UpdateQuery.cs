@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Gnome.Api.Services.Queries.Requests
 {
-    public class UpdateQuery : IRequest<Model>
+    public class UpdateQuery : IRequest<QueryModel>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

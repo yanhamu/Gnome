@@ -29,7 +29,7 @@ namespace Gnome.Api.IntegrationTests
 
             response.HasStatusCode(HttpStatusCode.OK);
 
-            var model = await response.Deserialize<Model>();
+            var model = await response.Deserialize<QueryModel>();
 
             Assert.Equal("test", model.Name);
         }
@@ -43,7 +43,7 @@ namespace Gnome.Api.IntegrationTests
 
             var response = await client.List();
             response.HasStatusCode(HttpStatusCode.OK);
-            var modelList = await response.Deserialize<List<Model>>();
+            var modelList = await response.Deserialize<List<QueryModel>>();
             var model = modelList.First();
 
             Assert.Equal(QueryFixture.QueryAll.Name, model.Name);

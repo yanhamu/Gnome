@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Gnome.Api.Services.Queries
 {
-    public class ListQueryHandler : IRequestHandler<ListQueries, List<Model>>
+    public class ListQueryHandler : IRequestHandler<ListQueries, List<QueryModel>>
     {
         private readonly IQueryRepository repository;
         private readonly IQueryDataService service;
@@ -18,7 +18,7 @@ namespace Gnome.Api.Services.Queries
             this.service = service;
         }
 
-        public List<Model> Handle(ListQueries message)
+        public List<QueryModel> Handle(ListQueries message)
         {
             var list = repository
                 .Query
@@ -30,7 +30,7 @@ namespace Gnome.Api.Services.Queries
                     id = m.Id,
                     name = m.Name
                 })
-                .Select(q => new Model()
+                .Select(q => new QueryModel()
                 {
                     Accounts = q.model.Accounts,
                     ExcludeExpressions = q.model.ExcludeExpressions,

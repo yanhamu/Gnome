@@ -3,7 +3,7 @@ using System;
 
 namespace Gnome.Api.Services.Queries.Requests
 {
-    public class GetQuery : IRequest<Model>
+    public class GetQuery : IRequest<QueryModel>
     {
         public Guid QueryId { get; }
 

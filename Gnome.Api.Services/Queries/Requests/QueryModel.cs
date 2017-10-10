@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Gnome.Api.Services.Queries.Requests
 {
-    public class Model
+    public class QueryModel
     {
         public Guid QueryId { get; set; }
         public string Name { get; set; }

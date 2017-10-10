@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Gnome.Api.Services.Queries
 {
-    public class CreateQueryHandler : IRequestHandler<CreateQuery, Model>
+    public class CreateQueryHandler : IRequestHandler<CreateQuery, QueryModel>
     {
         private readonly IQueryRepository repository;
         private readonly IQueryDataService service;
@@ -18,7 +18,7 @@ namespace Gnome.Api.Services.Queries
             this.service = queryDataservice;
         }
 
-        public Model Handle(CreateQuery message)
+        public QueryModel Handle(CreateQuery message)
         {
             var query = new Query()
             {
@@ -31,7 +31,7 @@ namespace Gnome.Api.Services.Queries
             repository.Save();
 
             var data = service.Deserialize(saved.Data);
-            return new Model()
+            return new QueryModel()
             {
                 QueryId = saved.Id,
                 Name = saved.Name,
