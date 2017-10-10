@@ -7,12 +7,14 @@ namespace Gnome.Api.Services.Reports.Requests
 {
     public class GetCumulativeReport : IRequest<AggregateEnvelope>
     {
-        public TransactionSearchFilter Filter { get; }
+        public ClosedInterval DateFilter { get; set; }
+        public Guid QueryId { get; }
         public Guid UserId { get; }
 
-        public GetCumulativeReport(TransactionSearchFilter filter, Guid userId)
+        public GetCumulativeReport(Guid queryId, ClosedInterval dateFilter, Guid userId)
         {
-            this.Filter = filter;
+            this.DateFilter = dateFilter;
+            this.QueryId = queryId;
             this.UserId = userId;
         }
     }

@@ -38,15 +38,21 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost("aggregate")]
-        public async Task<IActionResult> AggregateReport([FromBody]TransactionSearchFilter filter)
+        public async Task<IActionResult> AggregateReport([FromBody]GetReport report)
         {
-            return new OkObjectResult(await mediator.Send(new GetAggregateReport(filter, UserId, 30)));
+            return new OkObjectResult(await mediator.Send(new GetAggregateReport(report.QueryId, report.DateFilter, UserId, 30)));
         }
 
         [HttpPost("cumulative")]
-        public async Task<IActionResult> CumulativeReport([FromBody]TransactionSearchFilter filter)
+        public async Task<IActionResult> CumulativeReport([FromBody]GetReport report)
         {
-            return new OkObjectResult(await mediator.Send(new GetCumulativeReport(filter, UserId)));
+            return new OkObjectResult(await mediator.Send(new GetCumulativeReport(report.QueryId, report.DateFilter, UserId)));
         }
+    }
+
+    public class GetReport
+    {
+        public Guid QueryId { get; set; }
+        public ClosedInterval DateFilter { get; set; }
     }
 }

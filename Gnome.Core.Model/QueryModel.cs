@@ -1,13 +1,11 @@
-﻿using Gnome.Core.Model;
-using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Gnome.Api.Services.Queries.Requests
+namespace Gnome.Core.Model
 {
-    public class UpdateQuery : IRequest<QueryModel>
+    public class QueryModel
     {
-        public Guid Id { get; set; }
+        public Guid QueryId { get; set; }
         public string Name { get; set; }
         public List<Guid> Accounts { get; set; } = new List<Guid>();
         public List<Guid> IncludeExpressions { get; set; } = new List<Guid>();

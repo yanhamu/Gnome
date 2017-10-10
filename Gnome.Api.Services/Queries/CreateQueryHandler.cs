@@ -11,11 +11,16 @@ namespace Gnome.Api.Services.Queries
     {
         private readonly IQueryRepository repository;
         private readonly IQueryDataService service;
+        private readonly IQueryService queryService;
 
-        public CreateQueryHandler(IQueryRepository queryRepository, IQueryDataService queryDataservice)
+        public CreateQueryHandler(
+            IQueryRepository queryRepository,
+            IQueryDataService queryDataservice,
+            IQueryService queryService)
         {
             this.repository = queryRepository;
             this.service = queryDataservice;
+            this.queryService = queryService;
         }
 
         public QueryModel Handle(CreateQuery message)
@@ -30,15 +35,7 @@ namespace Gnome.Api.Services.Queries
             var saved = repository.Create(query);
             repository.Save();
 
-            var data = service.Deserialize(saved.Data);
-            return new QueryModel()
-            {
-                QueryId = saved.Id,
-                Name = saved.Name,
-                Accounts = data.Accounts,
-                ExcludeExpressions = data.ExcludeExpressions,
-                IncludeExpressions = data.IncludeExpressions
-            };
+            return queryService.Get(saved);
         }
     }
 }

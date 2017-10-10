@@ -1,6 +1,7 @@
 ﻿using Gnome.Api.IntegrationTests.Extensions;
 using Gnome.Api.IntegrationTests.Fixtures;
 using Gnome.Api.Services.Queries.Requests;
+using Gnome.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

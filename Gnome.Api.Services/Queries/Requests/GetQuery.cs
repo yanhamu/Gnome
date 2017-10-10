@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Gnome.Core.Model;
+using MediatR;
 using System;
 
 namespace Gnome.Api.Services.Queries.Requests

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Gnome.Api.Services.Queries.Requests
+namespace Gnome.Api.Services.Reports.Requests
 {
-    public class QueryModel
+    public class Query
     {
         public Guid QueryId { get; set; }
         public string Name { get; set; }

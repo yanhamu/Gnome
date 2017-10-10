@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Gnome.Core.Model;
+using MediatR;
 using System;
 using System.Collections.Generic;
 
