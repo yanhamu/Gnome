@@ -18,9 +18,10 @@ namespace Gnome.Core.Reports.Cummulative
             this.queryBuilder = queryBuilder;
         }
 
-        public List<Aggregate> Report(TransactionSearchFilter filter, Guid userId)
+        public AggregateEnvelope Report(TransactionSearchFilter filter, Guid userId)
         {
-            return Compute(queryBuilder.Query(userId, filter), filter.DateFilter);
+            var results = Compute(queryBuilder.Query(userId, filter), filter.DateFilter);
+            return new AggregateEnvelope(filter.DateFilter, results);
         }
 
         public List<Aggregate> Compute(IEnumerable<TransactionCategoryRow> orderedRows, ClosedInterval dateFilter)

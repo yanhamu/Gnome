@@ -2,6 +2,7 @@
 using Gnome.Core.DataAccess;
 using Gnome.Core.Reports;
 using Gnome.Core.Reports.AggregateReport;
+using Gnome.Core.Service.Query;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
 using System;
@@ -11,25 +12,26 @@ namespace Gnome.Api.Services.Reports
     public class AccountAggregateReportHandler : IRequestHandler<GetAggregateReport, AggregateEnvelope>
     {
         private readonly IAggregateReportService service;
-        private readonly IQueryRepository queryRepository;
+        private readonly IQueryService queryService;
 
         public AccountAggregateReportHandler(
             IAggregateReportService service,
-            IQueryRepository queryRepository)
+            IQueryService queryService)
         {
             this.service = service;
-            this.queryRepository = queryRepository;
+            this.queryService = queryService;
         }
 
         public AggregateEnvelope Handle(GetAggregateReport message)
         {
-            var query = queryRepository.Find(message.QueryId);
+            var query = queryService.Get(message.QueryId);
             var filter = new TransactionSearchFilter()
             {
-
+                Accounts = query.Accounts,
+                DateFilter = message.DateFilter,
+                ExcludeExpressions = query.ExcludeExpressions,
+                IncludeExpressions = query.IncludeExpressions,
             };
-            throw new NotImplementedException();
-            //TODO implement
             return service.CreateReport(filter, message.UserId, message.DaysPerAggregate);
         }
     }
