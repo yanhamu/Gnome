@@ -3,7 +3,7 @@
         return {
         };
     },
-    props: ['reports'],
+    props: ['reports', 'allowRemove'],
     created: function () {
     },
     methods: {
@@ -28,7 +28,7 @@
                                 <span class="glyphicon glyphicon-pencil" />
                             </button>
                         </td>
-                        <td>
+                        <td v-if="allowRemove">
                             <button class='btn btn-danger' v-on:click="remove(r)"">
                                 <span class="glyphicon glyphicon-remove" />
                             </button>

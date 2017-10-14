@@ -58,6 +58,7 @@
             <report-list 
                 v-if="step == 1" 
                 v-bind:reports="reports" 
+                v-bind:allowRemove="false" 
                 v-on:select-report="selectReport"
                 v-on:remove-report="removeReport"/>
             <report-details 
