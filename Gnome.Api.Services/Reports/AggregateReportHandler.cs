@@ -5,7 +5,6 @@ using Gnome.Core.Reports.AggregateReport;
 using Gnome.Core.Service.Query;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
-using System;
 
 namespace Gnome.Api.Services.Reports
 {
@@ -13,18 +12,22 @@ namespace Gnome.Api.Services.Reports
     {
         private readonly IAggregateReportService service;
         private readonly IQueryService queryService;
+        private readonly IReportRepository reportRepository;
 
         public AccountAggregateReportHandler(
             IAggregateReportService service,
-            IQueryService queryService)
+            IQueryService queryService,
+            IReportRepository reportRepository)
         {
             this.service = service;
             this.queryService = queryService;
+            this.reportRepository = reportRepository;
         }
 
         public AggregateEnvelope Handle(GetAggregateReport message)
         {
-            var query = queryService.Get(message.QueryId);
+            var report = reportRepository.Find(message.ReportId);
+            var query = queryService.Get(report.QueryId);
             var filter = new TransactionSearchFilter()
             {
                 Accounts = query.Accounts,

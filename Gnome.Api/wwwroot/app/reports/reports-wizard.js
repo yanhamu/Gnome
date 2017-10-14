@@ -1,4 +1,4 @@
-﻿const ReportManager = Vue.component('report-manager', {
+﻿const ReportWizard = Vue.component('report-wizard', {
     data: function () {
         return {
         };
