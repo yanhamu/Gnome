@@ -22,7 +22,7 @@ namespace Gnome.Api.IntegrationTests
             {
                 QueryId = ReportFixture.BasicAggregate.QueryId,
                 UserId = ReportFixture.BasicAggregate.UserId,
-                ReportType = ReportFixture.BasicAggregate.Type,
+                Type = ReportFixture.BasicAggregate.Type,
                 Name = ReportFixture.BasicAggregate.Name
             });
 

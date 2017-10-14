@@ -7,6 +7,12 @@
     created: function () {
     },
     methods: {
+        select: function (r) {
+            this.$emit('select-report', r);
+        },
+        remove: function (r) {
+            this.$emit('remove-report', r);
+        }
     },
     template: `
   <div class="container-fluid">
@@ -17,6 +23,16 @@
                 <tbody>
                     <tr v-for="r in reports">
                         <td>{{r.name}}</td>
+                        <td>
+                            <button class='btn btn-primary' v-on:click="select(r)"">
+                                <span class="glyphicon glyphicon-pencil" />
+                            </button>
+                        </td>
+                        <td>
+                            <button class='btn btn-danger' v-on:click="remove(r)"">
+                                <span class="glyphicon glyphicon-remove" />
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

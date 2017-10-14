@@ -34,19 +34,21 @@ namespace Gnome.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]CreateReport command)
         {
+            command.UserId = UserId;
             return new OkObjectResult(await mediator.Send(command));
         }
 
         [HttpDelete("{reportId:Guid}")]
-        public async Task<IActionResult> Remove(Guid id)
+        public async Task<IActionResult> Remove(Guid reportId)
         {
-            await mediator.Publish(new RemoveReport(id));
+            await mediator.Publish(new RemoveReport(reportId));
             return new NoContentResult();
         }
 
         [HttpPut("{reportId:Guid}")]
-        public async Task<IActionResult> Update(Guid reportId, UpdateReport updateReport)
+        public async Task<IActionResult> Update(Guid reportId, [FromBody]UpdateReport updateReport)
         {
+            updateReport.UserId = UserId;
             return new OkObjectResult(await mediator.Send(updateReport));
         }
 

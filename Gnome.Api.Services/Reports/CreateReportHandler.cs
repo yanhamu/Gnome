@@ -22,7 +22,7 @@ namespace Gnome.Api.Services.Reports
                 QueryId = message.QueryId,
                 UserId = message.UserId,
                 Name = message.Name,
-                Type = message.ReportType,
+                Type = message.Type,
             });
             repository.Save();
 
