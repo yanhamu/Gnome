@@ -1,5 +1,8 @@
 ﻿using Gnome.Core.Model.Database;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace Gnome.Core.Service.Transactions.RowFactories
 {
@@ -19,7 +22,8 @@ namespace Gnome.Core.Service.Transactions.RowFactories
                 transaction.AccountId,
                 transaction.Date.Date,
                 transaction.Amount,
-                transaction.Type);
+                transaction.Type,
+                JsonConvert.DeserializeObject<List<Guid>>(transaction.CategoryData));
 
             var jsonObject = JObject.Parse(transaction.Data);
 

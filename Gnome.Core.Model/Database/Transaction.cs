@@ -11,5 +11,6 @@ namespace Gnome.Core.Model.Database
         public decimal Amount { get; set; }
         public string Type { get; set; }
         public string Data { get; set; }
+        public string CategoryData { get; set; }
     }
 }

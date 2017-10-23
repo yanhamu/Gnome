@@ -41,7 +41,7 @@ namespace Gnome.Core.Reports.Tests
 
         private TransactionCategoryRow CreateRow(DateTime when, decimal amount)
         {
-            return new TransactionCategoryRow() { Row = new TransactionRow(default(Guid), default(Guid), when, amount, null) };
+            return new TransactionCategoryRow() { Row = new TransactionRow(default(Guid), default(Guid), when, amount, null, null) };
         }
     }
 }

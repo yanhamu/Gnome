@@ -6,5 +6,6 @@
 	[amount] decimal(18,2) not null,
 	[type] nvarchar(40) not null,
 	[data] text,
+	[category_data] text not null,
 	foreign key ([account_id]) references account(id)
 )

@@ -5,13 +5,14 @@ namespace Gnome.Core.Service.Transactions
 {
     public class TransactionRow
     {
-        public TransactionRow(Guid id, Guid accountId, DateTime date, decimal amount, string type)
+        public TransactionRow(Guid id, Guid accountId, DateTime date, decimal amount, string type, List<Guid> categories)
         {
             this.Id = id;
             this.Date = date;
             this.Amount = amount;
             this.Type = type;
             this.AccountId = accountId;
+            this.Categories = categories;
         }
 
         public Guid Id { get; }
@@ -19,6 +20,7 @@ namespace Gnome.Core.Service.Transactions
         public decimal Amount { get; }
         public string Type { get; }
         public Guid AccountId { get; }
+        public List<Guid> Categories { get; }
 
         public Dictionary<string, string> Fields { get; } = new Dictionary<string, string>();
 

@@ -68,6 +68,7 @@ namespace Gnome.Core.DataAccess
             builder.Property(x => x.Amount).IsRequired();
             builder.Property(x => x.Type).IsRequired();
             builder.Property(x => x.Data).IsRequired();
+            builder.Property(x => x.CategoryData).IsRequired().HasColumnName("category_data") ;
         }
 
         private void MapUser(EntityTypeBuilder<User> builder)

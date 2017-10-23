@@ -14,7 +14,8 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
                     new Guid("1d000171-4e13-445f-bd70-5fa5c4e42fc1"),
                     new DateTime(2015, 1, 1),
                     300,
-                    "fio");
+                    "fio",
+                    null);
                 transaction.Fields.Add("address", "1600 Pennsylvania Avenue");
                 transaction.Fields.Add("order", "100");
                 return transaction;

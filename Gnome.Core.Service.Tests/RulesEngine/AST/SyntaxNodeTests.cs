@@ -29,7 +29,8 @@ namespace Gnome.Core.Service.Tests.RulesEngine.AST
                 new Guid("1d000171-4e13-445f-bd70-5fa5c4e42fc1"),
                 new DateTime(2010, 1, 1),
                 120.0m,
-                "fio");
+                "fio",
+                null);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Gnome.Core.Reports.Tests
         {
             return new TransactionCategoryRow()
             {
-                Row = new TransactionRow(default(Guid), default(Guid), new DateTime(2017, 1, i), 1, default(string))
+                Row = new TransactionRow(default(Guid), default(Guid), new DateTime(2017, 1, i), 1, default(string), null)
             };
         }
     }
