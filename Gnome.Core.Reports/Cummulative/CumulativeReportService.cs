@@ -36,7 +36,7 @@ namespace Gnome.Core.Reports.Cummulative
                 if (date.Day == 1)
                     amount = 0m;
 
-                while (rowEnumerator.Current.Row.Date <= date)
+                while (rowEnumerator.Current != null && rowEnumerator.Current.Row.Date <= date)
                 {
                     amount += rowEnumerator.Current.Row.Amount;
                     if (rowEnumerator.MoveNext() == false)

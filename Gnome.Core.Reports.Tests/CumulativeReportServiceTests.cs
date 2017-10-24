@@ -18,7 +18,7 @@ namespace Gnome.Core.Reports.Tests
             var to = new DateTime(2017, 2, 28);
 
             var orderedRows = GetRows(from, to);
-            var filter = new ClosedInterval(from, to);
+            var filter = new ClosedInterval(from, to.AddDays(2));
             var result = service.Compute(orderedRows, filter);
 
             Assert.Equal(Fibonacci(31) + Fibonacci(28), result.Sum(r => r.Expences));
