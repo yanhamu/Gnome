@@ -22,5 +22,26 @@ namespace Gnome.Api.IntegrationTests.Fixtures
                 return root;
             }
         }
+
+        private static Category unassigned;
+
+        public static Category UnAssigned
+        {
+            get
+            {
+                if (unassigned == null)
+                    unassigned = new Category()
+                    {
+                        Id = new Guid("11fbedc5-44f1-4b02-9cf2-3e11d8489b5b"),
+                        Color = "00FF00",
+                        IsSystem = true,
+                        Name = "unassigned",
+                        ParentId = CategoryFixture.Root.Id,
+                        UserId = UserFixture.User.Id
+                    };
+                return unassigned;
+            }
+        }
+
     }
 }

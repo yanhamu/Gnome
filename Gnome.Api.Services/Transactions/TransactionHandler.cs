@@ -2,7 +2,9 @@
 using Gnome.Core.DataAccess;
 using Gnome.Core.Model.Database;
 using MediatR;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Gnome.Api.Services.Transactions
 {
@@ -25,7 +27,8 @@ namespace Gnome.Api.Services.Transactions
                 Amount = message.Amount,
                 Data = message.Data,
                 Date = message.Date,
-                Type = message.Type
+                Type = message.Type,
+                CategoryData = JsonConvert.SerializeObject(new List<Guid>())
             };
 
             transactionRepository.Create(t);

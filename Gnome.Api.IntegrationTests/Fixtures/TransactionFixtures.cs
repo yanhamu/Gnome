@@ -18,7 +18,8 @@ namespace Gnome.Api.IntegrationTests.Fixtures
                         Amount = 50000m,
                         Data = "{variablesymbol:'111'}",
                         Date = new DateTime(2017, 1, 1),
-                        Type = "fio"
+                        Type = "fio",
+                        CategoryData = "[]"
                     };
                 return income;
             }
@@ -37,7 +38,8 @@ namespace Gnome.Api.IntegrationTests.Fixtures
                         Amount = 1000m,
                         Data = "{}",
                         Date = new DateTime(2017, 1, 2),
-                        Type = "fio"
+                        Type = "fio",
+                        CategoryData = "[]"
                     };
                 return expense;
             }

@@ -41,13 +41,14 @@ namespace Gnome.Api.IntegrationTests.Extensions
             var connection = GetConnection(server);
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "insert into [transaction] values(@id, @account_id, @date, @amount, @type, @data)";
+                command.CommandText = "insert into [transaction] values(@id, @account_id, @date, @amount, @type, @data, @category_data)";
                 command.Parameters.Add(new SqliteParameter("id", transaction.Id));
                 command.Parameters.Add(new SqliteParameter("account_id", transaction.AccountId));
                 command.Parameters.Add(new SqliteParameter("date", transaction.Date));
                 command.Parameters.Add(new SqliteParameter("amount", transaction.Amount));
                 command.Parameters.Add(new SqliteParameter("type", transaction.Type));
                 command.Parameters.Add(new SqliteParameter("data", (object)transaction.Data ?? DBNull.Value));
+                command.Parameters.Add(new SqliteParameter("category_data", transaction.CategoryData));
                 command.ExecuteNonQuery();
             }
         }
