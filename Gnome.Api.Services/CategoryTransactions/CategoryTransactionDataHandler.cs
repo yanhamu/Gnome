@@ -9,8 +9,8 @@ using System.Collections.Generic;
 namespace Gnome.Api.Services.CategoryTransactions
 {
     class CategoryTransactionDataHandler :
-        IRequestHandler<CreateCategoryTransaction>,
-        IRequestHandler<RemoveCategoryTransaction>
+        INotificationHandler<CreateCategoryTransaction>,
+        INotificationHandler<RemoveCategoryTransaction>
     {
         private readonly ITransactionRepository repository;
 
@@ -27,6 +27,7 @@ namespace Gnome.Api.Services.CategoryTransactions
             transaction.CategoryData = JsonConvert.SerializeObject(categoryList);
             repository.Save();
         }
+
         public void Handle(RemoveCategoryTransaction message)
         {
             var transaction = repository.Find(message.TransactionId);

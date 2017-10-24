@@ -6,8 +6,8 @@ using MediatR;
 namespace Gnome.Api.Services.CategoryTransactions
 {
     public class CategoryTransactionHandler :
-        IRequestHandler<CreateCategoryTransaction>,
-        IRequestHandler<RemoveCategoryTransaction>
+        INotificationHandler<CreateCategoryTransaction>,
+        INotificationHandler<RemoveCategoryTransaction>
     {
         private readonly ICategoryTransactionRepository repository;
 

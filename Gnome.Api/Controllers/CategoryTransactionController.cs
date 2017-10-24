@@ -21,14 +21,14 @@ namespace Gnome.Api.Controllers
         [HttpPost("categories/{categoryId}/transaction{transactionId}")]
         public async Task<IActionResult> AssignCategoryTransaction(Guid categoryId, Guid transactionId)
         {
-            await mediator.Send(new CreateCategoryTransaction(categoryId, transactionId));
+            await mediator.Publish(new CreateCategoryTransaction(categoryId, transactionId));
             return new NoContentResult();
         }
 
         [HttpDelete("categories/{categoryId}/transaction{transactionId}")]
         public async Task<IActionResult> RemoveCategoryTransaction(Guid categoryId, Guid transactionId)
         {
-            await mediator.Send(new RemoveCategoryTransaction(categoryId, transactionId));
+            await mediator.Publish(new RemoveCategoryTransaction(categoryId, transactionId));
             return new NoContentResult();
         }
     }

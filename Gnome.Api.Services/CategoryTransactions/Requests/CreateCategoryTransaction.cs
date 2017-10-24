@@ -3,7 +3,7 @@ using System;
 
 namespace Gnome.Api.Services.CategoryTransactions.Requests
 {
-    public class CreateCategoryTransaction : IRequest
+    public class CreateCategoryTransaction : INotification
     {
         public Guid TransactionId { get; set; }
         public Guid CategoryId { get; set; }
