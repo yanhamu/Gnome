@@ -8,7 +8,7 @@ namespace Gnome.Api.Services.Reports.Requests
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public Guid QueryId { get; set; }
-        public string ReportType { get; set; }
+        public string Type { get; set; }
         public string Name { get; set; }
     }
 }

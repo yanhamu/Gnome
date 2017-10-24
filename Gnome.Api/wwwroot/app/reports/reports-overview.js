@@ -11,8 +11,18 @@
             .then(res => this.reports = res.body);
     },
     methods: {
-        selectReport: function () {
+        selectReport: function (r) {
+            var data = {
+                reportId: r.id,
+                dateFilter: {
+                    from: '2017-01-01',
+                    to: '2017-12-12'
+                }
+            };
 
+            this.$http
+                .post('reports/' + r.type, data)
+                .then(res => console.log(res));
         }
     },
     template: `

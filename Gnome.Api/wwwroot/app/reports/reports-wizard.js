@@ -44,9 +44,9 @@
         },
         save: function () {
             if (this.report.id) {
-                this.$http.put('reports/' + this.report.id, this.report).then(res => console.log('saved'))
+                this.$http.put('reports/' + this.report.id, this.report);
             } else {
-                this.$http.post('reports', this.report).then(res => console.log('saved'))
+                this.$http.post('reports', this.report);
             }
         }
     },

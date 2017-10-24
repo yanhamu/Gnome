@@ -18,7 +18,7 @@ namespace Gnome.Api.Services.Reports
             toUpdate.Name = message.Name;
             toUpdate.QueryId = message.QueryId;
             toUpdate.UserId = message.UserId;
-            toUpdate.Type = message.ReportType;
+            toUpdate.Type = message.Type;
 
             repository.Save();
 

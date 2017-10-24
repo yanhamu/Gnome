@@ -27,7 +27,7 @@ namespace Gnome.Api.Services.Reports
         public AggregateEnvelope Handle(GetCumulativeReport message)
         {
             var report = reportRepository.Find(message.ReportId);
-            var query = queryService.Get(report.Id);
+            var query = queryService.Get(report.QueryId);
 
             var filter = new TransactionSearchFilter()
             {
