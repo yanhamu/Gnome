@@ -3,7 +3,13 @@
     template: `
     <div class="container-fluid">
         <h4>transaction detail</h4>
-        <table class="table table-striped">
+        <table class="table table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
             <tbody>
                 <tr>
                     <td>Date</td>

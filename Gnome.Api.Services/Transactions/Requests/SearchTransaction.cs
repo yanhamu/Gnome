@@ -9,11 +9,13 @@ namespace Gnome.Api.Services.Transactions.Requests
     {
         public TransactionSearchFilter Filter { get; }
         public Guid UserId { get; }
+        public PaginationFilter PageFilter { get; }
 
-        public SearchTransaction(TransactionSearchFilter filter, Guid userId)
+        public SearchTransaction(TransactionSearchFilter filter, PaginationFilter pageFilter, Guid userId)
         {
             this.Filter = filter;
             this.UserId = userId;
+            this.PageFilter = pageFilter;
         }
     }
 }

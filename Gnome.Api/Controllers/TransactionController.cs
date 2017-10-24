@@ -1,10 +1,10 @@
 ﻿using Gnome.Api.Filters;
+using Gnome.Api.Services;
 using Gnome.Api.Services.Transactions.Requests;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Gnome.Api.Controllers
@@ -21,9 +21,10 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpPost("transactions/query")]
-        public async Task<IActionResult> Search([FromBody] TransactionSearchFilter filter)
+        public async Task<IActionResult> Search([FromBody] TransactionSearchFilter filter, int page = 1, int pageSize = 20)
         {
-            return new OkObjectResult(await mediator.Send(new SearchTransaction(filter, UserId)));
+            var pagination = new PaginationFilter() { Page = page, PageSize = pageSize };
+            return new OkObjectResult(await mediator.Send(new SearchTransaction(filter, pagination, UserId)));
         }
 
         [IgnoreUserFilter]

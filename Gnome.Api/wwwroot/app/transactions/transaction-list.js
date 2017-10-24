@@ -8,12 +8,12 @@
     template: `
     <div class="container-fluid">
         <h4>transaction list</h4>
-        <table class="table table-striped table-hover table-responsive">
+        <table class="table table-striped table-hover table-responsive table-condensed">
             <thead>
                 <tr>
-                    <td>Date</td>
-                    <td>Amount</td>
-                    <td>Categories</td>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Categories</th>
                 </tr>
             </thead>
             <tbody>

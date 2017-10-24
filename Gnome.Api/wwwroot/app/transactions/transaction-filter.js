@@ -47,9 +47,7 @@
             <div class="col-sm-4">
                 <input id="fromDateInput" class="form-control"/>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-offset-9 col-sm-3">
+            <div class="col-sm-6">
                 <input value="filter" class="btn btn-primary btn-block" v-on:click="send" />
             </div>
         </div>

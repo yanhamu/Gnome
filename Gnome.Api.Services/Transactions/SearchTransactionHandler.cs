@@ -22,7 +22,14 @@ namespace Gnome.Api.Services.Transactions
                 .Query(message.UserId, message.Filter)
                 .OrderByDescending(t => t.Row.Date)
                 .ToList();
-            return new SearchTransactionResult(rows);
+
+            var pagination = PaginationResult.CreateFromTotal(message.PageFilter.PageSize, message.PageFilter.Page, rows.Count);
+            var result = rows
+                .Skip(pagination.PageSize * (pagination.CurrentPage - 1))
+                .Take(pagination.PageSize)
+                .ToList();
+
+            return new SearchTransactionResult(result, pagination);
         }
     }
 }
