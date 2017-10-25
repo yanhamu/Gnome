@@ -27,7 +27,8 @@ namespace Gnome.Api.Services.Transactions
                     .Where(a => a.UserId == request.UserId)
                     .Select(a => a.Id)
                     .ToList();
-                request.Filter.Accounts = accounts;
+
+                request.Filter.Accounts.AddRange(accounts);
             }
 
             return next();

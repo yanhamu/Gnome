@@ -12,14 +12,14 @@ namespace Gnome.Api.Controllers
     public class ReportController : IUserAuthenticatedController
     {
         private readonly IMediator mediator;
-        private readonly IGetReportRequestFactory getReportRequestFactory;
+        private readonly IGetReportRequestFactory requestFactory;
 
         public Guid UserId { get; set; }
 
         public ReportController(IMediator mediator, IGetReportRequestFactory getReportRequestFactory)
         {
             this.mediator = mediator;
-            this.getReportRequestFactory = getReportRequestFactory;
+            this.requestFactory = getReportRequestFactory;
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace Gnome.Api.Controllers
         [HttpGet("{reportId:Guid}")]
         public async Task<IActionResult> Get(Guid reportId, ClosedInterval interval)
         {
-            var request = getReportRequestFactory.Create(reportId, interval.Create(), UserId);
+            var request = requestFactory.Create(reportId, interval.Create(), UserId);
             return new OkObjectResult(await mediator.Send(request));
         }
 

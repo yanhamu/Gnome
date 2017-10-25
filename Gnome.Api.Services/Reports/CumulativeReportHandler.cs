@@ -28,14 +28,7 @@ namespace Gnome.Api.Services.Reports
         {
             var report = reportRepository.Find(message.ReportId);
             var query = queryService.Get(report.QueryId);
-
-            var filter = new TransactionSearchFilter()
-            {
-                Accounts = query.Accounts,
-                DateFilter = message.DateFilter,
-                ExcludeExpressions = query.ExcludeExpressions,
-                IncludeExpressions = query.IncludeExpressions
-            };
+            var filter = new TransactionSearchFilter(message.DateFilter, query.Accounts, query.IncludeExpressions, query.ExcludeExpressions);
 
             return service.Report(filter, message.UserId);
         }

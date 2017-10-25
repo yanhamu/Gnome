@@ -43,12 +43,11 @@ namespace Gnome.Api.IntegrationTests
 
             client.SetBaseUrl($"api/transactions/query");
 
-            var response = await client.Create(new TransactionSearchFilter()
-            {
-                Accounts = new List<Guid>() { AccountFixtures.Fio.Id },
-                DateFilter = new ClosedInterval(DateTime.Now, DateTime.Now),
-                IncludeExpressions = new List<Guid>() { ExpressionFixtures.VariableSymbol.Id }
-            });
+            var response = await client.Create(new TransactionSearchFilter(
+                new ClosedInterval(DateTime.Now, DateTime.Now),
+                new List<Guid>() { AccountFixtures.Fio.Id },
+                new List<Guid>() { ExpressionFixtures.VariableSymbol.Id },
+                new List<Guid>()));
 
             response.HasStatusCode(HttpStatusCode.OK);
         }

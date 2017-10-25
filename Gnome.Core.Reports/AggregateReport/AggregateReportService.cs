@@ -51,14 +51,9 @@ namespace Gnome.Core.Reports.AggregateReport
         {
             var startDate = filter.DateFilter.From.AddDays(-numberOfDaysToAggregate).Date;
             var endDate = filter.DateFilter.To;
+            var closedInterval = new ClosedInterval(startDate, endDate);
 
-            return new TransactionSearchFilter()
-            {
-                Accounts = filter.Accounts,
-                DateFilter = new ClosedInterval(startDate, endDate),
-                IncludeExpressions = filter.IncludeExpressions,
-                ExcludeExpressions = filter.ExcludeExpressions
-            };
+            return new TransactionSearchFilter(closedInterval, filter.Accounts, filter.IncludeExpressions, filter.ExcludeExpressions);
         }
     }
 }
