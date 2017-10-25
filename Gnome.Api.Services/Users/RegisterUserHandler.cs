@@ -1,21 +1,23 @@
-﻿using Gnome.Core.Service.Categories;
+﻿using Gnome.Core.Service.Initialization;
 using Gnome.Core.Service.Interfaces;
 using MediatR;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Gnome.Api.Services.Users
 {
     public class RegisterUserHandler : INotificationHandler<RegisterUser>
     {
         private readonly IUserService userService;
-        private readonly ICategoryInitializeService categoryInitService;
+        private readonly IEnumerable<IInitializationService> initServices;
 
         public RegisterUserHandler(
             IUserService userService,
-            ICategoryInitializeService categoryInitService)
+            IEnumerable<IInitializationService> initServices)
         {
             this.userService = userService;
-            this.categoryInitService = categoryInitService;
+            this.initServices = initServices;
         }
 
         public void Handle(RegisterUser user)
@@ -25,7 +27,12 @@ namespace Gnome.Api.Services.Users
 
             var userId = Guid.NewGuid();
             this.userService.CreateNew(user.Email, user.Password, userId);
-            categoryInitService.Initialize(userId);
+
+            initServices
+                .ToList()
+                .OrderBy(s => s.Order)
+                .ToList()
+                .ForEach(s => s.Initialize(userId));
         }
     }
 }

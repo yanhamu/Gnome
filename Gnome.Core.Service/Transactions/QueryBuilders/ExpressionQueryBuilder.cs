@@ -21,7 +21,8 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
 
         public IEnumerable<TransactionCategoryRow> Query(Guid userId, TransactionSearchFilter filter)
         {
-            var evaluator = evaluatorFactory.Create(filter.ExcludeExpressions.Union(filter.IncludeExpressions).ToList());
+            var allExpressions = filter.ExcludeExpressions.Union(filter.IncludeExpressions).ToList();
+            var evaluator = evaluatorFactory.Create(allExpressions);
 
             var transactions = queryBuilder.Query(userId, filter);
 

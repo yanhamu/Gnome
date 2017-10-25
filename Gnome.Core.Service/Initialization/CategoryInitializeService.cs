@@ -2,16 +2,13 @@
 using Gnome.Core.Model.Database;
 using System;
 
-namespace Gnome.Core.Service.Categories
+namespace Gnome.Core.Service.Initialization
 {
-    public interface ICategoryInitializeService
-    {
-        void Initialize(Guid userId);
-    }
-
-    public class CategoryInitializeService : ICategoryInitializeService
+    public class CategoryInitializeService : IInitializationService
     {
         private readonly ICategoryRepository repository;
+
+        public int Order => 10;
 
         public CategoryInitializeService(ICategoryRepository repository)
         {
@@ -22,16 +19,18 @@ namespace Gnome.Core.Service.Categories
         {
             var root = repository.Create(new Category()
             {
+                Id = Guid.NewGuid(),
                 IsSystem = true,
-                Name = "root",
+                Name = Constants.Categories.Root,
                 UserId = userId
             });
             repository.Save();
 
             var system = repository.Create(new Category()
             {
+                Id = Guid.NewGuid(),
                 IsSystem = true,
-                Name = "system",
+                Name = Constants.Categories.System,
                 ParentId = root.Id,
                 UserId = userId
             });
@@ -39,27 +38,10 @@ namespace Gnome.Core.Service.Categories
 
             var unread = repository.Create(new Category()
             {
+                Id = Guid.NewGuid(),
                 IsSystem = true,
-                Name = "unread",
+                Name = Constants.Categories.New,
                 ParentId = system.Id,
-                UserId = userId
-            });
-            repository.Save();
-
-            var user = repository.Create(new Category()
-            {
-                IsSystem = false,
-                Name = "User Category",
-                ParentId = root.Id,
-                UserId = userId
-            });
-            repository.Save();
-
-            var other = repository.Create(new Category()
-            {
-                IsSystem = false,
-                Name = "Other",
-                ParentId = user.Id,
                 UserId = userId
             });
             repository.Save();
