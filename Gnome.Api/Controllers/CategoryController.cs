@@ -1,5 +1,4 @@
 ﻿using Gnome.Api.Services.Categories.Requests;
-using Gnome.Core.Model.Database;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -50,5 +49,14 @@ namespace Gnome.Api.Controllers
             await mediator.Publish(command);
             return new NoContentResult();
         }
+    }
+
+    public class Category
+    {
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public Guid? ParentId { get; set; }
+        public string Name { get; set; }
+        public string Color { get; set; }
     }
 }

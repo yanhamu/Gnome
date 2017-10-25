@@ -1,6 +1,7 @@
 ﻿using Gnome.Api.IntegrationTests.Extensions;
 using Gnome.Api.IntegrationTests.Fixtures;
 using Gnome.Api.Services.Accounts;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Xunit;
@@ -16,12 +17,7 @@ namespace Gnome.Api.IntegrationTests
         {
             server.PrepareUser(UserFixture.User);
 
-            var account = new Account()
-            {
-                Name = "test account",
-                Token = "secret token"
-            };
-
+            var account = new Account(default(Guid), "test account", "secret token");
             var result = await client.Create(account);
             result.HasStatusCode(HttpStatusCode.OK);
         }
