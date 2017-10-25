@@ -1,6 +1,6 @@
-﻿using Gnome.Api.Services.Reports.Requests;
-using Gnome.Core.Reports;
-using Gnome.Core.Service.Search.Filters;
+﻿using Gnome.Api.Model;
+using Gnome.Api.Services.Reports;
+using Gnome.Api.Services.Reports.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,11 +12,14 @@ namespace Gnome.Api.Controllers
     public class ReportController : IUserAuthenticatedController
     {
         private readonly IMediator mediator;
+        private readonly IGetReportRequestFactory getReportRequestFactory;
+
         public Guid UserId { get; set; }
 
-        public ReportController(IMediator mediator)
+        public ReportController(IMediator mediator, IGetReportRequestFactory getReportRequestFactory)
         {
             this.mediator = mediator;
+            this.getReportRequestFactory = getReportRequestFactory;
         }
 
         [HttpGet]
@@ -28,7 +31,8 @@ namespace Gnome.Api.Controllers
         [HttpGet("{reportId:Guid}")]
         public async Task<IActionResult> Get(Guid reportId, ClosedInterval interval)
         {
-            return new OkObjectResult(await mediator.Send(new GetReport() { ReportId = reportId, DateFilter = interval }));
+            var request = getReportRequestFactory.Create(reportId, interval.Create(), UserId);
+            return new OkObjectResult(await mediator.Send(request));
         }
 
         [HttpPost]
@@ -55,17 +59,17 @@ namespace Gnome.Api.Controllers
         [HttpPost("aggregate")]
         public async Task<IActionResult> AggregateReport([FromBody]GetReport report)
         {
-            return new OkObjectResult(await mediator.Send(new GetAggregateReport(report.ReportId, report.DateFilter, UserId, 30)));
+            return new OkObjectResult(await mediator.Send(new GetAggregateReport(report.ReportId, report.DateFilter.Create(), UserId, 30)));
         }
 
         [HttpPost("cumulative")]
         public async Task<IActionResult> CumulativeReport([FromBody]GetReport report)
         {
-            return new OkObjectResult(await mediator.Send(new GetCumulativeReport(report.ReportId, report.DateFilter, UserId)));
+            return new OkObjectResult(await mediator.Send(new GetCumulativeReport(report.ReportId, report.DateFilter.Create(), UserId)));
         }
     }
 
-    public class GetReport : IRequest<AggregateEnvelope>
+    public class GetReport
     {
         public Guid ReportId { get; set; }
         public ClosedInterval DateFilter { get; set; }

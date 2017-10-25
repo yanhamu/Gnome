@@ -4,10 +4,8 @@ namespace Gnome.Core.Service.Search.Filters
 {
     public class ClosedInterval
     {
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
-
-        public ClosedInterval() { }
+        public DateTime From { get; }
+        public DateTime To { get; }
 
         public ClosedInterval(DateTime from, DateTime to)
         {

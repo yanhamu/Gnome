@@ -8,6 +8,6 @@ namespace Gnome.Core.DataAccess
         T Create(T entity);
         T Find(params object[] ids);
         T Remove(params object[] ids);
-        int Save(); //TODO reevaluate
+        int Save();
     }
 }
