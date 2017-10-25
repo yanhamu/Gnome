@@ -25,6 +25,8 @@ namespace Gnome.Api.Services.Reports
                     return new GetAggregateReport(reportId, dateFilter, userId, 30);
                 case "cumulative":
                     return new GetCumulativeReport(reportId, dateFilter, userId);
+                case "total-monthly":
+                    return new GetTotalMonthlyReport(reportId, dateFilter, userId);
                 default: throw new ArgumentException();
             }
         }

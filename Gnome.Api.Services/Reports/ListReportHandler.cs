@@ -1,9 +1,10 @@
-﻿using Gnome.Core.DataAccess;
+﻿using Gnome.Api.Services.Reports.Requests;
+using Gnome.Core.DataAccess;
 using MediatR;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gnome.Api.Services.Reports.Requests
+namespace Gnome.Api.Services.Reports
 {
     public class ListReportHandler : IRequestHandler<ListReports, List<Report>>
     {
