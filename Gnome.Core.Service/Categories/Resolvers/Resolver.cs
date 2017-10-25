@@ -8,18 +8,16 @@ namespace Gnome.Core.Service.Categories.Resolvers
     public class Resolver
     {
         private readonly CategoryTree tree;
-        private readonly ILookup<Guid, Guid> transactionCategories;
         private Dictionary<CategoryNode, Category> categoryCache = new Dictionary<CategoryNode, Category>();
 
-        public Resolver(CategoryTree tree, ILookup<Guid, Guid> transactionCategories)
+        public Resolver(CategoryTree tree)
         {
             this.tree = tree;
-            this.transactionCategories = transactionCategories;
         }
 
-        public List<Category> GetCategories(Guid transactionId)
+        public List<Category> GetCategories(List<Guid> categories)
         {
-            return transactionCategories[transactionId].Select(c => CreateCategory(tree[c])).ToList();
+            return categories.Select(c => CreateCategory(tree[c])).ToList();
         }
 
         private Category CreateCategory(CategoryNode categoryNode)

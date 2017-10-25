@@ -1,4 +1,5 @@
-﻿using Gnome.Core.Service.Categories.Resolvers;
+﻿using Gnome.Core.Service.Categories;
+using Gnome.Core.Service.Categories.Resolvers;
 using Gnome.Core.Service.Search.Filters;
 using System;
 using System.Collections.Generic;
@@ -8,22 +9,22 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
 {
     public class TransactionCategoryRowQueryBuilder : ITransactionCategoryRowQueryBuilder
     {
-        private readonly ICategoryResolverFactory resolverFactory;
         private readonly ITransactionRowQueryBuilder queryBuilder;
+        private readonly ICategoryTreeFactory categoryTreeFactory;
 
         public TransactionCategoryRowQueryBuilder(
-            ICategoryResolverFactory resolverFactory,
-            ITransactionRowQueryBuilder queryBuilder)
+            ITransactionRowQueryBuilder queryBuilder,
+            ICategoryTreeFactory categoryTreeFactory)
         {
-            this.resolverFactory = resolverFactory;
             this.queryBuilder = queryBuilder;
+            this.categoryTreeFactory = categoryTreeFactory;
         }
 
         public IEnumerable<TransactionCategoryRow> Query(Guid userId, TransactionSearchFilter filter)
         {
-            var categoryResolver = resolverFactory.Create(userId, filter);
+            var resolver = new Resolver(categoryTreeFactory.Create(userId));
             return queryBuilder.Query(userId, filter)
-                .Select(t => Create(t, categoryResolver.GetCategories(t.Id)));
+                .Select(t => Create(t, resolver.GetCategories(t.Categories)));
         }
 
         private TransactionCategoryRow Create(TransactionRow row, List<Category> categories)
