@@ -11,7 +11,7 @@
             .then(res => this.reports = res.body);
     },
     methods: {
-        selectReport: function (r) {
+        viewReport: function (r) {
             var data = {
                 reportId: r.id,
                 dateFilter: {
@@ -21,7 +21,7 @@
             };
 
             this.$http
-                .post('reports/' + r.type, data)
+                .get('reports/' + r.id+'?from=2017-01-01&to=2017-12-12')
                 .then(res => console.log(res));
         }
     },
@@ -32,7 +32,10 @@
         <div class="col-md-12">
             <report-list 
                 v-bind:reports="reports" 
-                v-on:select-report="selectReport" v-bind:allowRemove="false" />
+                v-on:select-report="viewReport" 
+                v-bind:allowRemove="false"
+                v-bind:allowEdit="false"
+                v-bind:allowReport="true"/>
         </div>
     </div>
   </div>`

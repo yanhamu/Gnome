@@ -20,7 +20,7 @@
             this.report = { name: 'new report name', queryName: "" };
             this.step += 1;
         },
-        selectReport: function (r) {
+        editReport: function (r) {
             this.report = r;
             var q = this.findQuery(r.queryId);
             this.report.queryName = q.name;
@@ -58,8 +58,10 @@
             <report-list 
                 v-if="step == 1" 
                 v-bind:reports="reports" 
-                v-bind:allowRemove="false" 
-                v-on:select-report="selectReport"
+                v-bind:allowRemove="true"
+                v-bind:allowEdit="true"
+                v-bind:allowReport="false"
+                v-on:edit-report="editReport"
                 v-on:remove-report="removeReport"/>
             <report-details 
                 v-if="step == 2" 

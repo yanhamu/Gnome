@@ -37,6 +37,7 @@
                 <option disabled value="">Please select one</option>
                 <option>cumulative</option>
                 <option>aggregate</option>
+                <option>total-monthly</option>
             </select>
         </div>
     </div>

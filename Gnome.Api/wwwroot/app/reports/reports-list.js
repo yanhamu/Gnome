@@ -3,15 +3,18 @@
         return {
         };
     },
-    props: ['reports', 'allowRemove'],
+    props: ['reports', 'allowRemove', 'allowEdit', 'allowReport'],
     created: function () {
     },
     methods: {
-        select: function (r) {
-            this.$emit('select-report', r);
+        edit: function (r) {
+            this.$emit('edit-report', r);
         },
         remove: function (r) {
             this.$emit('remove-report', r);
+        },
+        select: function (r) {
+            this.$emit('select-report', r);
         }
     },
     template: `
@@ -23,14 +26,15 @@
                 <tbody>
                     <tr v-for="r in reports">
                         <td>{{r.name}}</td>
-                        <td>
-                            <button class='btn btn-primary' v-on:click="select(r)"">
+                        <td >
+                            <button class='btn btn-primary' v-on:click="edit(r)" v-if="allowEdit">
                                 <span class="glyphicon glyphicon-pencil" />
                             </button>
-                        </td>
-                        <td v-if="allowRemove">
-                            <button class='btn btn-danger' v-on:click="remove(r)"">
+                            <button class='btn btn-danger' v-on:click="remove(r)" v-if="allowRemove">
                                 <span class="glyphicon glyphicon-remove" />
+                            </button>
+                            <button class='btn btn-info' v-on:click="select(r)" v-if="allowReport">
+                                <span class="glyphicon glyphicon-signal" />
                             </button>
                         </td>
                     </tr>
