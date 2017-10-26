@@ -22,7 +22,7 @@ namespace Gnome.Core.Reports.TotalMonthly
             return new AggregateEnvelope(filter.DateFilter, results);
         }
 
-        private List<Aggregate> Compute(IEnumerable<TransactionCategoryRow> rows, ClosedInterval dateFilter)
+        public List<Aggregate> Compute(IEnumerable<TransactionCategoryRow> rows, ClosedInterval dateFilter)
         {
             var list = new List<Aggregate>();
             var dict = InitializeDictionary(dateFilter);
@@ -34,7 +34,7 @@ namespace Gnome.Core.Reports.TotalMonthly
 
             return dict
                 .Select(kv => new Aggregate(kv.Key, kv.Value))
-                .OrderBy(a => a.Interval) //TODO check or eventually implement comparable
+                .OrderBy(a => a.Interval.From)
                 .ToList();
         }
 
