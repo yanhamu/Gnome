@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/github/yanhamu/Gnome/badge.svg?branch=master)](https://coveralls.io/github/yanhamu/Gnome?branch=master)
 # Gnome
 Personal finance manager web application
 
