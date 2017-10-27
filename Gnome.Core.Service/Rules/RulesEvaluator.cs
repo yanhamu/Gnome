@@ -32,6 +32,7 @@ namespace Gnome.Core.Service.Rules
             var categoryRow = this.Create(row, resolver.GetCategories(row.Categories));
             var filter = default(TransactionSearchFilter);
             // todo implement
+            
             // foreach rule
             if (evaluator.Satisfies(categoryRow, filter))
             {
