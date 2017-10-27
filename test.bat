@@ -23,8 +23,6 @@ set coverage=coverage
 rmdir %coverage% /S /Q
 mkdir %coverage%
 
-dotnet test -f netcoreapp2.0 %DOTNET_TEST_ARGS%
-
 echo Calculating coverage with OpenCover
 %OPENCOVER% ^
   -target:"c:\Program Files\dotnet\dotnet.exe" ^
@@ -33,7 +31,7 @@ echo Calculating coverage with OpenCover
   -hideskipped:File ^
   -output:%coverage%/coverage.xml ^
   -oldStyle ^
-  -filter:"+[Gnome*]*" ^
+  -filter:"+[Gnome*]* -[*Tests]*" ^
   -searchdirs:%testdir%/bin/%CONFIG%/netcoreapp2.0 ^
   -register:user
 

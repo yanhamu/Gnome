@@ -16,6 +16,7 @@ namespace Gnome.Core.Service.Tests.Search.Filters
             Assert.True(a == b);
         }
 
+        [Fact]
         public void Should_Be_NotEqual()
         {
             Assert.NotEqual(

@@ -5,6 +5,11 @@
     <AssemblyName>Gnome.Api</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="wwwroot\app\lib\**" />
     <Content Remove="wwwroot\app\lib\**" />
