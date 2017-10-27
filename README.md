@@ -1,4 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/ocbqwrdlwhtty12t/branch/master?svg=true)](https://ci.appveyor.com/project/yanhamu/gnome/branch/master)
+[![Coverage Status](https://coveralls.io/repos/github/yanhamu/Gnome/badge.svg?branch=master)](https://coveralls.io/github/yanhamu/Gnome?branch=master)
 
 # Gnome
 Personal finance manager web application
