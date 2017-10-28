@@ -40,7 +40,6 @@ namespace Gnome.Infrastructure
                                 "transaction",
                                 "category_transaction",
                                 "expression",
-                                "filter",
                                 "query",
                                 "report"
                 });

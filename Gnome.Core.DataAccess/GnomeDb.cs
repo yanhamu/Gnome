@@ -16,7 +16,6 @@ namespace Gnome.Core.DataAccess
             MapCategoryTransaction(modelBuilder.Entity<CategoryTransaction>());
             MapTransaction(modelBuilder.Entity<Transaction>());
             MapExpression(modelBuilder.Entity<Expression>());
-            MapFilter(modelBuilder.Entity<Filter>());
             MapQuery(modelBuilder.Entity<Query>());
             MapReport(modelBuilder.Entity<Report>());
 
@@ -36,15 +35,6 @@ namespace Gnome.Core.DataAccess
             builder.ToTable("query");
             builder.HasKey(q => q.Id);
             builder.HasOne(b => b.User).WithMany().HasForeignKey(f => f.UserId);
-        }
-
-        private void MapFilter(EntityTypeBuilder<Filter> builder)
-        {
-            builder.ToTable("filter");
-            builder.HasKey(f => f.Id);
-            builder.HasOne(f => f.User).WithMany().HasForeignKey(f => f.UserId);
-            builder.Property(f => f.Content);
-            builder.Property(f => f.Name);
         }
 
         private void MapExpression(EntityTypeBuilder<Expression> builder)
