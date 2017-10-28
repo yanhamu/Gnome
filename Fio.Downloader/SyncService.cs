@@ -28,7 +28,8 @@ namespace Fio.Downloader
             foreach (var account in accounts)
             {
                 var client = new FioClient(account.Token);
-                var transactions = await client.Get(DateTime.Now.AddYears(-1), DateTime.UtcNow);
+                //await client.SetStopFlag(new DateTime(2016, 05, 01));
+                var transactions = await client.Get(DateTime.Now.AddYears(-1).AddMonths(-2), DateTime.UtcNow);
                 //var transactions = await client.GetNew();
 
                 await transactionRepository.SaveAll(account.Id, transactions.AccountStatement.TransactionList.Transactions);

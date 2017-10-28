@@ -24,12 +24,12 @@ namespace Gnome.Api.Services.Transactions
                 .ToList();
 
             var pagination = PaginationResult.CreateFromTotal(message.PageFilter.PageSize, message.PageFilter.Page, rows.Count);
-            var result = rows
-                .Skip(pagination.PageSize * (pagination.CurrentPage - 1))
-                .Take(pagination.PageSize)
-                .ToList();
+            //var result = rows
+            //    .Skip(pagination.PageSize * (pagination.CurrentPage - 1))
+            //    .Take(pagination.PageSize)
+            //    .ToList();
 
-            return new SearchTransactionResult(result, pagination);
+            return new SearchTransactionResult(rows, pagination);
         }
     }
 }
