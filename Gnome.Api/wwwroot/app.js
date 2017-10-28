@@ -9,6 +9,7 @@ const routes = [
     { path: '/expression-builder-wizard', component: ExpressionBuilderWizard },
     { path: '/report-wizard', component: ReportWizard },
     { path: '/report-overview', component: ReportsOverview },
+    { path: '/report-view/:id', name: 'report-view', component: ReportView, props: true },
     { path: '*', redirect: '/home' }]
 
 const router = new VueRouter({ routes })
@@ -32,7 +33,12 @@ Vue.http.interceptors.push(function (request, next) {
 
 Vue.filter('formatDate', function (value) {
     if (value)
-        return moment(String(value)).format('YYYY/MM/DD');
+        return moment(String(value)).format('YYYY-MM-DD');
+});
+
+Vue.filter('yearMonth', function (value) {
+    if (value)
+        return moment(String(value)).format('YYYY/MM');
 });
 
 const app = new Vue({

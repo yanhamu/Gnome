@@ -12,17 +12,7 @@
     },
     methods: {
         viewReport: function (r) {
-            var data = {
-                reportId: r.id,
-                dateFilter: {
-                    from: '2017-01-01',
-                    to: '2017-12-12'
-                }
-            };
-
-            this.$http
-                .get('reports/' + r.id+'?from=2017-01-01&to=2017-12-12')
-                .then(res => console.log(res));
+            router.push({ name: 'report-view', params: { id: r.id } });
         }
     },
     template: `
