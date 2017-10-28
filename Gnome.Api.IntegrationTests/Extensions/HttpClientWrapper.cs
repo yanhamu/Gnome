@@ -49,6 +49,38 @@ namespace Gnome.Api.IntegrationTests.Extensions
             return await client.SendAsync(request);
         }
 
+        public async Task<HttpResponseMessage> Remove(string id)
+        {
+            var request = CreateRequest(HttpMethod.Delete, id);
+            return await client.SendAsync(request);
+        }
+
+        public async Task<HttpResponseMessage> Update<T>(string id, T data)
+        {
+            var jsonContent = JsonConvert.SerializeObject(data);
+            var stringContent = new StringContent(
+                jsonContent,
+                Encoding.UTF8,
+                "application/json");
+            var message = CreateRequest(HttpMethod.Put, id);
+            message.Content = stringContent;
+            return await client.SendAsync(message);
+        }
+
+        public async Task<HttpResponseMessage> Get(string id)
+        {
+            var request = CreateRequest(HttpMethod.Get, id);
+            return await client.SendAsync(request);
+        }
+
+        private HttpRequestMessage CreateRequest(HttpMethod method, string id)
+        {
+            var request = new HttpRequestMessage(method, Url + $"/{id}");
+            if (this.IsAuthenticated)
+                request.Headers.Add(TestIdentityMiddleware.AUTH_HEADER_FLAG, "yeah");
+            return request;
+        }
+
         private HttpRequestMessage CreateRequest(HttpMethod method)
         {
             var request = new HttpRequestMessage(method, Url);

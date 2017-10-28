@@ -53,5 +53,45 @@ namespace Gnome.Api.IntegrationTests
             Assert.Empty(model.ExcludeExpressions);
             Assert.Equal(QueryFixture.QueryAll.Id, model.QueryId);
         }
+
+        [Fact]
+        public async void Should_Remove_Query()
+        {
+            this.server.PrepareUser(UserFixture.User);
+            this.server.PrepareAccount(AccountFixtures.Fio);
+            this.server.PrepareQuery(QueryFixture.QueryAll);
+
+            var response = await client.Remove(QueryFixture.QueryAll.Id.ToString());
+            response.HasStatusCode(HttpStatusCode.NoContent);
+        }
+
+        [Fact]
+        public async void Should_Update_Query()
+        {
+            this.server.PrepareUser(UserFixture.User);
+            this.server.PrepareAccount(AccountFixtures.Fio);
+            this.server.PrepareQuery(QueryFixture.QueryAll);
+
+            var updateQuery = new UpdateQuery()
+            {
+                Id = QueryFixture.QueryAll.Id,
+                Name = "new name",
+                Accounts = new List<Guid>() { AccountFixtures.Fio.Id }
+            };
+
+            var response = await client.Update(QueryFixture.QueryAll.Id.ToString(), updateQuery);
+            response.HasStatusCode(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async void Should_Get_Query()
+        {
+            this.server.PrepareUser(UserFixture.User);
+            this.server.PrepareAccount(AccountFixtures.Fio);
+            this.server.PrepareQuery(QueryFixture.QueryAll);
+
+            var response = await client.Get(QueryFixture.QueryAll.Id.ToString());
+            response.HasStatusCode(HttpStatusCode.OK);
+        }
     }
 }
