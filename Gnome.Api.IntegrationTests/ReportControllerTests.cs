@@ -33,5 +33,42 @@ namespace Gnome.Api.IntegrationTests
             Assert.Equal(ReportFixture.BasicAggregate.Name, report.Name);
             Assert.Equal(ReportFixture.BasicAggregate.Type, report.Type);
         }
+
+        [Fact]
+        public async void Should_List_Reports()
+        {
+            server.PrepareUser(UserFixture.User);
+            server.PrepareAccount(AccountFixtures.Fio);
+            server.PrepareQuery(QueryFixture.QueryAll);
+            server.PrepareReport(ReportFixture.BasicAggregate);
+
+            var response = await client.List();
+            response.HasStatusCode(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async void Should_Get_Report()
+        {
+            server.PrepareUser(UserFixture.User);
+            server.PrepareAccount(AccountFixtures.Fio);
+            server.PrepareQuery(QueryFixture.QueryAll);
+            server.PrepareReport(ReportFixture.BasicAggregate);
+
+            client.SetBaseUrl("api/reports?from=2017-01-01&to=2017-02-01");
+            var response = await client.Get(ReportFixture.BasicAggregate.Id);
+            response.HasStatusCode(HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async void Should_Remove_Report()
+        {
+            server.PrepareUser(UserFixture.User);
+            server.PrepareAccount(AccountFixtures.Fio);
+            server.PrepareQuery(QueryFixture.QueryAll);
+            server.PrepareReport(ReportFixture.BasicAggregate);
+
+            var response = await client.Remove(ReportFixture.BasicAggregate.Id);
+            response.HasStatusCode(HttpStatusCode.NoContent);
+        }
     }
 }

@@ -55,18 +55,6 @@ namespace Gnome.Api.Controllers
             updateReport.UserId = UserId;
             return new OkObjectResult(await mediator.Send(updateReport));
         }
-
-        [HttpPost("aggregate")]
-        public async Task<IActionResult> AggregateReport([FromBody]GetReport report)
-        {
-            return new OkObjectResult(await mediator.Send(new GetAggregateReport(report.ReportId, report.DateFilter.Create(), UserId, 30)));
-        }
-
-        [HttpPost("cumulative")]
-        public async Task<IActionResult> CumulativeReport([FromBody]GetReport report)
-        {
-            return new OkObjectResult(await mediator.Send(new GetCumulativeReport(report.ReportId, report.DateFilter.Create(), UserId)));
-        }
     }
 
     public class GetReport
