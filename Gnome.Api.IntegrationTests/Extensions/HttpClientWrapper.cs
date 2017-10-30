@@ -50,6 +50,12 @@ namespace Gnome.Api.IntegrationTests.Extensions
             return await client.SendAsync(request);
         }
 
+        public async Task<HttpResponseMessage> Remove()
+        {
+            var request = CreateRequest(HttpMethod.Delete);
+            return await client.SendAsync(request);
+        }
+
         public async Task<HttpResponseMessage> Remove(Guid id)
         {
             var request = CreateRequest(HttpMethod.Delete, id.ToString());

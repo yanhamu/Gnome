@@ -24,7 +24,7 @@ namespace Gnome.Api.Services.CategoryTransactions
 
         public void Handle(RemoveCategoryTransaction message)
         {
-            this.repository.Remove(message.TransactionId, message.CategoryId);
+            this.repository.Remove(message.CategoryId, message.TransactionId);
             this.repository.Save();
         }
     }

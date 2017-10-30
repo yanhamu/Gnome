@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Gnome.Api.Services.CategoryTransactions
 {
-    class CategoryTransactionDataHandler :
+    public class CategoryTransactionDataHandler :
         INotificationHandler<CreateCategoryTransaction>,
         INotificationHandler<RemoveCategoryTransaction>
     {
