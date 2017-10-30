@@ -15,7 +15,7 @@ namespace Gnome.Api.IntegrationTests
         {
             this.server.PrepareUser(UserFixture.User);
             this.server.PrepareCategory(CategoryFixture.Root);
-            var response = await client.Get(CategoryFixture.Root.Id.ToString());
+            var response = await client.Get(CategoryFixture.Root.Id);
             response.HasStatusCode(HttpStatusCode.OK);
 
             var category = await response.Deserialize<Category>();

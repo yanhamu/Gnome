@@ -61,7 +61,7 @@ namespace Gnome.Api.IntegrationTests
             this.server.PrepareAccount(AccountFixtures.Fio);
             this.server.PrepareQuery(QueryFixture.QueryAll);
 
-            var response = await client.Remove(QueryFixture.QueryAll.Id.ToString());
+            var response = await client.Remove(QueryFixture.QueryAll.Id);
             response.HasStatusCode(HttpStatusCode.NoContent);
         }
 
@@ -79,7 +79,7 @@ namespace Gnome.Api.IntegrationTests
                 Accounts = new List<Guid>() { AccountFixtures.Fio.Id }
             };
 
-            var response = await client.Update(QueryFixture.QueryAll.Id.ToString(), updateQuery);
+            var response = await client.Update(QueryFixture.QueryAll.Id, updateQuery);
             response.HasStatusCode(HttpStatusCode.OK);
         }
 
@@ -90,7 +90,7 @@ namespace Gnome.Api.IntegrationTests
             this.server.PrepareAccount(AccountFixtures.Fio);
             this.server.PrepareQuery(QueryFixture.QueryAll);
 
-            var response = await client.Get(QueryFixture.QueryAll.Id.ToString());
+            var response = await client.Get(QueryFixture.QueryAll.Id);
             response.HasStatusCode(HttpStatusCode.OK);
         }
     }

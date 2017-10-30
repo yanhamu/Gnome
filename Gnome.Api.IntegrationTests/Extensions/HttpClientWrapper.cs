@@ -1,5 +1,6 @@
 ﻿using Gnome.Api.IntegrationTests.Configuration;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,27 +50,27 @@ namespace Gnome.Api.IntegrationTests.Extensions
             return await client.SendAsync(request);
         }
 
-        public async Task<HttpResponseMessage> Remove(string id)
+        public async Task<HttpResponseMessage> Remove(Guid id)
         {
-            var request = CreateRequest(HttpMethod.Delete, id);
+            var request = CreateRequest(HttpMethod.Delete, id.ToString());
             return await client.SendAsync(request);
         }
 
-        public async Task<HttpResponseMessage> Update<T>(string id, T data)
+        public async Task<HttpResponseMessage> Update<T>(Guid id, T data)
         {
             var jsonContent = JsonConvert.SerializeObject(data);
             var stringContent = new StringContent(
                 jsonContent,
                 Encoding.UTF8,
                 "application/json");
-            var message = CreateRequest(HttpMethod.Put, id);
+            var message = CreateRequest(HttpMethod.Put, id.ToString());
             message.Content = stringContent;
             return await client.SendAsync(message);
         }
 
-        public async Task<HttpResponseMessage> Get(string id)
+        public async Task<HttpResponseMessage> Get(Guid id)
         {
-            var request = CreateRequest(HttpMethod.Get, id);
+            var request = CreateRequest(HttpMethod.Get, id.ToString());
             return await client.SendAsync(request);
         }
 

@@ -5,11 +5,11 @@ namespace Gnome.Api.Services.Accounts.Requests
 {
     public class RemoveAccount : INotification
     {
-        public Guid Id { get; }
+        public Guid AccountId { get; }
 
         public RemoveAccount(Guid accountId)
         {
-            this.Id = accountId;
+            this.AccountId = accountId;
         }
     }
 }

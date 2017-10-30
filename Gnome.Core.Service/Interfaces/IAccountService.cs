@@ -6,7 +6,7 @@ namespace Gnome.Core.Service.Interfaces
 {
     public interface IAccountService
     {
-        Guid Create(Account account);
+        Account Create(Account account);
         Account Get(Guid accountId);
         IEnumerable<Account> List(Guid userId);
         void Remove(Guid accountId);

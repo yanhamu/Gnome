@@ -15,10 +15,11 @@ namespace Gnome.Core.Service
             this.repository = repository;
         }
 
-        public Guid Create(Account account)
+        public Account Create(Account account)
         {
             var created = repository.Create(account);
-            return created.Id;
+            repository.Save();
+            return created;
         }
 
         public Account Get(Guid accountId)
