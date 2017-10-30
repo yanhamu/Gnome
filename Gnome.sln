@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gnome.Core.Service", "Gnome.Core.Service\Gnome.Core.Service.csproj", "{113FC7D0-0450-4301-97E0-3025808C5F5A}"
 EndProject
@@ -37,7 +37,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gnome.Api.IntegrationTests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gnome.Database", "Gnome.Database\Gnome.Database.csproj", "{A8D34717-9D3D-460E-A5E7-5D3D2705973F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Core.Reports.Tests", "Gnome.Core.Reports.Tests\Gnome.Core.Reports.Tests.csproj", "{40F815DA-1B85-46AC-B814-5368E8215EB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gnome.Core.Reports.Tests", "Gnome.Core.Reports.Tests\Gnome.Core.Reports.Tests.csproj", "{40F815DA-1B85-46AC-B814-5368E8215EB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gnome.Api.Services.Tests", "Gnome.Api.Services.Tests\Gnome.Api.Services.Tests.csproj", "{DD554292-9DFE-47EE-AFBB-B1D4759FE03F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +99,10 @@ Global
 		{40F815DA-1B85-46AC-B814-5368E8215EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40F815DA-1B85-46AC-B814-5368E8215EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40F815DA-1B85-46AC-B814-5368E8215EB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD554292-9DFE-47EE-AFBB-B1D4759FE03F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD554292-9DFE-47EE-AFBB-B1D4759FE03F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD554292-9DFE-47EE-AFBB-B1D4759FE03F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD554292-9DFE-47EE-AFBB-B1D4759FE03F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +120,7 @@ Global
 		{BF9C9C7D-082B-41C0-8C83-334C6B96B038} = {BCBBBE33-CC72-4653-9BCB-76BD193951B8}
 		{A8D34717-9D3D-460E-A5E7-5D3D2705973F} = {2DFF429A-E5C0-425D-9EE8-01C11648FF5E}
 		{40F815DA-1B85-46AC-B814-5368E8215EB8} = {BCBBBE33-CC72-4653-9BCB-76BD193951B8}
+		{DD554292-9DFE-47EE-AFBB-B1D4759FE03F} = {BCBBBE33-CC72-4653-9BCB-76BD193951B8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCCD851D-9068-44FB-8326-70C11BCEFB71}

@@ -7,7 +7,7 @@ namespace Gnome.Api.Services.Reports.Requests
 {
     public class GetTotalMonthlyReport : IRequest<AggregateEnvelope>
     {
-        public ClosedInterval DateFilter { get; set; }
+        public ClosedInterval DateFilter { get; }
         public Guid ReportId { get; }
         public Guid UserId { get; }
 
