@@ -26,13 +26,16 @@ namespace Gnome.Api.AuthenticationMiddleware
         public Task Invoke(HttpContext context, IUserService userService)
         {
             if (!context.Request.Path.Equals(_options.Path, StringComparison.Ordinal))
-            {
-                context.Response.WriteAsync("Bad Request.");
                 return _next(context);
-            }
 
             if (!context.Request.Method.Equals("POST")
                || !context.Request.HasFormContentType)
+            {
+                context.Response.StatusCode = 400;
+                return Task.FromResult(0);
+            }
+
+            if (!context.Request.Form.ContainsKey("username") || !context.Request.Form.ContainsKey("password"))
             {
                 context.Response.StatusCode = 400;
                 return Task.FromResult(0);
@@ -47,6 +50,7 @@ namespace Gnome.Api.AuthenticationMiddleware
             var password = context.Request.Form["password"];
 
             var identity = GetIdentity(username, password, userService);
+
             if (identity == null)
             {
                 context.Response.StatusCode = 400;

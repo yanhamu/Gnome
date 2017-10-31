@@ -34,7 +34,7 @@ namespace Gnome.Api.Controllers
         public async Task<IActionResult> Remove(Guid expressionId)
         {
             await mediator.Send(new RemoveExpression() { ExpressionId = expressionId });
-            return new OkResult();
+            return new NoContentResult();
         }
 
         [HttpPost]
