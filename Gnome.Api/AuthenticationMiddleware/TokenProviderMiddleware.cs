@@ -27,6 +27,7 @@ namespace Gnome.Api.AuthenticationMiddleware
         {
             if (!context.Request.Path.Equals(_options.Path, StringComparison.Ordinal))
             {
+                context.Response.WriteAsync("Bad Request.");
                 return _next(context);
             }
 
@@ -34,7 +35,7 @@ namespace Gnome.Api.AuthenticationMiddleware
                || !context.Request.HasFormContentType)
             {
                 context.Response.StatusCode = 400;
-                return context.Response.WriteAsync("Bad request.");
+                return Task.FromResult(0);
             }
 
             return GenerateToken(context, userService);
@@ -83,9 +84,9 @@ namespace Gnome.Api.AuthenticationMiddleware
                 expires_in = (int)_options.Expiration.TotalSeconds
             };
 
-            // Serialize and return the response
             context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+            var stringResponse = JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented });
+            await context.Response.WriteAsync(stringResponse);
         }
 
         private ClaimsIdentity GetIdentity(string username, string password, IUserService userService)
