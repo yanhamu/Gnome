@@ -28,20 +28,21 @@ namespace Gnome.Api.AuthenticationMiddleware
             if (!context.Request.Path.Equals(_options.Path, StringComparison.Ordinal))
                 return _next(context);
 
-            if (!context.Request.Method.Equals("POST")
-               || !context.Request.HasFormContentType)
-            {
-                context.Response.StatusCode = 400;
-                return Task.FromResult(0);
-            }
-
-            if (!context.Request.Form.ContainsKey("username") || !context.Request.Form.ContainsKey("password"))
+            if (!IsRequestValid(context.Request))
             {
                 context.Response.StatusCode = 400;
                 return Task.FromResult(0);
             }
 
             return GenerateToken(context, userService);
+        }
+
+        private bool IsRequestValid(HttpRequest request)
+        {
+            return request.Method.Equals("POST")
+                && request.HasFormContentType
+                && request.Form.ContainsKey("username")
+                && request.Form.ContainsKey("password");
         }
 
         private async Task GenerateToken(HttpContext context, IUserService userService)
