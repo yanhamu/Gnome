@@ -43,5 +43,25 @@ namespace Gnome.Api.IntegrationTests.Fixtures
             }
         }
 
+        private static Category userCategory;
+
+        public static Category UserCategory
+        {
+            get
+            {
+                if (userCategory == null)
+                    userCategory = new Category()
+                    {
+                        Id = new Guid("cebc753f-b2c7-4675-a86d-fdfaf6a07d1d"),
+                        Color = "00FFDD",
+                        IsSystem = false,
+                        Name = "user category",
+                        ParentId = CategoryFixture.Root.Id,
+                        UserId = UserFixture.User.Id
+                    };
+                return userCategory;
+            }
+        }
+
     }
 }

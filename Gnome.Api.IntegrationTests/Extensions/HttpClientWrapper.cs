@@ -62,6 +62,15 @@ namespace Gnome.Api.IntegrationTests.Extensions
             return await client.SendAsync(request);
         }
 
+        public async Task<HttpResponseMessage> Remove<TData>(TData data)
+        {
+            var jsonContent = JsonConvert.SerializeObject(data);
+            var stringContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            var request = CreateRequest(HttpMethod.Delete);
+            request.Content = stringContent;
+            return await client.SendAsync(request);
+        }
+
         public async Task<HttpResponseMessage> Update<T>(Guid id, T data)
         {
             var jsonContent = JsonConvert.SerializeObject(data);

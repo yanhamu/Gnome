@@ -58,5 +58,17 @@ namespace Gnome.Api.IntegrationTests
 
             response.HasStatusCode(HttpStatusCode.OK);
         }
+
+        [Fact]
+        public async void Should_Remove_Category()
+        {
+            this.server.PrepareUser(UserFixture.User);
+            this.server.PrepareCategory(CategoryFixture.Root);
+            this.server.PrepareCategory(CategoryFixture.UserCategory);
+
+            var response = await client.Remove(new RemoveCategory(CategoryFixture.UserCategory.Id, true, default(Guid)));
+
+            response.HasStatusCode(HttpStatusCode.NoContent);
+        }
     }
 }

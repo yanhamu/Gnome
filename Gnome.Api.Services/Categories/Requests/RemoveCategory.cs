@@ -7,7 +7,7 @@ namespace Gnome.Api.Services.Categories.Requests
     {
         public Guid Id { get; }
         public bool RemoveChildren { get; }
-        public Guid UserId { get; }
+        public Guid UserId { get; set; }
 
         public RemoveCategory(
             Guid id,

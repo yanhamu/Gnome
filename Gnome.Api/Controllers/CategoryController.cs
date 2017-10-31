@@ -44,8 +44,10 @@ namespace Gnome.Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Remove(RemoveCategory command)
+        public async Task<IActionResult> Remove([FromBody]RemoveCategory command)
         {
+            command.UserId = UserId;
+
             await mediator.Publish(command);
             return new NoContentResult();
         }
