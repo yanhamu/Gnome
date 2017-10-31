@@ -32,6 +32,8 @@ namespace Gnome.Core.Service.Tests.Search.Filters
                 new ClosedInterval(new DateTime(2017, 1, 1), new DateTime(2017, 1, 4)));
 
             Assert.True(new ClosedInterval(new DateTime(2017, 1, 1), new DateTime(2017, 1, 4)) != new ClosedInterval(new DateTime(2017, 1, 2), new DateTime(2017, 1, 3)));
+
+            Assert.False(new ClosedInterval(new DateTime(2017, 1, 2), new DateTime(2017, 1, 3)).Equals(new Object()));
         }
     }
 }

@@ -32,6 +32,7 @@ namespace Gnome.Core.Service.Tests.Transactions.RowFactories
             var row = factory.Create(transaction);
 
             Assert.Equal(transaction.Id, row.Id);
+            Assert.Equal(transaction.Id.ToString(), row["id"]);
             Assert.Equal(transaction.Date.Date.ToString(), row["date"]);
             Assert.Equal(transaction.Amount.ToString(), row["amount"]);
             Assert.Equal(transaction.Type.ToString(), row["type"]);
