@@ -13,11 +13,6 @@ namespace Gnome.Core.Service.Search.Filters
             this.To = to;
         }
 
-        public static ClosedInterval Create(Interval interval)
-        {
-            return new ClosedInterval(interval.From.Value, interval.To.Value);
-        }
-
         public override bool Equals(object that)
         {
             if (that is ClosedInterval c)
