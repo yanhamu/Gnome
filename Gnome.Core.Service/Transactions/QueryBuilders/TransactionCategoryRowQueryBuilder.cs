@@ -29,7 +29,7 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
 
         private TransactionCategoryRow Create(TransactionRow row, List<Category> categories)
         {
-            return new TransactionCategoryRow() { Row = row, Categories = categories };
+            return new TransactionCategoryRow(row, categories);
         }
     }
 }

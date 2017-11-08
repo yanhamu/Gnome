@@ -17,10 +17,18 @@ namespace Gnome.Core.Service.RulesEngine
             this.expressionRepository = expressionRepository;
         }
 
-        public CachedEvaluator Create(List<Guid> ids)
+        public CachedEvaluator Create(List<Guid> expressionIds)
         {
             var expressions = expressionRepository.Query
-                .Where(e => ids.Contains(e.Id))
+                .Where(e => expressionIds.Contains(e.Id))
+                .ToList();
+            return new CachedEvaluator(treeBuilder).Initialize(expressions);
+        }
+
+        public CachedEvaluator Create(Guid userId)
+        {
+            var expressions = expressionRepository.Query
+                .Where(e => e.UserId == userId)
                 .ToList();
             return new CachedEvaluator(treeBuilder).Initialize(expressions);
         }

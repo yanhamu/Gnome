@@ -46,17 +46,17 @@ namespace Gnome.Core.Reports.Tests
 
         private TransactionCategoryRow CreateRow(DateTime date)
         {
-            return new TransactionCategoryRow()
-            {
-                Categories = new List<Category>(),
-                Row = new TransactionRow(
+            var row = new TransactionRow(
                     default(Guid),
                     default(Guid),
                     date,
                     1,
                     default(string),
-                    default(List<Guid>))
-            };
+                    default(List<Guid>));
+            var categories = new List<Category>();
+
+            return new TransactionCategoryRow(row, categories);
+
         }
     }
 }

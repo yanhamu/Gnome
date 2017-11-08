@@ -6,5 +6,6 @@ namespace Gnome.Core.Service.RulesEngine
     public interface ICachedEvaluatorFactory
     {
         CachedEvaluator Create(List<Guid> ids);
+        CachedEvaluator Create(Guid userId);
     }
 }

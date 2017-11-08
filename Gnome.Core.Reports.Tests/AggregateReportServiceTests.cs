@@ -31,10 +31,8 @@ namespace Gnome.Core.Reports.Tests
 
         private TransactionCategoryRow CreateRow(int i)
         {
-            return new TransactionCategoryRow()
-            {
-                Row = new TransactionRow(default(Guid), default(Guid), new DateTime(2017, 1, i), 1, default(string), null)
-            };
+            var row = new TransactionRow(default(Guid), default(Guid), new DateTime(2017, 1, i), 1, default(string), null);
+            return new TransactionCategoryRow(row, new List<Category>());
         }
     }
 }
