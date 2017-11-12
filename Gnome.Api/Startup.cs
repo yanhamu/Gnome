@@ -91,11 +91,11 @@ namespace Gnome.Api
 
                 // Validate the JWT Issuer (iss) claim
                 ValidateIssuer = true,
-                ValidIssuer = "ExampleIssuer",
+                ValidIssuer = issuer,
 
                 // Validate the JWT Audience (aud) claim
                 ValidateAudience = true,
-                ValidAudience = "ExampleAudience",
+                ValidAudience = audience,
 
                 // Validate the token expiry
                 ValidateLifetime = true,
@@ -106,16 +106,17 @@ namespace Gnome.Api
             return tokenValidationParameters;
         }
 
+        private const string issuer = "gnome-default";
+        private const string audience = "gnome-default";
+
         private static TokenProviderOptions GetTokenProviderOptions(SymmetricSecurityKey signingKey)
         {
-            return new TokenProviderOptions()
-            {
-                Audience = "ExampleAudience",
-                Issuer = "ExampleIssuer",
-                Expiration = TimeSpan.FromMinutes(30),
-                Path = "/api/gettoken",
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
-            };
+            return new TokenProviderOptions(
+                "/api/gettoken",
+                issuer,
+                audience,
+                TimeSpan.FromHours(2),
+                new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256));
         }
     }
 }

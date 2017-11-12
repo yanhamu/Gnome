@@ -5,14 +5,28 @@ namespace Gnome.Api.AuthenticationMiddleware
 {
     public class TokenProviderOptions
     {
-        public string Path { get; set; } = "/token";
+        public string Path { get; }
 
-        public string Issuer { get; set; }
+        public string Issuer { get; }
 
-        public string Audience { get; set; }
+        public string Audience { get; }
 
-        public TimeSpan Expiration { get; set; } = TimeSpan.FromDays(7);
+        public TimeSpan Expiration { get; }
 
-        public SigningCredentials SigningCredentials { get; set; }
+        public SigningCredentials SigningCredentials { get; }
+
+        public TokenProviderOptions(string path, string issuer, string audience, TimeSpan expiration, SigningCredentials credentials)
+        {
+            this.Path = path;
+            this.Issuer = issuer;
+            this.Audience = audience;
+            this.Expiration = expiration;
+            this.SigningCredentials = SigningCredentials;
+        }
+
+        public TokenProviderOptions()
+        {
+
+        }
     }
 }
