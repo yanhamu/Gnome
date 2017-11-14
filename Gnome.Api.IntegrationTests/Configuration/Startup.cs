@@ -1,5 +1,4 @@
-﻿using Gnome.Api.AuthenticationMiddleware;
-using Gnome.Api.Filters;
+﻿using Gnome.Api.Filters;
 using Gnome.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -19,15 +18,13 @@ namespace Gnome.Api.IntegrationTests.Configuration
                 options.Filters.Add(new UserFilter());
             });
 
-            var signKey = TokenProviderOptionFactory.GetKey();
-
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(o =>
                 {
                     o.RequireHttpsMetadata = false;
                     o.SaveToken = false;
-                    o.TokenValidationParameters = GetTokenValidationParameters(signKey);
+                    o.TokenValidationParameters = GetTokenValidationParameters();
                 });
 
             services.AddCors();
@@ -48,33 +45,27 @@ namespace Gnome.Api.IntegrationTests.Configuration
             if (initializer.HasAllTables() == false)
                 initializer.DropAndCreate();
 
-            var signKey = TokenProviderOptionFactory.GetKey();
-            var options = GetTokenProviderOptions(signKey);
+            var options = TokenProviderOptionFactory.Create();
 
             app.UseMiddleware<TestIdentityMiddleware>(Options.Create(options));
             app.UseAuthentication();
             app.UseMvc();
         }
 
-        private TokenValidationParameters GetTokenValidationParameters(SymmetricSecurityKey signingKey)
+        private TokenValidationParameters GetTokenValidationParameters()
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuerSigningKey = false, //TODO should be true
-                IssuerSigningKey = signingKey,
-                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = TokenProviderOptionFactory.GetKey(),
+                ValidateIssuer = true,
                 ValidIssuer = TokenProviderOptionFactory.ISSUER,
-                ValidateAudience = false,
+                ValidateAudience = true,
                 ValidAudience = TokenProviderOptionFactory.AUDIENCE,
-                ValidateLifetime = false,
+                ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };
             return tokenValidationParameters;
-        }
-
-        private static TokenProviderOptions GetTokenProviderOptions(SymmetricSecurityKey signingKey)
-        {
-            return TokenProviderOptionFactory.Create();
         }
     }
 }
