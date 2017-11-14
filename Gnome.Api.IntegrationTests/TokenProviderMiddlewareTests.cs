@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using NSubstitute;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -12,36 +13,40 @@ namespace Gnome.Api.IntegrationTests
 {
     public class TokenProviderMiddlewareTests
     {
-        public const string PATH = "/gettoken";
-
         [Fact]
         public async void Should_Return_Bad_Request_Response()
         {
-            var middleware = new TokenProviderMiddleware(null, Options.Create(new TokenProviderOptions() { Path = PATH }));
+            TokenProviderMiddleware middleware = GetMiddleware();
+
             var context = new DefaultHttpContext();
             context.Request.Method = "GET";
-            context.Request.Path = PATH;
+            context.Request.Path = TokenProviderOptionFactory.PATH;
 
             await middleware.Invoke(context, null);
 
             Assert.Equal(400, context.Response.StatusCode);
         }
 
+        private TokenProviderMiddleware GetMiddleware()
+        {
+            return new TokenProviderMiddleware(null, Options.Create(TokenProviderOptionFactory.Create()));
+        }
+
         [Fact]
         public async void Should_Generate_Token()
         {
-            var middleware = new TokenProviderMiddleware(null, Options.Create(new TokenProviderOptions() { Path = PATH }));
+            var middleware = GetMiddleware();
             var context = new DefaultHttpContext();
 
             var userService = Substitute.For<IUserService>();
             userService.Verify("username", "password").Returns(new User()
             {
                 Email = "user@email.com",
-                Id = new System.Guid("af330cca-4715-4005-8da1-e1505d24aa2c")
+                Id = new Guid("af330cca-4715-4005-8da1-e1505d24aa2c")
             });
 
             context.Request.Method = "POST";
-            context.Request.Path = PATH;
+            context.Request.Path = TokenProviderOptionFactory.PATH;
             context.Request.ContentType = "application/x-www-form-urlencoded";
             context.Request.Form = GetFormCollection();
 
@@ -53,13 +58,13 @@ namespace Gnome.Api.IntegrationTests
         [Fact]
         public async void Should_Not_Generate_Token()
         {
-            var middleware = new TokenProviderMiddleware(null, Options.Create(new TokenProviderOptions() { Path = PATH }));
+            var middleware = GetMiddleware();
             var context = new DefaultHttpContext();
             var userService = Substitute.For<IUserService>();
             userService.Verify("username", "password").Returns(default(User));
 
             context.Request.Method = "POST";
-            context.Request.Path = PATH;
+            context.Request.Path = TokenProviderOptionFactory.PATH;
             context.Request.ContentType = "application/x-www-form-urlencoded";
             context.Request.Form = GetFormCollection();
 

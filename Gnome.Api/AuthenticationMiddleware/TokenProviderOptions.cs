@@ -21,7 +21,7 @@ namespace Gnome.Api.AuthenticationMiddleware
             this.Issuer = issuer;
             this.Audience = audience;
             this.Expiration = expiration;
-            this.SigningCredentials = SigningCredentials;
+            this.SigningCredentials = credentials;
         }
 
         public TokenProviderOptions()

@@ -7,14 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Text;
 
 namespace Gnome.Api.IntegrationTests.Configuration
 {
     public class Startup
     {
-        public const string SECRET_KEY = "this is my secret";
-
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options =>
@@ -22,7 +19,7 @@ namespace Gnome.Api.IntegrationTests.Configuration
                 options.Filters.Add(new UserFilter());
             });
 
-            var signKey = GetKey(SECRET_KEY);
+            var signKey = TokenProviderOptionFactory.GetKey();
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -50,33 +47,26 @@ namespace Gnome.Api.IntegrationTests.Configuration
 
             if (initializer.HasAllTables() == false)
                 initializer.DropAndCreate();
-            var options = GetTokenProviderOptions(GetKey(SECRET_KEY));
+
+            var signKey = TokenProviderOptionFactory.GetKey();
+            var options = GetTokenProviderOptions(signKey);
+
             app.UseMiddleware<TestIdentityMiddleware>(Options.Create(options));
             app.UseAuthentication();
             app.UseMvc();
         }
-        private SymmetricSecurityKey GetKey(string v) => new SymmetricSecurityKey(Encoding.ASCII.GetBytes(v));
 
         private TokenValidationParameters GetTokenValidationParameters(SymmetricSecurityKey signingKey)
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
-                // The signing key must match!
-                ValidateIssuerSigningKey = true,
+                ValidateIssuerSigningKey = false, //TODO should be true
                 IssuerSigningKey = signingKey,
-
-                // Validate the JWT Issuer (iss) claim
-                ValidateIssuer = true,
-                ValidIssuer = "ExampleIssuer",
-
-                // Validate the JWT Audience (aud) claim
-                ValidateAudience = true,
-                ValidAudience = "ExampleAudience",
-
-                // Validate the token expiry
-                ValidateLifetime = true,
-
-                // If you want to allow a certain amount of clock drift, set that here:
+                ValidateIssuer = false,
+                ValidIssuer = TokenProviderOptionFactory.ISSUER,
+                ValidateAudience = false,
+                ValidAudience = TokenProviderOptionFactory.AUDIENCE,
+                ValidateLifetime = false,
                 ClockSkew = TimeSpan.Zero
             };
             return tokenValidationParameters;
@@ -84,14 +74,7 @@ namespace Gnome.Api.IntegrationTests.Configuration
 
         private static TokenProviderOptions GetTokenProviderOptions(SymmetricSecurityKey signingKey)
         {
-            return new TokenProviderOptions()
-            {
-                Audience = "ExampleAudience",
-                Issuer = "ExampleIssuer",
-                Expiration = TimeSpan.FromMinutes(60),
-                Path = "/api/gettoken",
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
-            };
+            return TokenProviderOptionFactory.Create();
         }
     }
 }
