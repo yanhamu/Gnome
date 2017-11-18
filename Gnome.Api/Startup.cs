@@ -85,22 +85,17 @@ namespace Gnome.Api
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
-                // The signing key must match!
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
 
-                // Validate the JWT Issuer (iss) claim
                 ValidateIssuer = true,
                 ValidIssuer = issuer,
 
-                // Validate the JWT Audience (aud) claim
                 ValidateAudience = true,
                 ValidAudience = audience,
 
-                // Validate the token expiry
                 ValidateLifetime = true,
 
-                // If you want to allow a certain amount of clock drift, set that here:
                 ClockSkew = TimeSpan.Zero
             };
             return tokenValidationParameters;
