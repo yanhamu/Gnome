@@ -55,7 +55,6 @@ namespace Gnome.Api
 
             loggerFactory.AddConsole();
 
-
             app.UseCors(builder =>
             {
                 builder.AllowAnyOrigin();

@@ -10,9 +10,11 @@ namespace Gnome.Api
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseSetting("detailedErrors", "true")
                 .UseUrls("http://*:5000")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                .CaptureStartupErrors(true)
                 .Build();
 
             host.Run();
