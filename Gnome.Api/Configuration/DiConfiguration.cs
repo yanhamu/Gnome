@@ -1,5 +1,4 @@
 ﻿using Gnome.Core.DataAccess;
-using Gnome.Database;
 using Gnome.Infrastructure;
 using MediatR;
 using Microsoft.Data.Sqlite;

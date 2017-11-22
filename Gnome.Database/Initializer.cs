@@ -12,8 +12,8 @@ namespace Gnome.Database
         private List<string> createTableFiles { get; }
 
         public Initializer(
-            SqliteConnection sqlConnection, 
-            string sqlFilePath, 
+            SqliteConnection sqlConnection,
+            string sqlFilePath,
             List<string> tableNames)
         {
             this.sqlConnection = sqlConnection;
@@ -64,7 +64,6 @@ namespace Gnome.Database
             using (var command = sqlConnection.CreateCommand())
             {
                 var absoluteSqlFilePath = Path.Combine(
-                    Directory.GetCurrentDirectory(),
                     sqlFilePath,
                     fileName + ".sql");
 
