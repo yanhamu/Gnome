@@ -18,8 +18,25 @@ namespace Gnome.Core.DataAccess
             MapExpression(modelBuilder.Entity<Expression>());
             MapQuery(modelBuilder.Entity<Query>());
             MapReport(modelBuilder.Entity<Report>());
+            MapRule(modelBuilder.Entity<Rule>());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void MapRule(EntityTypeBuilder<Rule> builder)
+        {
+            builder.ToTable("rule");
+            builder.HasKey(k => k.Id);
+
+            builder.Property(p => p.ExpressionId).HasColumnName("expression_id");
+            builder.Property(p => p.UserId).HasColumnName("user_id");
+
+            builder.HasOne(b => b.User).WithMany().HasForeignKey(b => b.UserId);
+            builder.HasOne(b => b.Expression).WithMany().HasForeignKey(b => b.ExpressionId);
+
+            builder.Property(p => p.Name).IsRequired();
+            builder.Property(p => p.ActionType).IsRequired();
+            builder.Property(p => p.ActionData).IsRequired();
         }
 
         private void MapReport(EntityTypeBuilder<Report> builder)
@@ -58,7 +75,7 @@ namespace Gnome.Core.DataAccess
             builder.Property(x => x.Amount).IsRequired();
             builder.Property(x => x.Type).IsRequired();
             builder.Property(x => x.Data).IsRequired();
-            builder.Property(x => x.CategoryData).IsRequired().HasColumnName("category_data") ;
+            builder.Property(x => x.CategoryData).IsRequired().HasColumnName("category_data");
         }
 
         private void MapUser(EntityTypeBuilder<User> builder)
@@ -98,6 +115,9 @@ namespace Gnome.Core.DataAccess
         {
             builder.ToTable("account");
             builder.HasKey(k => k.Id);
+
+            builder.Property(x => x.UserId).HasColumnName("user_id");
+
             builder.HasOne(u => u.User)
                 .WithMany()
                 .HasForeignKey(f => f.UserId)
