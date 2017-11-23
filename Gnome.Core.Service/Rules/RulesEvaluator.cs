@@ -2,8 +2,8 @@
 using Gnome.Core.Model.Database;
 using Gnome.Core.Service.RulesEngine;
 using Gnome.Core.Service.TransactionCategories;
-using Gnome.Core.Service.Transactions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Gnome.Core.Service.Rules
@@ -24,26 +24,15 @@ namespace Gnome.Core.Service.Rules
             this.transactionCategoryService = transactionCategoryService;
         }
 
-        public void Evaluate(Guid transactionId, Guid userId)
+        public List<Rule> GetSuitableRules(Guid transactionId, Guid userId)
         {
             var categoryRow = transactionCategoryService.Get(transactionId, userId);
             var cachedEvaluator = cachedEvaluatorFactory.Create(userId);
-            var rules = ruleRepository.Query.Where(r => r.UserId == userId).ToList();
-
-            rules.Where(r => cachedEvaluator.Evaluate(r.ExpressionId, categoryRow))
-                .ToList()
-                .ForEach(r => Process(categoryRow, r));
-
-            foreach (var rule in rules)
-            {
-                cachedEvaluator.Evaluate(rule.ExpressionId, categoryRow);
-            }
-        }
-
-        private void Process(TransactionCategoryRow categoryRow, Rule rule)
-        {
-            //TODO make action
-            throw new NotImplementedException();
+            return ruleRepository
+                .Query
+                .Where(r => r.UserId == userId).ToList()
+                .Where(r => cachedEvaluator.Evaluate(r.ExpressionId, categoryRow))
+                .ToList();
         }
     }
 }
