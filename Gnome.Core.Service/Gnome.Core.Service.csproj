@@ -25,8 +25,4 @@
     <ProjectReference Include="..\Gnome.Core.Model\Gnome.Core.Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Rules\Actions\" />
-  </ItemGroup>
-
 </Project>
