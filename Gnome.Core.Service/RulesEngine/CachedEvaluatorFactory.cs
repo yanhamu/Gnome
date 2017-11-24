@@ -22,7 +22,7 @@ namespace Gnome.Core.Service.RulesEngine
             var expressions = expressionRepository.Query
                 .Where(e => expressionIds.Contains(e.Id))
                 .ToList();
-            return new CachedEvaluator(treeBuilder).Initialize(expressions);
+            return new CachedEvaluator(treeBuilder, expressions);
         }
 
         public CachedEvaluator Create(Guid userId)
@@ -30,7 +30,7 @@ namespace Gnome.Core.Service.RulesEngine
             var expressions = expressionRepository.Query
                 .Where(e => e.UserId == userId)
                 .ToList();
-            return new CachedEvaluator(treeBuilder).Initialize(expressions);
+            return new CachedEvaluator(treeBuilder, expressions);
         }
     }
 }

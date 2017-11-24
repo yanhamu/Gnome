@@ -29,8 +29,7 @@ namespace Gnome.Core.Service.Rules
             var categoryRow = transactionCategoryService.Get(transactionId, userId);
             var cachedEvaluator = cachedEvaluatorFactory.Create(userId);
             return ruleRepository
-                .Query
-                .Where(r => r.UserId == userId).ToList()
+                .GetRules(userId)
                 .Where(r => cachedEvaluator.Evaluate(r.ExpressionId, categoryRow))
                 .ToList();
         }
