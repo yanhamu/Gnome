@@ -22,7 +22,8 @@ namespace Gnome.Core.Service.Initialization
                 Id = Guid.NewGuid(),
                 IsSystem = true,
                 Name = Constants.Categories.Root,
-                UserId = userId
+                UserId = userId,
+                Color = "#333333"
             });
             repository.Save();
 
@@ -32,7 +33,8 @@ namespace Gnome.Core.Service.Initialization
                 IsSystem = true,
                 Name = Constants.Categories.System,
                 ParentId = root.Id,
-                UserId = userId
+                UserId = userId,
+                Color = "#333333"
             });
             repository.Save();
 
@@ -42,7 +44,8 @@ namespace Gnome.Core.Service.Initialization
                 IsSystem = true,
                 Name = Constants.Categories.New,
                 ParentId = system.Id,
-                UserId = userId
+                UserId = userId,
+                Color = "#333333"
             });
             repository.Save();
         }

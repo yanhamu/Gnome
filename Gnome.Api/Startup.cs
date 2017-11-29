@@ -65,7 +65,7 @@ namespace Gnome.Api
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
-            if (initializer.HasAllTables() == false)
+            //if (initializer.HasAllTables() == false)
                 initializer.DropAndCreate();
 
             app.UseStaticFiles();

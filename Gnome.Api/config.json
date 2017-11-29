@@ -1,6 +1,6 @@
 ﻿{
   "key": "change-me-please",
-  "sql": "C:\\Sources\\PG\\Gnome\\Gnome.Database\\sql-files",
+  "sql": "C:\\Sources\\Gnome\\Gnome.Database\\sql-files",
   "db": {
     "core": "Data Source=gnome.db"
   }
