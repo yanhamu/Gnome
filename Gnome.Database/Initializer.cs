@@ -8,16 +8,13 @@ namespace Gnome.Database
     public class Initializer
     {
         private readonly SqliteConnection sqlConnection;
-        private readonly string sqlFilePath;
         private List<string> createTableFiles { get; }
 
         public Initializer(
             SqliteConnection sqlConnection,
-            string sqlFilePath,
             List<string> tableNames)
         {
             this.sqlConnection = sqlConnection;
-            this.sqlFilePath = sqlFilePath;
             this.createTableFiles = tableNames;
         }
 
@@ -63,11 +60,9 @@ namespace Gnome.Database
         {
             using (var command = sqlConnection.CreateCommand())
             {
-                var absoluteSqlFilePath = Path.Combine(
-                    sqlFilePath,
-                    fileName + ".sql");
-
-                command.CommandText = File.ReadAllText(absoluteSqlFilePath);
+                using (var resourceStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream($"Gnome.Database.sql_files.{fileName}.sql"))
+                using (var textStream = new StreamReader(resourceStream))
+                    command.CommandText = textStream.ReadToEnd();
                 command.ExecuteNonQuery();
             }
         }

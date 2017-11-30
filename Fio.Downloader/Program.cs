@@ -31,7 +31,7 @@ namespace Fio.Downloader
             {
                 accountConnection.Open();
                 transactionConnection.Open();
-                var initializer = new Initializer(transactionConnection, "bin\\Debug\\netcoreapp2.0\\sql-files\\", new List<string>() { "transaction" });
+                var initializer = new Initializer(transactionConnection, new List<string>() { "transaction" });
                 if (initializer.HasAllTables() == false)
                     initializer.DropAndCreate();
 
