@@ -8,21 +8,24 @@ using System.Collections.Generic;
 
 namespace Gnome.Api.Services.Transactions
 {
-    public class TransactionHandler : IRequestHandler<CreateTransaction, Guid>
+    public class CreateTransactionHandler : IRequestHandler<CreateTransaction, Guid>
     {
         private readonly ITransactionRepository transactionRepository;
+        private readonly IRequestHandler<CreateTransaction, Guid> applyRulesTransactionHandler;
 
-        public TransactionHandler(ITransactionRepository transactionRepository)
+        public CreateTransactionHandler(
+            ITransactionRepository transactionRepository,
+            IRequestHandler<CreateTransaction, Guid> applyRulesTransactionHandler)
         {
             this.transactionRepository = transactionRepository;
+            this.applyRulesTransactionHandler = applyRulesTransactionHandler;
         }
 
         public Guid Handle(CreateTransaction message)
         {
-            var id = Guid.NewGuid();
             var t = new Transaction()
             {
-                Id = id,
+                Id = message.Id,
                 AccountId = message.AccountId,
                 Amount = message.Amount,
                 Data = message.Data,
@@ -33,7 +36,10 @@ namespace Gnome.Api.Services.Transactions
 
             transactionRepository.Create(t);
             transactionRepository.Save();
-            return id;
+
+            this.applyRulesTransactionHandler.Handle(message);
+
+            return message.Id;
         }
     }
 }

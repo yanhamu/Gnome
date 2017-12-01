@@ -32,6 +32,7 @@ namespace Gnome.Api.Controllers
         [HttpPost("transactions")]
         public async Task<IActionResult> CreateTransaction([FromBody] CreateTransaction transaction)
         {
+            transaction.Id = Guid.NewGuid();
             return new OkObjectResult(await mediator.Send(transaction));
         }
     }

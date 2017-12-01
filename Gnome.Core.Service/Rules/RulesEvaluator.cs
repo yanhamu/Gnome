@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Gnome.Core.Service.Rules
 {
-    public class RulesEvaluator
+    public class RulesEvaluator : IRulesEvaluator
     {
         private readonly ICachedEvaluatorFactory cachedEvaluatorFactory;
         public readonly IRuleRepository ruleRepository;
