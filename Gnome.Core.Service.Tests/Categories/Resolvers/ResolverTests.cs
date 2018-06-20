@@ -20,11 +20,11 @@ namespace Gnome.Core.Service.Tests.Categories.Resolvers
 
             var categories = resolver.GetCategories(new List<Guid>() { RootId });
             Assert.Equal(RootId, categories.First().Id);
-            Assert.Equal(1, categories.Count);
+            Assert.StrictEqual(1, categories.Count);
 
             var cachedCategories = resolver.GetCategories(new List<Guid>() { RootId });
             Assert.Equal(RootId, cachedCategories.First().Id);
-            Assert.Equal(1, cachedCategories.Count);
+            Assert.StrictEqual(1, cachedCategories.Count);
         }
 
         private CategoryTree GetCategoryTree()

@@ -37,7 +37,7 @@ namespace Gnome.Api.Services.Transactions
             };
 
             transactionRepository.Create(t);
-            transactionRepository.Save();
+            await transactionRepository.Save();
 
             await this.applyRulesTransactionHandler.Handle(message, default(CancellationToken));
 
