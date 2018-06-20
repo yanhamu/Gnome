@@ -4,6 +4,7 @@ using Gnome.Core.Service.Categories.Resolvers;
 using Gnome.Core.Service.Transactions;
 using Gnome.Core.Service.Transactions.RowFactories;
 using System;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.TransactionCategories
 {
@@ -23,12 +24,12 @@ namespace Gnome.Core.Service.TransactionCategories
             this.categoryTreeFactory = categoryTreeFactory;
         }
 
-        public TransactionCategoryRow Get(Guid transactionId, Guid userId)
+        public async Task<TransactionCategoryRow> Get(Guid transactionId, Guid userId)
         {
-            var transaction = transactionRepository.Find(transactionId);
+            var transaction = await transactionRepository.Find(transactionId);
             var transactionRow = transactionFactory.Create(transaction);
 
-            var resolver = new Resolver(categoryTreeFactory.Create(userId));
+            var resolver = new Resolver(await categoryTreeFactory.Create(userId));
 
             return new TransactionCategoryRow(transactionRow, resolver.GetCategories(transactionRow.Categories));
         }

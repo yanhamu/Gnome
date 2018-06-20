@@ -4,6 +4,7 @@ using Gnome.Core.Service.Search.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.Transactions.QueryBuilders
 {
@@ -20,10 +21,10 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
             this.categoryTreeFactory = categoryTreeFactory;
         }
 
-        public IEnumerable<TransactionCategoryRow> Query(Guid userId, TransactionSearchFilter filter)
+        public async Task<IEnumerable<TransactionCategoryRow>> Query(Guid userId, TransactionSearchFilter filter)
         {
-            var resolver = new Resolver(categoryTreeFactory.Create(userId));
-            return queryBuilder.Query(userId, filter)
+            var resolver = new Resolver(await categoryTreeFactory.Create(userId));
+            return (await queryBuilder.Query(userId, filter))
                 .Select(t => Create(t, resolver.GetCategories(t.Categories)));
         }
 

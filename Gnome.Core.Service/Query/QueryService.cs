@@ -1,6 +1,7 @@
 ﻿using Gnome.Core.DataAccess;
 using Gnome.Core.Model;
 using System;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.Query
 {
@@ -15,9 +16,9 @@ namespace Gnome.Core.Service.Query
             this.queryDataService = queryDataService;
         }
 
-        public QueryModel Get(Guid queryId)
+        public async Task<QueryModel> Get(Guid queryId)
         {
-            var query = queryRepository.Find(queryId);
+            var query = await queryRepository.Find(queryId);
             var data = queryDataService.Deserialize(query.Data);
 
             return new QueryModel()

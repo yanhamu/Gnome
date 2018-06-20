@@ -4,6 +4,7 @@ using Gnome.Core.Reports;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
 using System;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Reports
 {
@@ -16,9 +17,9 @@ namespace Gnome.Api.Services.Reports
             this.repository = reportRepository;
         }
 
-        public IRequest<AggregateEnvelope> Create(Guid reportId, ClosedInterval dateFilter, Guid userId)
+        public async Task<IRequest<AggregateEnvelope>> Create(Guid reportId, ClosedInterval dateFilter, Guid userId)
         {
-            var report = repository.Find(reportId);
+            var report = await repository.Find(reportId);
             switch (report.Type)
             {
                 case "aggregate":

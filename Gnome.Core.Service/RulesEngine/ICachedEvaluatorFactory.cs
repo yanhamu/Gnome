@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.RulesEngine
 {
     public interface ICachedEvaluatorFactory
     {
-        CachedEvaluator Create(List<Guid> ids);
-        CachedEvaluator Create(Guid userId);
+        Task<CachedEvaluator> Create(List<Guid> ids);
+        Task<CachedEvaluator> Create(Guid userId);
     }
 }

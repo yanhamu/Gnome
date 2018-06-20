@@ -3,8 +3,11 @@ using Gnome.Core.DataAccess;
 using Gnome.Core.Model;
 using Gnome.Core.Service.Query;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Queries
 {
@@ -21,12 +24,12 @@ namespace Gnome.Api.Services.Queries
             this.queryService = queryService;
         }
 
-        public List<QueryModel> Handle(ListQueries message)
+        public async Task<List<QueryModel>> Handle(ListQueries message, CancellationToken cancellationToken)
         {
-            return repository
+            return (await repository
                 .Query
                 .Where(q => q.UserId == message.UserId)
-                .ToList()
+                .ToListAsync())
                 .Select(m => queryService.Get(m))
                 .ToList();
         }

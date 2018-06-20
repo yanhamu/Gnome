@@ -1,6 +1,8 @@
 ﻿using Gnome.Api.Services.Reports.Requests;
 using Gnome.Core.DataAccess;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Reports
 {
@@ -13,10 +15,11 @@ namespace Gnome.Api.Services.Reports
             this.repository = reportRepository;
         }
 
-        public void Handle(RemoveReport notification)
+        public Task Handle(RemoveReport notification, CancellationToken cancellationToken)
         {
             var report = repository.Remove(notification.ReportId);
             repository.Save();
+            return Task.CompletedTask;
         }
     }
 }

@@ -3,6 +3,7 @@ using Gnome.Core.Service.Transactions;
 using Gnome.Core.Service.Transactions.QueryBuilders;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Reports.Cummulative
 {
@@ -18,9 +19,9 @@ namespace Gnome.Core.Reports.Cummulative
             this.queryBuilder = queryBuilder;
         }
 
-        public AggregateEnvelope Report(TransactionSearchFilter filter, Guid userId)
+        public async Task<AggregateEnvelope> Report(TransactionSearchFilter filter, Guid userId)
         {
-            var results = Compute(queryBuilder.Query(userId, filter), filter.DateFilter);
+            var results = Compute(await queryBuilder.Query(userId, filter), filter.DateFilter);
             return new AggregateEnvelope(filter.DateFilter, results);
         }
 

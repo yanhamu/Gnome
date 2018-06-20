@@ -1,12 +1,14 @@
 ﻿using Gnome.Core.Model.Database;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.DataAccess
 {
     public interface IUserRepository
     {
-        bool CheckEmailAvailability(string email);
-        User GetUser(string email);
+        Task<bool> CheckEmailAvailability(string email);
+        Task<User> GetUser(string email);
     }
 
     public class UserRepository : IUserRepository
@@ -18,15 +20,15 @@ namespace Gnome.Core.DataAccess
             this.context = context;
         }
 
-        public bool CheckEmailAvailability(string email)
+        public async Task<bool> CheckEmailAvailability(string email)
         {
-            var user = context.Users.Where(u => u.Email == email).SingleOrDefault();
+            var user = await context.Users.Where(u => u.Email == email).SingleOrDefaultAsync();
             return user == null;
         }
 
-        public User GetUser(string email)
+        public Task<User> GetUser(string email)
         {
-            return context.Users.Where(u => u.Email == email).SingleOrDefault();
+            return context.Users.Where(u => u.Email == email).SingleOrDefaultAsync();
         }
     }
 }

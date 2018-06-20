@@ -4,6 +4,8 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Accounts
 {
@@ -21,36 +23,37 @@ namespace Gnome.Api.Services.Accounts
             this.service = accountService;
         }
 
-        public List<Account> Handle(ListUserAccounts message)
+        public async Task<List<Account>> Handle(ListUserAccounts message, CancellationToken cancellationToken)
         {
-            return service
-                .List(message.UserId)
+            return (await service
+                .List(message.UserId))
                 .Select(a => new Account(a.Id, a.Name, a.Token))
                 .ToList();
         }
 
-        public Account Handle(GetAccount message)
+        public async Task<Account> Handle(GetAccount message, CancellationToken cancellationToken)
         {
-            var account = service.Get(message.AccountId);
+            var account = await service.Get(message.AccountId);
             return new Account(account.Id, account.Name, account.Token);
         }
 
-        public Account Handle(UpdateAccount message)
+        public async Task<Account> Handle(UpdateAccount message, CancellationToken cancellationToken)
         {
-            var updated = service.Update(message.Id, message.Name, message.Token);
+            var updated = await service.Update(message.Id, message.Name, message.Token);
             return new Account(updated.Id, updated.Name, updated.Token);
         }
 
-        public Account Handle(CreateAccount message)
+        public Task<Account> Handle(CreateAccount message, CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
             var created = service.Create(new Core.Model.Database.Account(id, message.UserId, message.Name, message.Token));
-            return new Account(created.Id, created.Name, created.Token);
+            return Task.FromResult(new Account(created.Id, created.Name, created.Token));
         }
 
-        public void Handle(RemoveAccount notification)
+        public Task Handle(RemoveAccount notification, CancellationToken cancellationToken)
         {
             service.Remove(notification.AccountId);
+            return Task.CompletedTask;
         }
     }
 }

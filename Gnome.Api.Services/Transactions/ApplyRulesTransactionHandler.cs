@@ -1,10 +1,11 @@
 ﻿using Gnome.Api.Services.Transactions.Requests;
 using Gnome.Core.DataAccess;
-using Gnome.Core.Model.Database;
 using Gnome.Core.Service.Rules;
 using Gnome.Core.Service.Rules.Actions;
 using MediatR;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Transactions
 {
@@ -23,11 +24,11 @@ namespace Gnome.Api.Services.Transactions
             this.accountRepository = accountRepository;
             this.actionFactory = actionFactory;
         }
-        public Guid Handle(CreateTransaction message)
+        public async Task<Guid> Handle(CreateTransaction message, CancellationToken cancellationToken)
         {
-            var userId = accountRepository.Find(message.Id).UserId;
-            rulesEvaluator
-                .GetSuitableRules(message.Id, userId)
+            var userId = (await accountRepository.Find(message.Id)).UserId;
+            (await rulesEvaluator
+                .GetSuitableRules(message.Id, userId))
                 .ForEach(r => actionFactory.Create(r, message.Id));
 
             return message.Id;

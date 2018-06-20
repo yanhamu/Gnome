@@ -5,6 +5,8 @@ using Gnome.Core.Reports.AggregateReport;
 using Gnome.Core.Service.Query;
 using Gnome.Core.Service.Search.Filters;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Reports
 {
@@ -24,12 +26,12 @@ namespace Gnome.Api.Services.Reports
             this.reportRepository = reportRepository;
         }
 
-        public AggregateEnvelope Handle(GetAggregateReport message)
+        public async Task<AggregateEnvelope> Handle(GetAggregateReport message, CancellationToken cancellationToken)
         {
-            var report = reportRepository.Find(message.ReportId);
-            var query = queryService.Get(report.QueryId);
+            var report = await reportRepository.Find(message.ReportId);
+            var query = await queryService.Get(report.QueryId);
             var filter = new TransactionSearchFilter(message.DateFilter, query.Accounts, query.IncludeExpressions, query.ExcludeExpressions);
-            return service.CreateReport(filter, message.UserId, message.DaysPerAggregate);
+            return await service.CreateReport(filter, message.UserId, message.DaysPerAggregate);
         }
     }
 }

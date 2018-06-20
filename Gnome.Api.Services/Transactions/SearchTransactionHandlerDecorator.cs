@@ -3,6 +3,7 @@ using Gnome.Api.Services.Transactions.Requests;
 using Gnome.Core.DataAccess;
 using MediatR;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Transactions
@@ -18,7 +19,7 @@ namespace Gnome.Api.Services.Transactions
             this.accountRepository = accountRepository;
         }
 
-        public Task<SearchTransactionResult> Handle(SearchTransaction request, RequestHandlerDelegate<SearchTransactionResult> next)
+        public Task<SearchTransactionResult> Handle(SearchTransaction request, CancellationToken cancellationToken, RequestHandlerDelegate<SearchTransactionResult> next)
         {
             if (!request.Filter.Accounts.Any())
             {

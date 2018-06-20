@@ -1,10 +1,11 @@
-﻿using System;
-using Gnome.Core.Service.Transactions;
+﻿using Gnome.Core.Service.Transactions;
+using System;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.TransactionCategories
 {
     public interface ITransactionCategoryService
     {
-        TransactionCategoryRow Get(Guid transactionId, Guid userId);
+        Task<TransactionCategoryRow> Get(Guid transactionId, Guid userId);
     }
 }

@@ -5,6 +5,7 @@ using Gnome.Core.Service.TransactionCategories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.Rules
 {
@@ -24,12 +25,12 @@ namespace Gnome.Core.Service.Rules
             this.transactionCategoryService = transactionCategoryService;
         }
 
-        public List<Rule> GetSuitableRules(Guid transactionId, Guid userId)
+        public async Task<List<Rule>> GetSuitableRules(Guid transactionId, Guid userId)
         {
-            var categoryRow = transactionCategoryService.Get(transactionId, userId);
-            var cachedEvaluator = cachedEvaluatorFactory.Create(userId);
-            return ruleRepository
-                .GetRules(userId)
+            var categoryRow = await transactionCategoryService.Get(transactionId, userId);
+            var cachedEvaluator = await cachedEvaluatorFactory.Create(userId);
+            return (await ruleRepository
+                .GetRules(userId))
                 .Where(r => cachedEvaluator.Evaluate(r.ExpressionId, categoryRow))
                 .ToList();
         }

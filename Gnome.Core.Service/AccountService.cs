@@ -3,6 +3,7 @@ using Gnome.Core.Model.Database;
 using Gnome.Core.Service.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service
 {
@@ -22,12 +23,12 @@ namespace Gnome.Core.Service
             return created;
         }
 
-        public Account Get(Guid accountId)
+        public Task<Account> Get(Guid accountId)
         {
             return repository.Find(accountId);
         }
 
-        public IEnumerable<Account> List(Guid userId)
+        public Task<List<Account>> List(Guid userId)
         {
             return repository.GetAccounts(userId);
         }
@@ -38,14 +39,14 @@ namespace Gnome.Core.Service
             repository.Save();
         }
 
-        public Account Update(Guid accountId, string name, string token)
+        public async Task<Account> Update(Guid accountId, string name, string token)
         {
-            var fioAccount = repository.Find(accountId);
+            var fioAccount = await repository.Find(accountId);
 
             fioAccount.Name = name;
             fioAccount.Token = token;
 
-            repository.Save();
+            await repository.Save();
 
             return fioAccount;
         }

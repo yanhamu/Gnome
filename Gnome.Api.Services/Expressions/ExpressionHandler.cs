@@ -3,9 +3,12 @@ using Gnome.Core.DataAccess;
 using Gnome.Core.Model.Database;
 using Gnome.Core.Service.RulesEngine.AST;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Expressions
 {
@@ -27,12 +30,12 @@ namespace Gnome.Api.Services.Expressions
             this.treeBuilderFacade = treeBuilderFacade;
         }
 
-        public Expression Handle(GetExpression message)
+        public async Task<Expression> Handle(GetExpression message, CancellationToken cancellationToken)
         {
-            return repository.Find(message.ExpressionId);
+            return await repository.Find(message.ExpressionId);
         }
 
-        public Model.Expression Handle(CreateExpression message)
+        public async Task<Model.Expression> Handle(CreateExpression message, CancellationToken cancellationToken)
         {
             var id = Guid.NewGuid();
             var expression = this.repository.Create(new Expression()
@@ -42,7 +45,7 @@ namespace Gnome.Api.Services.Expressions
                 UserId = message.UserId,
                 Name = message.Name ?? GetName()
             });
-            repository.Save();
+            await repository.Save();
 
             return new Model.Expression()
             {
@@ -52,21 +55,23 @@ namespace Gnome.Api.Services.Expressions
             };
         }
 
-        public void Handle(UpdateExpression message)
+        public async Task<Unit> Handle(UpdateExpression message, CancellationToken cancellationToken)
         {
-            var expression = repository.Find(message.Id);
+            var expression = await repository.Find(message.Id);
             expression.ExpressionString = message.ExpressionString;
             expression.Name = message.Name;
-            repository.Save();
+            await repository.Save();
+            return Unit.Value;
         }
 
-        public void Handle(RemoveExpression message)
+        public async Task<Unit> Handle(RemoveExpression message, CancellationToken cancellationToken)
         {
             repository.Remove(message.ExpressionId);
-            repository.Save();
+            await repository.Save();
+            return Unit.Value;
         }
 
-        public List<Model.Expression> Handle(ListExpression message)
+        public Task<List<Model.Expression>> Handle(ListExpression message, CancellationToken cancellationToken)
         {
             return repository
                 .Query
@@ -77,7 +82,7 @@ namespace Gnome.Api.Services.Expressions
                     Id = e.Id,
                     Name = e.Name
                 })
-                .ToList();
+                .ToListAsync();
         }
 
         private string GetName()

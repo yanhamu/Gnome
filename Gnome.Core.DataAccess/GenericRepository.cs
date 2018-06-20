@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace Gnome.Core.DataAccess
 {
@@ -15,9 +15,9 @@ namespace Gnome.Core.DataAccess
             this.set = context.Set<T>();
         }
 
-        public virtual T Find(params object[] ids)
+        public virtual Task<T> Find(params object[] ids)
         {
-            return set.Find(ids);
+            return set.FindAsync(ids);
         }
 
         public virtual T Remove(params object[] ids)
@@ -31,9 +31,9 @@ namespace Gnome.Core.DataAccess
             return this.set.Add(entity).Entity;
         }
 
-        public virtual int Save()
+        public virtual Task<int> Save()
         {
-            return this.context.SaveChanges();
+            return this.context.SaveChangesAsync();
         }
 
         public IQueryable<T> Query { get { return set; } }

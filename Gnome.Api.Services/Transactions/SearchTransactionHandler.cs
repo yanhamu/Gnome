@@ -3,6 +3,8 @@ using Gnome.Api.Services.Transactions.Requests;
 using Gnome.Core.Service.Transactions.QueryBuilders;
 using MediatR;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Transactions
 {
@@ -16,10 +18,10 @@ namespace Gnome.Api.Services.Transactions
             this.queryBuilder = queryBuilder;
         }
 
-        public SearchTransactionResult Handle(SearchTransaction message)
+        public async Task<SearchTransactionResult> Handle(SearchTransaction message, CancellationToken cancellationToken)
         {
-            var rows = queryBuilder
-                .Query(message.UserId, message.Filter)
+            var rows = (await queryBuilder
+                .Query(message.UserId, message.Filter))
                 .OrderByDescending(t => t.Row.Date)
                 .ToList();
 

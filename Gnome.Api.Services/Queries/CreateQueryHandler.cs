@@ -4,6 +4,8 @@ using Gnome.Core.Model;
 using Gnome.Core.Model.Database;
 using Gnome.Core.Service.Query;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Queries
 {
@@ -23,7 +25,7 @@ namespace Gnome.Api.Services.Queries
             this.queryService = queryService;
         }
 
-        public QueryModel Handle(CreateQuery message)
+        public async Task<QueryModel> Handle(CreateQuery message, CancellationToken cancellationToken)
         {
             var query = new Query()
             {
@@ -33,7 +35,7 @@ namespace Gnome.Api.Services.Queries
             };
 
             var saved = repository.Create(query);
-            repository.Save();
+            await repository.Save();
 
             return queryService.Get(saved);
         }

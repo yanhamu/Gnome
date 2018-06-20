@@ -3,6 +3,8 @@ using Gnome.Core.DataAccess;
 using Gnome.Core.Service.Categories;
 using MediatR;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Categories
 {
@@ -19,16 +21,16 @@ namespace Gnome.Api.Services.Categories
             this.treeFactory = treeFactory;
         }
 
-        public void Handle(RemoveCategory notification)
+        public async Task Handle(RemoveCategory notification, CancellationToken cancellationToken)
         {
             if (notification.RemoveChildren == false)
                 return;
 
-            var tree = treeFactory.Create(notification.UserId);
+            var tree = await treeFactory.Create(notification.UserId);
 
             var toDelete = tree.SubTree(notification.Id).Select(c => c.Id).ToList();
             categoryRepository.Remove(toDelete);
-            categoryRepository.Save();
+            await categoryRepository.Save();
         }
     }
 }

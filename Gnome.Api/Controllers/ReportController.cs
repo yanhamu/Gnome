@@ -31,7 +31,7 @@ namespace Gnome.Api.Controllers
         [HttpGet("{reportId:Guid}")]
         public async Task<IActionResult> Get(Guid reportId, ClosedInterval interval)
         {
-            var request = requestFactory.Create(reportId, interval.Create(), UserId);
+            var request = await requestFactory.Create(reportId, interval.Create(), UserId);
             return new OkObjectResult(await mediator.Send(request));
         }
 

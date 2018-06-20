@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Gnome.Core.Model.Database;
+using System;
 using System.Collections.Generic;
-using Gnome.Core.Model.Database;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.Rules
 {
     public interface IRulesEvaluator
     {
-        List<Rule> GetSuitableRules(Guid transactionId, Guid userId);
+        Task<List<Rule>> GetSuitableRules(Guid transactionId, Guid userId);
     }
 }

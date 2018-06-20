@@ -3,6 +3,8 @@ using Gnome.Core.DataAccess;
 using Gnome.Core.Model;
 using Gnome.Core.Service.Query;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Queries
 {
@@ -17,9 +19,9 @@ namespace Gnome.Api.Services.Queries
             this.repository = queryRepository;
         }
 
-        public QueryModel Handle(GetQuery message)
+        public async Task<QueryModel> Handle(GetQuery message, CancellationToken cancellationToken)
         {
-            var result = repository.Find(message.QueryId);
+            var result = await repository.Find(message.QueryId);
             return service.Get(result);
         }
     }

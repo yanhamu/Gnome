@@ -5,6 +5,8 @@ using MediatR;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.CategoryTransactions
 {
@@ -19,22 +21,22 @@ namespace Gnome.Api.Services.CategoryTransactions
             this.repository = transactionRepository;
         }
 
-        public void Handle(CreateCategoryTransaction message)
+        public async Task Handle(CreateCategoryTransaction message, CancellationToken cancellationToken)
         {
-            var transaction = repository.Find(message.TransactionId);
+            var transaction = await repository.Find(message.TransactionId);
             var categoryList = GetCategoryList(transaction);
             categoryList.Add(message.CategoryId);
             transaction.CategoryData = JsonConvert.SerializeObject(categoryList);
-            repository.Save();
+            await repository.Save();
         }
 
-        public void Handle(RemoveCategoryTransaction message)
+        public async Task Handle(RemoveCategoryTransaction message, CancellationToken cancellationToken)
         {
-            var transaction = repository.Find(message.TransactionId);
+            var transaction = await repository.Find(message.TransactionId);
             var categoryList = GetCategoryList(transaction);
             categoryList.Remove(message.CategoryId);
             transaction.CategoryData = JsonConvert.SerializeObject(categoryList);
-            repository.Save();
+            await repository.Save();
         }
 
         private List<Guid> GetCategoryList(Transaction transaction)

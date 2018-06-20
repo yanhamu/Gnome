@@ -3,15 +3,17 @@ using Gnome.Core.Model.Database;
 using Gnome.Core.Service.Search.Filters;
 using Gnome.Core.Service.Search.QueryBuilders;
 using Gnome.Core.Service.Transactions.RowFactories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.Transactions.QueryBuilders
 {
     public interface ITransactionRowQueryBuilder
     {
-        IEnumerable<TransactionRow> Query(Guid userId, TransactionSearchFilter filter);
+        Task<IEnumerable<TransactionRow>> Query(Guid userId, TransactionSearchFilter filter);
     }
 
     public class TransactionRowQueryBuilder : ITransactionRowQueryBuilder
@@ -30,11 +32,11 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
             this.rowFactory = rowFactory;
         }
 
-        public IEnumerable<TransactionRow> Query(Guid userId, TransactionSearchFilter filter)
+        public async Task<IEnumerable<TransactionRow>> Query(Guid userId, TransactionSearchFilter filter)
         {
             var transactionsQuery = queryBuilder.Filter(repository.Query, filter);
-            return transactionsQuery
-                .ToList()
+            return (await transactionsQuery
+                .ToListAsync())
                 .Select(t => rowFactory.Create(t));
         }
     }

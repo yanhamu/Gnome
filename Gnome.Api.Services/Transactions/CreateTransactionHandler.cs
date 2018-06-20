@@ -5,6 +5,8 @@ using MediatR;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Transactions
 {
@@ -21,7 +23,7 @@ namespace Gnome.Api.Services.Transactions
             this.applyRulesTransactionHandler = applyRulesTransactionHandler;
         }
 
-        public Guid Handle(CreateTransaction message)
+        public async Task<Guid> Handle(CreateTransaction message, CancellationToken cancellationToken)
         {
             var t = new Transaction()
             {
@@ -37,7 +39,7 @@ namespace Gnome.Api.Services.Transactions
             transactionRepository.Create(t);
             transactionRepository.Save();
 
-            this.applyRulesTransactionHandler.Handle(message);
+            await this.applyRulesTransactionHandler.Handle(message, default(CancellationToken));
 
             return message.Id;
         }

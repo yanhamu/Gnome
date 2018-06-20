@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.Categories
 {
     public interface ICategoryTreeFactory
     {
-        CategoryTree Create(Guid userId);
+        Task<CategoryTree> Create(Guid userId);
     }
 }

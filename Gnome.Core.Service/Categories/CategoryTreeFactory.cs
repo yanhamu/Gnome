@@ -3,6 +3,7 @@ using Gnome.Core.Model.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.Categories
 {
@@ -15,9 +16,9 @@ namespace Gnome.Core.Service.Categories
             this.categoryRepository = categoryRepository;
         }
 
-        public CategoryTree Create(Guid userId)
+        public async Task<CategoryTree> Create(Guid userId)
         {
-            var categories = categoryRepository.GetAll(userId);
+            var categories = await categoryRepository.GetAll(userId);
 
             CheckRoot(categories);
 

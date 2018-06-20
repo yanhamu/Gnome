@@ -1,6 +1,8 @@
 ﻿using Gnome.Api.Services.Queries.Requests;
 using Gnome.Core.DataAccess;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Queries
 {
@@ -13,10 +15,10 @@ namespace Gnome.Api.Services.Queries
             this.repository = repository;
         }
 
-        public void Handle(RemoveQuery removeQuery)
+        public async Task Handle(RemoveQuery removeQuery, CancellationToken cancellationToken)
         {
             repository.Remove(removeQuery.QueryId);
-            repository.Save();
+            await repository.Save();
         }
     }
 }

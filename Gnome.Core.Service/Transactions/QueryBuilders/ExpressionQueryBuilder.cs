@@ -3,6 +3,7 @@ using Gnome.Core.Service.Search.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.Transactions.QueryBuilders
 {
@@ -19,12 +20,12 @@ namespace Gnome.Core.Service.Transactions.QueryBuilders
             this.evaluatorFactory = evaluatorFactory;
         }
 
-        public IEnumerable<TransactionCategoryRow> Query(Guid userId, TransactionSearchFilter filter)
+        public async Task<IEnumerable<TransactionCategoryRow>> Query(Guid userId, TransactionSearchFilter filter)
         {
             var allExpressions = filter.ExcludeExpressions.Union(filter.IncludeExpressions).ToList();
-            var evaluator = evaluatorFactory.Create(allExpressions);
+            var evaluator = await evaluatorFactory.Create(allExpressions);
 
-            var transactions = queryBuilder.Query(userId, filter);
+            var transactions = await queryBuilder.Query(userId, filter);
 
             if (filter.ExcludeExpressions.Any() && filter.IncludeExpressions.Any())
             {

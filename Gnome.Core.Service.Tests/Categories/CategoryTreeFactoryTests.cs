@@ -5,6 +5,7 @@ using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Gnome.Core.Service.Tests.Categories
@@ -12,7 +13,7 @@ namespace Gnome.Core.Service.Tests.Categories
     public class CategoryTreeFactoryTests
     {
         [Fact]
-        public void Should_Create_Category_Tree()
+        public async Task Should_Create_Category_Tree()
         {
             var repository = Substitute.For<ICategoryRepository>();
             var categories = GetCategories();
@@ -22,7 +23,7 @@ namespace Gnome.Core.Service.Tests.Categories
 
             var factory = new CategoryTreeFactory(repository);
 
-            var tree = factory.Create(Guid.NewGuid());
+            var tree = await factory.Create(Guid.NewGuid());
 
             Assert.Equal(categories[0].Id, tree.Root.Id);
             Assert.Contains(tree.Root.Children.Select(c => c.Id), p => p == Guids.Guid2 || p == Guids.Guid3);
@@ -34,7 +35,7 @@ namespace Gnome.Core.Service.Tests.Categories
         }
 
         [Fact]
-        public void Should_Throw_Exception_No_Root()
+        public async Task Should_Throw_Exception_No_Root()
         {
             var repository = Substitute.For<ICategoryRepository>();
             var categories = GetCategories();
@@ -43,11 +44,11 @@ namespace Gnome.Core.Service.Tests.Categories
             repository.GetAll(Arg.Any<Guid>())
                 .Returns(categories);
 
-            Assert.Throws<ArgumentException>(() => new CategoryTreeFactory(repository).Create(Guid.NewGuid()));
+            await Assert.ThrowsAsync<ArgumentException>(async () => await new CategoryTreeFactory(repository).Create(Guid.NewGuid()));
         }
 
         [Fact]
-        public void Should_Throw_Exception_Multiple_Roots()
+        public async Task Should_Throw_Exception_Multiple_Roots()
         {
             var repository = Substitute.For<ICategoryRepository>();
             var categories = GetCategories();
@@ -56,7 +57,7 @@ namespace Gnome.Core.Service.Tests.Categories
             repository.GetAll(Arg.Any<Guid>())
                 .Returns(categories);
 
-            Assert.Throws<ArgumentException>(() => new CategoryTreeFactory(repository).Create(Guid.NewGuid()));
+            await Assert.ThrowsAsync<ArgumentException>(async () => await new CategoryTreeFactory(repository).Create(Guid.NewGuid()));
         }
 
         public List<Category> GetCategories()

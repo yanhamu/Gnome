@@ -2,6 +2,8 @@
 using Gnome.Core.DataAccess;
 using MediatR;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Reports
 {
@@ -14,7 +16,7 @@ namespace Gnome.Api.Services.Reports
             this.repository = reportRepository;
         }
 
-        public Report Handle(CreateReport message)
+        public async Task<Report> Handle(CreateReport message, CancellationToken cancellationToken)
         {
             var created = repository.Create(new Core.Model.Database.Report()
             {
@@ -24,7 +26,7 @@ namespace Gnome.Api.Services.Reports
                 Name = message.Name,
                 Type = message.Type,
             });
-            repository.Save();
+            await repository.Save();
 
             return new Report(created.Id, created.QueryId, created.Name, created.Type);
         }

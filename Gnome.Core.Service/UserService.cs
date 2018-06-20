@@ -2,6 +2,7 @@
 using Gnome.Core.Model.Database;
 using Gnome.Core.Service.Interfaces;
 using System;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service
 {
@@ -21,9 +22,9 @@ namespace Gnome.Core.Service
             this.securityService = securityService;
         }
 
-        public bool CheckEmailAvailability(string email)
+        public async Task<bool> CheckEmailAvailability(string email)
         {
-            return repository.CheckEmailAvailability(email);
+            return await repository.CheckEmailAvailability(email);
         }
 
         public void CreateNew(string email, string password, Guid userId)

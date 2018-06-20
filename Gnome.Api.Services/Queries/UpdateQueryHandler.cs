@@ -3,6 +3,8 @@ using Gnome.Core.DataAccess;
 using Gnome.Core.Model;
 using Gnome.Core.Service.Query;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Queries
 {
@@ -17,13 +19,13 @@ namespace Gnome.Api.Services.Queries
             this.service = queryDataservice;
         }
 
-        public QueryModel Handle(UpdateQuery message)
+        public async Task<QueryModel> Handle(UpdateQuery message, CancellationToken cancellationToken)
         {
-            var query = repository.Find(message.Id);
+            var query = await repository.Find(message.Id);
             var data = new QueryData(message.ExcludeExpressions, message.IncludeExpressions, message.Accounts);
             query.Data = service.Serialize(data);
             query.Name = message.Name;
-            repository.Save();
+            await repository.Save();
 
             return new QueryModel()
             {

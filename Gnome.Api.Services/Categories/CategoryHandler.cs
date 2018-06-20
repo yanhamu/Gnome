@@ -4,6 +4,8 @@ using Gnome.Core.DataAccess;
 using Gnome.Core.Model.Database;
 using Gnome.Core.Service.Categories;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Categories
 {
@@ -24,30 +26,30 @@ namespace Gnome.Api.Services.Categories
             this.categoryRepository = categoryRepository;
         }
 
-        public CategoryNode Handle(ListCategories message)
+        public async Task<CategoryNode> Handle(ListCategories message, CancellationToken cancellationToken)
         {
-            var tree = treeFactory.Create(message.UserId);
+            var tree = await treeFactory.Create(message.UserId);
             return tree.Root;
         }
 
-        public Category Handle(GetCategory message)
+        public Task<Category> Handle(GetCategory message, CancellationToken cancellationToken)
         {
             return categoryRepository.Find(message.Id);
         }
 
-        public Category Handle(UpdateCategory message)
+        public async Task<Category> Handle(UpdateCategory message, CancellationToken cancellationToken)
         {
-            var category = categoryRepository.Find(message.Id);
+            var category = await categoryRepository.Find(message.Id);
             category.Name = message.Name;
             category.ParentId = message.ParentId;
             category.Color = message.Color;
 
-            categoryRepository.Save();
+            await categoryRepository.Save();
 
             return category;
         }
 
-        public Category Handle(CreateCategory message)
+        public async Task<Category> Handle(CreateCategory message, CancellationToken cancellationToken)
         {
             var category = new Category()
             {
@@ -56,8 +58,8 @@ namespace Gnome.Api.Services.Categories
                 UserId = message.UserId
             };
 
-            var created =  categoryRepository.Create(category);
-            categoryRepository.Save();
+            var created = categoryRepository.Create(category);
+            await categoryRepository.Save();
             return created;
         }
     }

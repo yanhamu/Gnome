@@ -4,6 +4,8 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Users
 {
@@ -20,9 +22,9 @@ namespace Gnome.Api.Services.Users
             this.initServices = initServices;
         }
 
-        public void Handle(RegisterUser user)
+        public async Task Handle(RegisterUser user, CancellationToken cancellationToken)
         {
-            if (this.userService.CheckEmailAvailability(user.Email) == false)
+            if (await this.userService.CheckEmailAvailability(user.Email) == false)
                 throw new InvalidOperationException("email already exists");
 
             var userId = Guid.NewGuid();

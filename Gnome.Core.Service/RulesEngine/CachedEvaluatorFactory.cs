@@ -1,8 +1,10 @@
 ﻿using Gnome.Core.DataAccess;
 using Gnome.Core.Service.RulesEngine.AST;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Service.RulesEngine
 {
@@ -17,19 +19,19 @@ namespace Gnome.Core.Service.RulesEngine
             this.expressionRepository = expressionRepository;
         }
 
-        public CachedEvaluator Create(List<Guid> expressionIds)
+        public async Task<CachedEvaluator> Create(List<Guid> expressionIds)
         {
-            var expressions = expressionRepository.Query
+            var expressions = await expressionRepository.Query
                 .Where(e => expressionIds.Contains(e.Id))
-                .ToList();
+                .ToListAsync();
             return new CachedEvaluator(treeBuilder, expressions);
         }
 
-        public CachedEvaluator Create(Guid userId)
+        public async Task<CachedEvaluator> Create(Guid userId)
         {
-            var expressions = expressionRepository.Query
+            var expressions = await expressionRepository.Query
                 .Where(e => e.UserId == userId)
-                .ToList();
+                .ToListAsync();
             return new CachedEvaluator(treeBuilder, expressions);
         }
     }

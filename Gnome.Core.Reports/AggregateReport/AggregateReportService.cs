@@ -4,6 +4,7 @@ using Gnome.Core.Service.Transactions.QueryBuilders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.Reports.AggregateReport
 {
@@ -16,10 +17,10 @@ namespace Gnome.Core.Reports.AggregateReport
             this.queryBuilder = queryBuilder;
         }
 
-        public AggregateEnvelope CreateReport(TransactionSearchFilter filter, Guid userId, int numberOfDaysToAggregate)
+        public async Task<AggregateEnvelope> CreateReport(TransactionSearchFilter filter, Guid userId, int numberOfDaysToAggregate)
         {
-            var orderedRows = queryBuilder
-                .Query(userId, FacilitateFilter(filter, numberOfDaysToAggregate))
+            var orderedRows = (await queryBuilder
+                .Query(userId, FacilitateFilter(filter, numberOfDaysToAggregate)))
                 .ToList();
 
             return new AggregateEnvelope(filter.DateFilter, Compute(filter.DateFilter, orderedRows, numberOfDaysToAggregate));

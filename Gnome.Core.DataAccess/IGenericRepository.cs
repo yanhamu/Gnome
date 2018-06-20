@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace Gnome.Core.DataAccess
 {
@@ -6,8 +7,8 @@ namespace Gnome.Core.DataAccess
     {
         IQueryable<T> Query { get; }
         T Create(T entity);
-        T Find(params object[] ids);
+        Task<T> Find(params object[] ids);
         T Remove(params object[] ids);
-        int Save();
+        Task<int> Save();
     }
 }

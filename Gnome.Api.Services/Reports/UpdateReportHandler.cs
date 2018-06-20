@@ -1,6 +1,8 @@
 ﻿using Gnome.Api.Services.Reports.Requests;
 using Gnome.Core.DataAccess;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Reports
 {
@@ -12,15 +14,15 @@ namespace Gnome.Api.Services.Reports
         {
             this.repository = repository;
         }
-        public Report Handle(UpdateReport message)
+        public async Task<Report> Handle(UpdateReport message, CancellationToken cancellationToken)
         {
-            var toUpdate = repository.Find(message.Id);
+            var toUpdate = await repository.Find(message.Id);
             toUpdate.Name = message.Name;
             toUpdate.QueryId = message.QueryId;
             toUpdate.UserId = message.UserId;
             toUpdate.Type = message.Type;
 
-            repository.Save();
+            await repository.Save();
 
             return new Report(toUpdate.Id, toUpdate.QueryId, toUpdate.Name, toUpdate.Type);
         }

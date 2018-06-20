@@ -1,8 +1,11 @@
 ﻿using Gnome.Api.Services.Reports.Requests;
 using Gnome.Core.DataAccess;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Reports
 {
@@ -15,13 +18,13 @@ namespace Gnome.Api.Services.Reports
             this.repository = repository;
         }
 
-        public List<Report> Handle(ListReports message)
+        public Task<List<Report>> Handle(ListReports message, CancellationToken cancellationToken)
         {
             return repository
                 .Query
                 .Where(r => r.UserId == message.UserId)
                 .Select(r => new Report(r.Id, r.QueryId, r.Name, r.Type))
-                .ToList();
+                .ToListAsync();
         }
     }
 }

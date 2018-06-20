@@ -4,6 +4,8 @@ using Gnome.Core.Service.Categories;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Categories
 {
@@ -23,16 +25,16 @@ namespace Gnome.Api.Services.Categories
             this.mediator = mediator;
         }
 
-        public void Handle(RemoveCategory notification)
+        public async Task Handle(RemoveCategory notification, CancellationToken cancellationToken)
         {
             if (notification.RemoveChildren)
                 return;
 
-            var tree = treeFactory.Create(notification.UserId);
+            var tree = await treeFactory.Create(notification.UserId);
             var node = tree[notification.Id];
 
             foreach (var child in node.Children)
-                mediator.Send(new UpdateCategory(child.Id, node.ParentId, child.Name, child.Color));
+                await mediator.Send(new UpdateCategory(child.Id, node.ParentId, child.Name, child.Color));
 
             categoryRepository.Remove(new List<Guid>() { node.Id });
         }
