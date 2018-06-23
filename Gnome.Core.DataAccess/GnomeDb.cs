@@ -35,8 +35,8 @@ namespace Gnome.Core.DataAccess
             builder.HasOne(b => b.Expression).WithMany().HasForeignKey(b => b.ExpressionId);
 
             builder.Property(p => p.Name).IsRequired();
-            builder.Property(p => p.ActionType).IsRequired();
-            builder.Property(p => p.ActionData).IsRequired();
+            builder.Property(p => p.ActionType).HasColumnName("action_type").IsRequired();
+            builder.Property(p => p.ActionData).HasColumnName("action_data").IsRequired();
         }
 
         private void MapReport(EntityTypeBuilder<Report> builder)

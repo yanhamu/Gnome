@@ -18,6 +18,7 @@ namespace Gnome.Api.IntegrationTests
         {
             this.server.PrepareUser(UserFixture.User);
             this.server.PrepareAccount(AccountFixtures.Fio);
+            this.server.PrepareCategory(CategoryFixture.Root);
 
             var response = await client.Create(new CreateTransaction()
             {
@@ -25,7 +26,7 @@ namespace Gnome.Api.IntegrationTests
                 Amount = 100m,
                 Date = new DateTime(2017, 01, 01),
                 Type = "fio",
-                Data = null
+                Data = "{}"
             });
 
             response.HasStatusCode(HttpStatusCode.OK);

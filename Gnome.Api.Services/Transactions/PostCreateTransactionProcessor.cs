@@ -2,20 +2,18 @@
 using Gnome.Core.DataAccess;
 using Gnome.Core.Service.Rules;
 using Gnome.Core.Service.Rules.Actions;
-using MediatR;
-using System;
-using System.Threading;
+using MediatR.Pipeline;
 using System.Threading.Tasks;
 
 namespace Gnome.Api.Services.Transactions
 {
-    public class ApplyRulesTransactionHandler : IRequestHandler<CreateTransaction, Guid>
+    public class PostCreateTransactionProcessor<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse> where TRequest : CreateTransaction
     {
         private readonly IRulesEvaluator rulesEvaluator;
         private readonly IAccountRepository accountRepository;
         private readonly IActionFactory actionFactory;
 
-        public ApplyRulesTransactionHandler(
+        public PostCreateTransactionProcessor(
             IRulesEvaluator rulesEvaluator,
             IAccountRepository accountRepository,
             IActionFactory actionFactory)
@@ -24,14 +22,13 @@ namespace Gnome.Api.Services.Transactions
             this.accountRepository = accountRepository;
             this.actionFactory = actionFactory;
         }
-        public async Task<Guid> Handle(CreateTransaction message, CancellationToken cancellationToken)
+
+        public async Task Process(TRequest message, TResponse response)
         {
-            var userId = (await accountRepository.Find(message.Id)).UserId;
+            var userId = (await accountRepository.Find(message.AccountId)).UserId;
             (await rulesEvaluator
                 .GetSuitableRules(message.Id, userId))
                 .ForEach(r => actionFactory.Create(r, message.Id));
-
-            return message.Id;
         }
     }
 }

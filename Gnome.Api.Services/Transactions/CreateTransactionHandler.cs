@@ -13,14 +13,11 @@ namespace Gnome.Api.Services.Transactions
     public class CreateTransactionHandler : IRequestHandler<CreateTransaction, Guid>
     {
         private readonly ITransactionRepository transactionRepository;
-        private readonly IRequestHandler<CreateTransaction, Guid> applyRulesTransactionHandler;
 
         public CreateTransactionHandler(
-            ITransactionRepository transactionRepository,
-            IRequestHandler<CreateTransaction, Guid> applyRulesTransactionHandler)
+            ITransactionRepository transactionRepository)
         {
             this.transactionRepository = transactionRepository;
-            this.applyRulesTransactionHandler = applyRulesTransactionHandler;
         }
 
         public async Task<Guid> Handle(CreateTransaction message, CancellationToken cancellationToken)
@@ -38,8 +35,6 @@ namespace Gnome.Api.Services.Transactions
 
             transactionRepository.Create(t);
             await transactionRepository.Save();
-
-            await this.applyRulesTransactionHandler.Handle(message, default(CancellationToken));
 
             return message.Id;
         }

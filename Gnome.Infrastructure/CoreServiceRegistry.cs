@@ -1,6 +1,7 @@
 ﻿using Gnome.Core.Model.Database;
 using Gnome.Core.Service;
 using Gnome.Core.Service.Initialization;
+using Gnome.Core.Service.Rules;
 using Gnome.Core.Service.Search.Filters;
 using Gnome.Core.Service.Search.QueryBuilders;
 using Gnome.Core.Service.Search.QueryBuilders.Categories;
@@ -31,6 +32,7 @@ namespace Gnome.Infrastructure
 
                 For<IQueryBuilderService<Transaction, TransactionSearchFilter>>().Use<TransactionQueryBuilder>();
                 For<IQueryBuilderService<CategoryTransaction, TransactionSearchFilter>>().Use<CategoryQueryBuilderService>();
+                For<IRulesEvaluator>().Use<RulesEvaluator>();
             });
         }
     }
