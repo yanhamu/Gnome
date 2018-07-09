@@ -53,8 +53,6 @@ namespace Gnome.Api
                 .AddJsonFile("config.json")
                 .Build();
 
-            loggerFactory.AddConsole();
-
             app.UseCors(builder =>
             {
                 builder.AllowAnyOrigin();
@@ -62,11 +60,13 @@ namespace Gnome.Api
                 builder.AllowAnyMethod();
             });
 
+            loggerFactory.AddConsole();
+            
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
             //if (initializer.HasAllTables() == false)
-                initializer.DropAndCreate();
+            initializer.DropAndCreate();
 
             app.UseStaticFiles();
 
